@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="brand.css">
 <style>
 /* Vinaseed: lá xanh, chữ nâu đất, vàng hạt lúa · bố cục: dải thương hiệu → bộ lọc → tab → KPI → biểu đồ → bảng */
@@ -10,11 +11,11 @@
   --cds-chart-grid: #EDF1EC; --cds-chart-axis: #C5CEC4; --cds-chart-reference: #9AA79D;
   --cds-surface-popover: #FFFFFF; --cds-border: #E2E7E1; --cds-text-secondary: #5C6A61;
   color-scheme: light; background: #FFFFFF; border-radius: var(--cds-radius); padding: var(--cds-pad-md);
-  font-family: var(--font-anthropic-sans); color: var(--color-fg); display: flex; flex-direction: column; gap: var(--cds-gap-md); }
+  font-family: 'Be Vietnam Pro', var(--font-anthropic-sans), system-ui, sans-serif; color: var(--color-fg); display: flex; flex-direction: column; gap: var(--cds-gap-md); }
 .vs-band { background-color: #FFFFFF; color: var(--color-fg); border: 1px solid var(--color-border-line); border-bottom: 4px solid var(--vs-green); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--cds-gap-md); align-items: flex-end; position: relative; overflow: hidden; }
 .vs-brand { display: flex; flex-direction: column; gap: 4px; position: relative; }
 .vs-logochip { align-self: flex-start; margin-bottom: 6px; }
-.vs-brand h1 { margin: 0; font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); line-height: 1.15; color: var(--vs-brown); }
+.vs-brand h1 { margin: 0; font-weight: 700; letter-spacing: -.01em; font-size: var(--cds-font-size-title); line-height: 1.15; color: var(--vs-brown); }
 .vs-brand p { margin: 0; font-size: var(--cds-font-size-body); color: var(--color-fg-muted); max-width: 60ch; }
 .vs-foot { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); text-align: right; }
 
@@ -48,7 +49,7 @@
 .vs-kpi { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-md); display: flex; flex-direction: column; gap: 2px; border-top: 3px solid var(--vs-green); min-height: 104px; }
 .vs-kpi.t-warn { border-top-color: var(--vs-soon); } .vs-kpi.t-bad { border-top-color: var(--vs-late); } .vs-kpi.t-gold { border-top-color: var(--vs-gold); } .vs-kpi.t-brown { border-top-color: var(--vs-brown-2); }
 .vs-kpi small { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); font-weight: 600; }
-.vs-kpi .v { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); line-height: 1.15; font-variant-numeric: tabular-nums; }
+.vs-kpi .v { font-weight: 700; letter-spacing: -.01em; font-size: var(--cds-font-size-title); line-height: 1.15; font-variant-numeric: tabular-nums; }
 .vs-kpi .s { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
 .vs-kpi .s .up { color: var(--color-ok); font-weight: 600; } .vs-kpi .s .down { color: var(--color-bad); font-weight: 600; }
 

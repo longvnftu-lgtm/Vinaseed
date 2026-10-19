@@ -488,6 +488,33 @@ svg.i{width:1em;height:1em;stroke-width:2;vertical-align:-.15em}
 .sess td:last-child{color:var(--green-d)}
 .commit p{font-size:8.2pt;opacity:.95;margin-top:1.5mm;line-height:1.5}
 
+/* ───────── 4 use case demo ───────── */
+.ucd{display:grid;grid-template-columns:1fr 1fr;gap:5mm}
+.ucd .card{border:1px solid var(--line);border-top:3px solid var(--blue);border-radius:12px;padding:5mm;display:flex;flex-direction:column;gap:3mm;min-height:96mm}
+.ucd .card:nth-child(2),.ucd .card:nth-child(3){border-top-color:var(--green)}
+.ucd .ch{display:flex;gap:3mm;align-items:flex-start}
+.ucd .ch .ic{flex:none;width:11mm;height:11mm;border-radius:10px;background:var(--blue-s);color:var(--blue);display:grid;place-items:center;font-size:15pt}
+.ucd .card:nth-child(2) .ch .ic,.ucd .card:nth-child(3) .ch .ic{background:var(--green-s);color:var(--green)}
+.ucd h3{font-size:11.5pt;line-height:1.25;margin-bottom:1.2mm}
+.flow3{list-style:none;counter-reset:s;display:grid;gap:1.6mm}
+.flow3 li{counter-increment:s;position:relative;padding:2mm 2.5mm 2mm 9mm;background:var(--soft);border-radius:7px;font-size:7.9pt;line-height:1.4;color:#33445C}
+.flow3 li::before{content:counter(s);position:absolute;left:2.5mm;top:2mm;width:4.4mm;height:4.4mm;border-radius:50%;background:var(--blue);color:#fff;font-size:6.6pt;font-weight:700;display:grid;place-items:center}
+.flow3 li b{color:var(--blue-d)}
+.ucd dl{display:grid;grid-template-columns:15mm 1fr;gap:1.4mm 2.5mm;font-size:7.9pt;margin-top:auto;padding-top:2.5mm;border-top:1px dashed var(--line)}
+.ucd dt{font-size:6.6pt;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-top:.4mm}
+.ucd dd{color:#33445C;line-height:1.4}
+.ucd dt:last-of-type{color:var(--green-d)}
+.ucd dd:last-of-type{color:var(--ink);font-weight:600}
+.ucd .ex{font-size:8.2pt;color:#33445C}
+.facts{list-style:none;display:grid;gap:1.6mm}
+.facts li{font-size:7.9pt;line-height:1.4;color:#33445C;padding-left:3.5mm;position:relative}
+.facts li::before{content:"";position:absolute;left:0;top:.6em;width:4px;height:4px;border-radius:50%;background:var(--green)}
+.facts b{color:var(--ink)}
+.qa{background:var(--soft);border-radius:9px;padding:3mm}
+.qa .q{font-size:8.6pt;font-weight:700;color:var(--blue-d);margin-bottom:1.5mm}
+.qa .a{font-size:7.9pt;color:#33445C;line-height:1.45;padding-left:3mm;border-left:2px solid var(--green)}
+.ucd .more{font-size:7.6pt;color:var(--muted);line-height:1.45}
+
 /* ───────── xem trên màn hình & thanh chỉnh sửa (không in ra) ───────── */
 @media screen{
   html,body{background:#E6EBF2}
@@ -531,7 +558,7 @@ body.editing .page:hover{outline:2px dashed rgba(26,107,240,.35)}
     <div class="toc">
       <div><b>01</b><span>Bài toán</span><small>6 yêu cầu, định vị là văn phòng điện tử</small></div>
       <div><b>02</b><span>Phương pháp tiếp cận</span><small>Data Warehouse, AI nhúng, dashboard lãnh đạo</small></div>
-      <div><b>03</b><span>Use case demo</span><small>Một ngày làm việc của Chủ tịch</small></div>
+      <div><b>03</b><span>Use case demo</span><small>Họp & giao việc, duyệt giá, dự án, AI hỏi đáp</small></div>
       <div><b>04</b><span>Phương pháp kiểm thử</span><small>Showcase hoặc PoC, khung chuẩn bị</small></div>
     </div>
     <div class="note"><div class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <circle cx="12" cy="12" r="10" /> <circle cx="12" cy="12" r="6" /> <circle cx="12" cy="12" r="2" /> </svg></div><div><b>Mục tiêu tài liệu:</b> thống nhất cách hiểu bài toán và chọn phương án kiểm chứng giải pháp trước khi trình Chủ tịch.</div></div>
@@ -629,22 +656,41 @@ body.editing .page:hover{outline:2px dashed rgba(26,107,240,.35)}
   <div class="gradbar"></div>
   <div class="head"><div class="brandpair"><span class="b">Base.vn</span><span class="x">×</span><span class="v">Vinaseed</span></div><span>03 · Use case demo</span></div>
 
-  <div class="sec" style="margin-top:6mm"><div class="n">03</div><div><div class="k">Use case demo · góc nhìn Chủ tịch</div><h2>Một ngày làm việc của Chủ tịch</h2></div></div>
-  <p class="lead">Bảy tình huống cũng là kịch bản demo đề xuất.</p>
+  <div class="sec" style="margin-top:6mm"><div class="n">03</div><div><div class="k">Use case demo</div><h2>Bốn use case trình diễn</h2></div></div>
+  <p class="lead">Mỗi use case gắn với một yêu cầu của Vinaseed, demo trên dữ liệu thật của Vinaseed khi kiểm thử.</p>
 
-  <table class="uct">
-    <thead><tr><th>Use case</th><th>Bối cảnh</th><th>Dữ liệu dùng</th><th>Giá trị cho lãnh đạo</th></tr></thead>
-    <tbody>
-      <tr><td><span class="t">07:30</span><b>Bản tin sáng</b></td><td>Cần biết việc quan trọng, việc chậm, ai ở đâu, hồ sơ chờ duyệt.</td><td>Task, Project, Meeting, BPM</td><td>Nắm toàn cảnh trong vài phút</td></tr>
-      <tr><td><span class="t">07:40</span><b>Hỏi AI về dự án</b></td><td>"Dự án Hitech Hà Nam đang chậm ở đâu?"</td><td>Project, Task</td><td>Trả lời trong vài giây, có nguồn</td></tr>
-      <tr><td><span class="t">08:15</span><b>Duyệt giá thu mua</b></td><td>Tờ trình đã qua TC và SX ký song song, chờ Chủ tịch.</td><td>BPM, giá các vụ trước</td><td>Duyệt có so sánh; thấy điểm nghẽn</td></tr>
-      <tr><td><span class="t">09:00</span><b>Họp giao ban</b></td><td>Kết luận nằm trong biên bản, khó theo dõi.</td><td>Meeting, Task</td><td>Mọi kết luận có người nhận, có hạn</td></tr>
-      <tr><td><span class="t">10:30</span><b>Theo dõi chỉ đạo</b></td><td>Chỉ đạo từ văn bản, họp, giao trực tiếp chưa có nơi theo dõi chung.</td><td>E-office, Task</td><td>Thấy tỷ lệ đúng hạn theo đơn vị</td></tr>
-      <tr><td><span class="t">14:00</span><b>Lịch công tác</b></td><td>"Chiều nay các PTGĐ ở đâu?"; phòng ban xin lịch làm việc.</td><td>Meeting, Booking</td><td>Điều phối nhanh, không trùng lịch</td></tr>
-      <tr><td><span class="t">17:00</span><b>Cảnh báo, báo cáo tuần</b></td><td>Biết việc trễ khi đã muộn; báo cáo tuần tốn công tổng hợp.</td><td>Toàn bộ kho dữ liệu</td><td>Phát hiện sớm; báo cáo tự sinh</td></tr>
-    </tbody>
-  </table>
-  <div class="foot"><span>Tên dự án, chức danh là minh hoạ; khi demo sẽ dùng dữ liệu của Vinaseed</span><b>04 / 05</b></div>
+  <div class="ucd">
+    <div class="card">
+      <div class="ch"><span class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M2 3h20" /> <path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3" /> <path d="m7 21 5-5 5 5" /> </svg></span><div><h3>Meeting + AI giao việc</h3><span class="chip b">Meeting</span> <span class="chip g">Task</span> <span class="chip w">AI</span></div></div>
+      <ol class="flow3"><li>Họp giao ban Ban TGĐ: lịch, phòng họp, thành viên</li><li>AI ghi biên bản, rút kết luận</li><li>Kết luận thành việc có người nhận, hạn, tiêu chí; tự nhắc hạn</li></ol>
+      <dl><dt>Dữ liệu</dt><dd>Lịch họp, biên bản, kết luận; đầu việc phát sinh</dd><dt>Giá trị</dt><dd>Không bỏ sót kết luận; đo được tỷ lệ hoàn thành</dd></dl>
+    </div>
+    <div class="card">
+      <div class="ch"><span class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <rect width="8" height="8" x="3" y="3" rx="2" /> <path d="M7 11v4a2 2 0 0 0 2 2h4" /> <rect width="8" height="8" x="13" y="13" rx="2" /> </svg></span><div><h3>Quy trình phê duyệt giá thu mua</h3><span class="chip b">BPM</span> <span class="chip w">AI</span></div></div>
+      <ol class="flow3"><li><b>B1</b> GĐ Sản xuất / GĐ BU2 lập đề nghị, tải tờ trình</li><li><b>B2</b> GĐ Tài chính và GĐ Sản xuất ký song song; không đạt trả về B1</li><li><b>B3</b> Chủ tịch HĐQT phê duyệt; không đạt trả về B2</li></ol>
+      <dl><dt>Dữ liệu</dt><dd>Hồ sơ đề nghị, lịch sử ký, thời gian chờ từng bước</dd><dt>Giá trị</dt><dd>Duyệt nhanh, minh bạch; thấy ngay điểm nghẽn</dd></dl>
+    </div>
+    <div class="card">
+      <div class="ch"><span class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" /> <path d="M8 10v4" /> <path d="M12 10v2" /> <path d="M16 10v6" /> </svg></span><div><h3>Quản lý dự án chiến lược</h3><span class="chip g">Project</span></div></div>
+      <p class="ex">Ví dụ: <b>Mở rộng vùng sản xuất lúa giống Thu Đông 2026</b></p>
+      <ul class="facts">
+        <li><b>12</b> đầu việc, <b>4</b> mốc: ký hợp đồng liên kết 120 hộ, gieo cấy 450 ha, kiểm định đồng ruộng, nhập kho</li>
+        <li>Rủi ro: rầy nâu, lịch trỗ bố mẹ, mưa muộn vùng trũng</li>
+        <li>Chi phí kế hoạch <b>~5,2 tỷ</b>, doanh thu dự kiến <b>6 tỷ</b></li>
+      </ul>
+      <dl><dt>Giá trị</dt><dd>Tiến độ, rủi ro, lãi lỗ dự án trên một màn hình</dd></dl>
+    </div>
+    <div class="card">
+      <div class="ch"><span class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" /> <path d="M20 3v4" /> <path d="M22 5h-4" /> <path d="M4 17v2" /> <path d="M5 18H3" /> </svg></span><div><h3>AI hỏi đáp cho lãnh đạo</h3><span class="chip b">Data Warehouse</span> <span class="chip w">AI</span></div></div>
+      <div class="qa">
+        <p class="q">"Dự án Thu Đông 2026 đang vướng gì?"</p>
+        <p class="a">Mốc ký hợp đồng 120 hộ trễ 19 ngày; 3 rủi ro đang mở, 1 mức cao (mưa muộn vùng trũng); hoàn thành 4/12 việc.</p>
+      </div>
+      <p class="more">Câu hỏi khác: tờ trình nào đang chờ tôi duyệt? kết luận họp tuần trước còn việc nào chưa xong?</p>
+      <dl><dt>Giá trị</dt><dd>Trả lời trong vài giây, kèm nguồn, đúng quyền</dd></dl>
+    </div>
+  </div>
+  <div class="foot"><span>Số liệu dự án là dữ liệu demo minh hoạ; khi kiểm thử sẽ dùng dữ liệu của Vinaseed</span><b>04 / 05</b></div>
 </section>
 
 <!-- ═════════════ PAGE 5 · PHƯƠNG PHÁP KIỂM THỬ ═════════════ -->

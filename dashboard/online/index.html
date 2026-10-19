@@ -4,12 +4,18 @@
 #dash-root { --dash-gutter: clamp(12px, 3vw, 32px); }
 .vs { --vs-green: #005834; --vs-green-2: #8DB58F; --vs-brown: #351400; --vs-brown-2: #7A4E2D; --vs-gold: #C8962E;
   --vs-late: #C2412D; --vs-soon: #D9A21B; --vs-doing: #4F7CAC; --vs-idle: #A59B8F;
+  /* nền trắng cố định, không theo giao diện tối */
+  --color-bg: #F6F8F5; --color-panel: #FFFFFF; --color-fg: #1E2A22; --color-fg-muted: #5C6A61; --color-border-line: #E2E7E1;
+  --color-ok: #127A47; --color-warn: #A86A00; --color-bad: #B3261E;
+  --cds-chart-grid: #EDF1EC; --cds-chart-axis: #C5CEC4; --cds-chart-reference: #9AA79D;
+  --cds-surface-popover: #FFFFFF; --cds-border: #E2E7E1; --cds-text-secondary: #5C6A61;
+  color-scheme: light; background: #FFFFFF; border-radius: var(--cds-radius); padding: var(--cds-pad-md);
   font-family: var(--font-anthropic-sans); color: var(--color-fg); display: flex; flex-direction: column; gap: var(--cds-gap-md); }
-.vs-band { background-color: var(--vs-brown); color: #F6EFE6; border-radius: var(--cds-radius); padding: var(--cds-pad-lg); display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--cds-gap-md); align-items: flex-end; position: relative; overflow: hidden; }
+.vs-band { background-color: #FFFFFF; color: var(--color-fg); border: 1px solid var(--color-border-line); border-bottom: 4px solid var(--vs-green); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--cds-gap-md); align-items: flex-end; position: relative; overflow: hidden; }
 .vs-brand { display: flex; flex-direction: column; gap: 4px; position: relative; }
-.vs-logochip { align-self: flex-start; background: #FFFFFF; border-radius: 10px; padding: 10px 14px; box-shadow: 0 2px 10px rgba(0,0,0,.18); margin-bottom: 8px; }
-.vs-brand h1 { margin: 0; font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); line-height: 1.15; color: #FFFFFF; }
-.vs-brand p { margin: 0; font-size: var(--cds-font-size-body); color: #E6D9CA; max-width: 60ch; }
+.vs-logochip { align-self: flex-start; margin-bottom: 6px; }
+.vs-brand h1 { margin: 0; font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); line-height: 1.15; color: var(--vs-brown); }
+.vs-brand p { margin: 0; font-size: var(--cds-font-size-body); color: var(--color-fg-muted); max-width: 60ch; }
 .vs-foot { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); text-align: right; }
 
 .vs-filters { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm) var(--cds-gap-md); align-items: flex-end; background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-md); }

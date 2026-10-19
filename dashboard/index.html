@@ -412,7 +412,7 @@ table.dt tr:hover td{background:#FAFCFF}
     const forCT = pending.filter(a => a.step.startsWith('B3')).sort((a, b) => (b.urgent - a.urgent) || (b.waiting_days - a.waiting_days));
     const evToday = D.events.filter(e => e.date === TODAY && (!F.dept || personDept(e.person) === F.dept || e.related_dept === F.dept) && (!F.person || e.person === F.person));
     kpis('#kpiHome', [
-      { l: 'Việc trọng tâm', v: fmtInt(focus.length), s: 'chưa xong, hạn trong kỳ' },
+      { l: 'Việc trọng tâm', v: fmtInt(focus.length), s: 'chưa xong, gồm việc quá hạn' },
       { l: 'Việc quá hạn', v: fmtInt(od.length), vc: od.length ? 'var(--late)' : '', c: 'var(--late)', s: 'tính đến hôm nay' },
       { l: 'Tỷ lệ xong đúng hạn', v: fmtPct(onTime / doneIn.length), c: 'var(--ok)', s: `${fmtInt(onTime)}/${fmtInt(doneIn.length)} việc xong trong kỳ` },
       { l: 'Dự án chậm tiến độ', v: `${fmtInt(slowP.length)}/${fmtInt(projs.length)}`, c: 'var(--soon)', s: 'dự án chiến lược' },

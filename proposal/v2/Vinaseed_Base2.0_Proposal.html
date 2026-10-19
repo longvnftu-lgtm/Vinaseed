@@ -254,7 +254,7 @@ svg.i{width:1em;height:1em;stroke-width:2;vertical-align:-.15em}
 .meta{display:grid;grid-template-columns:repeat(4,1fr);gap:5mm;border-bottom:1px solid var(--line);padding-bottom:7mm}
 .meta div small{display:block;font-size:6.8pt;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;font-weight:600;margin-bottom:1mm}
 .meta div{font-size:9pt;font-weight:600;line-height:1.35}
-.toc{display:grid;grid-template-columns:repeat(5,1fr);gap:4mm;margin-top:7mm}
+.toc{display:grid;grid-template-columns:repeat(4,1fr);gap:5mm;margin-top:7mm}
 .toc div{border-top:3px solid var(--blue);padding-top:3mm}
 .toc div:nth-child(even){border-color:var(--green)}
 .toc b{display:block;font-size:20pt;font-weight:800;color:var(--ink);line-height:1}
@@ -450,6 +450,44 @@ svg.i{width:1em;height:1em;stroke-width:2;vertical-align:-.15em}
 .commit .cols p{font-size:7.8pt;opacity:.92;line-height:1.45}
 .commit .cols .n{font-size:7pt;font-weight:800;opacity:.75;letter-spacing:.1em}
 
+
+/* ───────── bản rút gọn presale ───────── */
+.pipe .node b{margin-top:0}
+.cols5{display:grid;grid-template-columns:repeat(5,1fr);gap:3mm;margin-top:-2mm}
+.cols5>div{background:var(--soft);border-radius:10px;padding:3mm;display:flex;flex-direction:column;justify-content:space-between;gap:2.5mm}
+.cols5 p{font-size:7.6pt;color:#33445C;line-height:1.45}
+.cols5 .so{align-self:flex-start}
+.blocks5{display:grid;grid-template-columns:repeat(5,1fr);gap:3mm}
+.blocks5>div{border:1px solid var(--line);border-radius:10px;padding:3.5mm 3mm;text-align:center;color:var(--blue);font-size:14pt}
+.blocks5>div:nth-child(odd){color:var(--green)}
+.blocks5>div.on{background:var(--grad);color:#fff;border:0}
+.blocks5 b{display:block;font-size:8.4pt;color:var(--ink);margin-top:1mm}
+.blocks5 .on b{color:#fff}
+.uct{width:100%;border-collapse:collapse;font-size:8.4pt}
+.uct th{text-align:left;font-size:6.8pt;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700;padding:2.2mm 3mm;background:var(--soft)}
+.uct td{padding:4.2mm 3mm;border-top:1px solid var(--line);vertical-align:top;color:#33445C;line-height:1.45}
+.uct td:first-child{width:40mm}
+.uct td:nth-child(3){width:34mm;color:var(--blue-d);font-weight:600;font-size:7.8pt}
+.uct td:last-child{width:44mm;color:var(--green-d);font-weight:600}
+.uct .t{display:block;font-size:7.4pt;font-weight:700;color:var(--blue)}
+.uct b{color:var(--ink);font-size:9pt}
+.opts2{display:grid;grid-template-columns:1fr 1fr;gap:5mm}
+.opts2 .kpis{margin:3.5mm 0 0}
+.prep{display:grid;grid-template-columns:repeat(3,1fr);gap:4mm}
+.prep>div{border:1px solid var(--line);border-radius:10px;padding:3.5mm 4mm}
+.ph3{font-size:9.2pt;font-weight:700;display:flex;align-items:center;gap:2mm;margin-bottom:2mm;color:var(--ink)}
+.ph3 svg{color:var(--blue)}
+.prep>div:nth-child(2) .ph3 svg{color:var(--green)}
+.prep ul{list-style:none;font-size:7.8pt;color:#33445C}
+.prep li{position:relative;padding-left:3.5mm;margin-bottom:1.2mm;line-height:1.45}
+.prep li::before{content:"";position:absolute;left:0;top:.6em;width:4px;height:4px;border-radius:50%;background:var(--blue)}
+.sess{width:100%;border-collapse:collapse;font-size:8.2pt}
+.sess th{text-align:left;font-size:6.8pt;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700;padding:2mm 3mm;background:var(--soft)}
+.sess td{padding:2.2mm 3mm;border-top:1px solid var(--line);color:#33445C}
+.sess td:nth-child(n+2){width:52mm;color:var(--blue-d);font-weight:600}
+.sess td:last-child{color:var(--green-d)}
+.commit p{font-size:8.2pt;opacity:.95;margin-top:1.5mm;line-height:1.5}
+
 /* ───────── xem trên màn hình & thanh chỉnh sửa (không in ra) ───────── */
 @media screen{
   html,body{background:#E6EBF2}
@@ -492,14 +530,13 @@ body.editing .page:hover{outline:2px dashed rgba(26,107,240,.35)}
     </div>
     <div class="toc">
       <div><b>01</b><span>Bài toán</span><small>6 yêu cầu, định vị là văn phòng điện tử</small></div>
-      <div><b>02</b><span>Kiến trúc</span><small>Service hoá dữ liệu, AI nhúng</small></div>
-      <div><b>03</b><span>Phương pháp số hoá</span><small>Dashboard trên Data Warehouse nhúng AI</small></div>
-      <div><b>04</b><span>Use case demo</span><small>Một ngày làm việc của Chủ tịch</small></div>
-      <div><b>05</b><span>Kế hoạch PoC</span><small>Showcase miễn phí hoặc PoC 30 tài khoản</small></div>
+      <div><b>02</b><span>Phương pháp tiếp cận</span><small>Data Warehouse, AI nhúng, dashboard lãnh đạo</small></div>
+      <div><b>03</b><span>Use case demo</span><small>Một ngày làm việc của Chủ tịch</small></div>
+      <div><b>04</b><span>Phương pháp kiểm thử</span><small>Showcase hoặc PoC, khung chuẩn bị</small></div>
     </div>
     <div class="note"><div class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <circle cx="12" cy="12" r="10" /> <circle cx="12" cy="12" r="6" /> <circle cx="12" cy="12" r="2" /> </svg></div><div><b>Mục tiêu tài liệu:</b> thống nhất cách hiểu bài toán và chọn phương án kiểm chứng giải pháp trước khi trình Chủ tịch.</div></div>
   </div>
-  <div class="foot" style="left:15mm;right:15mm"><span>Base.vn × Vinaseed · Đề xuất sơ bộ</span><b>01 / 08</b></div>
+  <div class="foot" style="left:15mm;right:15mm"><span>Base.vn × Vinaseed · Đề xuất sơ bộ</span><b>01 / 05</b></div>
 </section>
 
 <!-- ═════════════ PAGE 2 · BÀI TOÁN ═════════════ -->
@@ -537,315 +574,144 @@ body.editing .page:hover{outline:2px dashed rgba(26,107,240,.35)}
       <div class="step"><span class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <rect width="7" height="9" x="3" y="3" rx="1" /> <rect width="7" height="5" x="14" y="3" rx="1" /> <rect width="7" height="9" x="14" y="12" rx="1" /> <rect width="7" height="5" x="3" y="16" rx="1" /> </svg></span><b>Báo cáo</b><small>một màn hình</small></div>
     </div>
   </div>
-  <div class="foot"><span>Nguồn: Yêu cầu kỹ thuật dự án số hoá quản trị vận hành, Vinaseed, 10/2026</span><b>02 / 08</b></div>
+  <div class="foot"><span>Nguồn: Yêu cầu kỹ thuật dự án số hoá quản trị vận hành, Vinaseed, 10/2026</span><b>02 / 05</b></div>
 </section>
 
-<!-- ═════════════ PAGE 3 · KIẾN TRÚC ═════════════ -->
+<!-- ═════════════ PAGE 3 · PHƯƠNG PHÁP TIẾP CẬN ═════════════ -->
 <section class="page">
   <div class="gradbar"></div>
-  <div class="head"><div class="brandpair"><span class="b">Base.vn</span><span class="x">×</span><span class="v">Vinaseed</span></div><span>02 · Kiến trúc giải pháp</span></div>
+  <div class="head"><div class="brandpair"><span class="b">Base.vn</span><span class="x">×</span><span class="v">Vinaseed</span></div><span>02 · Phương pháp tiếp cận</span></div>
 
-  <div class="sec" style="margin-top:6mm"><div class="n">02</div><div><div class="k">Kiến trúc giải pháp</div><h2>Service hoá dữ liệu, AI nhúng vào điều hành</h2></div></div>
-  <p class="lead">Mỗi ứng dụng làm tốt việc của mình, nhưng <b>dữ liệu được công bố thành dịch vụ chung</b>. AI và báo cáo đọc từ cùng một nguồn, nên mọi nơi thấy cùng một con số.</p>
+  <div class="sec" style="margin-top:6mm"><div class="n">02</div><div><div class="k">Phương pháp tiếp cận</div><h2>Service hoá dữ liệu, Data Warehouse, AI nhúng</h2></div></div>
+  <p class="lead">Mỗi ứng dụng làm tốt việc của mình; dữ liệu được <b>chuẩn hoá về một kho chung</b>, AI và dashboard đọc từ cùng một nguồn, nên mọi nơi thấy cùng một con số.</p>
 
-  <div class="arch">
-    <div>
-      <div class="lab"><i>L4</i> Người dùng cuối</div>
-      <div class="layer l4">
-        <div class="who"><div class="avatar"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M18 21a8 8 0 0 0-16 0" /> <circle cx="10" cy="8" r="5" /> <path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3" /> </svg></div><div><b>Home của Chủ tịch</b><small>mỗi sáng, mọi thiết bị</small></div></div>
-        <div class="blocks"><span>Hỏi đáp AI</span><span>Việc trọng tâm</span><span>Việc chậm</span><span>Lịch Ban TGĐ</span><span>Chờ phê duyệt</span></div>
-      </div>
-      <div class="conn"><i></i><i></i><i></i></div>
-      <div class="lab"><i>L3</i> AI nhúng</div>
-      <div class="layer l3">
-        <div class="ai"><div class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /> <path d="M13 8H7" /> <path d="M17 12H7" /> </svg></div><div><b>AI hỏi đáp</b><small>trả lời kèm nguồn</small></div></div>
-        <div class="ai"><div class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <rect width="7" height="9" x="3" y="3" rx="1" /> <rect width="7" height="5" x="14" y="3" rx="1" /> <rect width="7" height="9" x="14" y="12" rx="1" /> <rect width="7" height="5" x="3" y="16" rx="1" /> </svg></div><div><b>Báo cáo tập trung</b><small>tự sinh ngày, tuần</small></div></div>
-        <div class="ai"><div class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" /> <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" /> <path d="M4 2C2.8 3.7 2 5.7 2 8" /> <path d="M22 8c0-2.3-.8-4.3-2-6" /> </svg></div><div><b>Cảnh báo chủ động</b><small>sắp hạn, trễ hạn</small></div></div>
-      </div>
-      <div class="conn"><i></i><i></i><i></i></div>
-      <div class="lab"><i>L2</i> Service hoá dữ liệu · Data Warehouse</div>
-      <div class="layer l2"><b>Data Warehouse điều hành</b><small>Mỗi ứng dụng công bố việc, hạn, người phụ trách, trạng thái, tờ trình thành dịch vụ chuẩn, gom về một kho</small>
-        <div class="pills"><span>Kết nối</span><span>Chuẩn hoá</span><span>Kho dữ liệu</span></div></div>
-      <div class="conn g"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-      <div class="lab"><i>L1</i> Ứng dụng nghiệp vụ</div>
-      <div class="layer l1">
-        <div class="app"><div class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M2 3h20" /> <path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3" /> <path d="m7 21 5-5 5 5" /> </svg></div><b>Meeting</b><small>họp, biên bản</small></div>
-        <div class="app"><div class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2" /> <circle cx="7" cy="17" r="2" /> <path d="M9 17h6" /> <circle cx="17" cy="17" r="2" /> </svg></div><b>Booking</b><small>phòng, xe</small></div>
-        <div class="app"><div class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" /> <path d="M14 2v4a2 2 0 0 0 2 2h4" /> <path d="M10 9H8" /> <path d="M16 13H8" /> <path d="M16 17H8" /> </svg></div><b>E-office</b><small>văn bản chỉ đạo</small></div>
-        <div class="app"><div class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="m3 17 2 2 4-4" /> <path d="m3 7 2 2 4-4" /> <path d="M13 6h8" /> <path d="M13 12h8" /> <path d="M13 18h8" /> </svg></div><b>Task</b><small>giao việc</small></div>
-        <div class="app"><div class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <rect width="8" height="8" x="3" y="3" rx="2" /> <path d="M7 11v4a2 2 0 0 0 2 2h4" /> <rect width="8" height="8" x="13" y="13" rx="2" /> </svg></div><b>BPM</b><small>quy trình duyệt</small></div>
-        <div class="app"><div class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" /> <path d="M8 10v4" /> <path d="M12 10v2" /> <path d="M16 10v6" /> </svg></div><b>Project</b><small>dự án</small></div>
-      </div>
-      <div class="lab" style="margin-top:4mm"><i>L0</i> Nền tảng chung</div>
-      <div class="layer l0"><b>Base Account</b>: sơ đồ tổ chức · người dùng · phân quyền theo cấp bậc</div>
-    </div>
+  <div class="pipe">
+    <div class="node"><div class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M12 22v-5" /> <path d="M9 8V2" /> <path d="M15 8V2" /> <path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z" /> </svg></div><b>Nguồn dữ liệu</b></div>
+    <div class="node"><div class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" /> </svg></div><b>Chuẩn hoá</b></div>
+    <div class="node"><div class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <ellipse cx="12" cy="5" rx="9" ry="3" /> <path d="M3 5V19A9 3 0 0 0 21 19V5" /> <path d="M3 12A9 3 0 0 0 21 12" /> </svg></div><b>Data Warehouse</b></div>
+    <div class="node"><div class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" /> <path d="M20 3v4" /> <path d="M22 5h-4" /> <path d="M4 17v2" /> <path d="M5 18H3" /> </svg></div><b>Lớp AI</b></div>
+    <div class="node on"><div class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <rect width="7" height="9" x="3" y="3" rx="1" /> <rect width="7" height="5" x="14" y="3" rx="1" /> <rect width="7" height="9" x="14" y="12" rx="1" /> <rect width="7" height="5" x="3" y="16" rx="1" /> </svg></div><b>Dashboard</b></div>
+  </div>
+  <div class="cols5">
+    <div><p>Meeting, Booking, E-office, Task, BPM, Project trên Base; sau này thêm báo cáo đơn vị, ERP.</p><span class="so">Bản đồ nguồn</span></div>
+    <div><p>Kết nối tự động; thống nhất danh mục tổ chức, nhân sự, dự án, trạng thái.</p><span class="so">Danh mục chuẩn</span></div>
+    <div><p>Dữ liệu tập trung theo chủ đề, có lịch sử, phân quyền theo cấp.</p><span class="so">Kho dữ liệu điều hành</span></div>
+    <div><p>Định nghĩa chỉ số thống nhất; hỏi đáp tiếng Việt có nguồn; tóm tắt, cảnh báo.</p><span class="so">Trợ lý AI</span></div>
+    <div><p>Một màn hình mỗi sáng; đi sâu từ chỉ số đến bản ghi gốc.</p><span class="so">Home của Chủ tịch</span></div>
+  </div>
 
-    <div class="side" style="padding-top:5mm">
-      <div class="pr"><div class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <ellipse cx="12" cy="5" rx="9" ry="3" /> <path d="M3 5V19A9 3 0 0 0 21 19V5" /> <path d="M3 12A9 3 0 0 0 21 12" /> </svg></div><div><b>Nhập một lần, dùng nhiều nơi</b><p>Phòng ban làm việc trên ứng dụng quen thuộc; báo cáo sinh ra từ chính vận hành.</p></div></div>
-      <div class="pr"><div class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /> <path d="m9 12 2 2 4-4" /> </svg></div><div><b>AI đọc qua dịch vụ, đúng quyền</b><p>AI chỉ thấy những gì người hỏi được phép thấy; mỗi câu trả lời dẫn về bản ghi gốc.</p></div></div>
-      <div class="pr"><div class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" /> <path d="M20 3v4" /> <path d="M22 5h-4" /> <path d="M4 17v2" /> <path d="M5 18H3" /> </svg></div><div><b>Hỏi thay vì tìm</b><p>Chủ tịch hỏi bằng tiếng Việt, không cần mở từng ứng dụng hay chờ tổng hợp.</p></div></div>
-      <div class="pr"><div class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" /> <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" /> <path d="M4 2C2.8 3.7 2 5.7 2 8" /> <path d="M22 8c0-2.3-.8-4.3-2-6" /> </svg></div><div><b>Hệ thống tự đôn đốc</b><p>Kết luận thành việc, việc tự nhắc, trễ hạn tự báo lên Home.</p></div></div>
-    </div>
+  <div class="h3" style="margin-top:7mm">Dashboard của Chủ tịch gồm 5 khối</div>
+  <div class="blocks5">
+    <div class="on"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /> <path d="M13 8H7" /> <path d="M17 12H7" /> </svg><b>Hỏi đáp AI</b></div>
+    <div><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <circle cx="12" cy="12" r="10" /> <circle cx="12" cy="12" r="6" /> <circle cx="12" cy="12" r="2" /> </svg><b>Việc trọng tâm</b></div>
+    <div><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M12 6v6l4 2" /> <path d="M16 21.16a10 10 0 1 1 5-13.516" /> <path d="M20 11.5v6" /> <path d="M20 21.5h.01" /> </svg><b>Việc, dự án chậm</b></div>
+    <div><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M8 2v4" /> <path d="M16 2v4" /> <rect width="18" height="18" x="3" y="4" rx="2" /> <path d="M3 10h18" /> <path d="M8 14h.01" /> <path d="M12 14h.01" /> <path d="M16 14h.01" /> <path d="M8 18h.01" /> <path d="M12 18h.01" /> <path d="M16 18h.01" /> </svg><b>Lịch Ban TGĐ</b></div>
+    <div><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" /> <path d="M14 2v4a2 2 0 0 0 2 2h4" /> <path d="M10 9H8" /> <path d="M16 13H8" /> <path d="M16 17H8" /> </svg><b>Chờ phê duyệt</b></div>
+  </div>
+
+  <div class="h3" style="margin-top:7mm">Nguyên tắc</div>
+  <div class="princ">
+    <div><div class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="m12 14 4-4" /> <path d="M3.34 19a10 10 0 1 1 17.32 0" /> </svg></div><b>Một định nghĩa cho mỗi chỉ số</b><small>Mọi màn hình, báo cáo dùng chung cách tính.</small></div>
+    <div><div class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M3 7V5a2 2 0 0 1 2-2h2" /> <path d="M17 3h2a2 2 0 0 1 2 2v2" /> <path d="M21 17v2a2 2 0 0 1-2 2h-2" /> <path d="M7 21H5a2 2 0 0 1-2-2v-2" /> <circle cx="12" cy="12" r="3" /> <path d="m16 16-1.9-1.9" /> </svg></div><b>Truy vết đến bản ghi gốc</b><small>Mỗi con số, câu trả lời AI đều mở được về nguồn.</small></div>
+    <div><div class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /> <path d="m9 12 2 2 4-4" /> </svg></div><b>Đúng quyền</b><small>AI chỉ trả lời trong phạm vi người hỏi được xem.</small></div>
+    <div><div class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" /> <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" /> <path d="M4 2C2.8 3.7 2 5.7 2 8" /> <path d="M22 8c0-2.3-.8-4.3-2-6" /> </svg></div><b>Hệ thống tự đôn đốc</b><small>Kết luận thành việc, trễ hạn tự báo lên Home.</small></div>
   </div>
 
   <div class="compare">
     <div class="before"><h5>Hôm nay</h5><ul><li>Hỏi tiến độ qua thư ký, điện thoại</li><li>Chờ phòng ban tổng hợp Excel</li><li>Kết luận họp dễ bị bỏ sót</li></ul></div>
-    <div class="after"><h5>Với Base 2.0</h5><ul><li>Hỏi AI, có câu trả lời kèm nguồn trong vài giây</li><li>Báo cáo tự sinh, cùng một con số ở mọi nơi</li><li>Kết luận thành việc có hạn ngay sau họp</li></ul></div>
+    <div class="after"><h5>Với Base 2.0</h5><ul><li>Hỏi AI, có câu trả lời kèm nguồn</li><li>Báo cáo tự sinh, một con số ở mọi nơi</li><li>Kết luận thành việc có hạn ngay sau họp</li></ul></div>
   </div>
-  <div class="foot"><span>Mức tự động hoá số liệu liên ứng dụng sẽ chốt cụ thể trong phạm vi PoC</span><b>03 / 08</b></div>
+  <div class="foot"><span>Mức tự động hoá số liệu liên ứng dụng sẽ chốt trong phạm vi kiểm thử</span><b>03 / 05</b></div>
 </section>
 
-<!-- ═════════════ PAGE 4 · PHƯƠNG PHÁP (1) ═════════════ -->
+<!-- ═════════════ PAGE 4 · USE CASE ═════════════ -->
 <section class="page">
   <div class="gradbar"></div>
-  <div class="head"><div class="brandpair"><span class="b">Base.vn</span><span class="x">×</span><span class="v">Vinaseed</span></div><span>03 · Phương pháp số hoá</span></div>
+  <div class="head"><div class="brandpair"><span class="b">Base.vn</span><span class="x">×</span><span class="v">Vinaseed</span></div><span>03 · Use case demo</span></div>
 
-  <div class="sec" style="margin-top:6mm"><div class="n">03</div><div><div class="k">Phương pháp số hoá</div><h2>Executive Dashboard trên Data Warehouse nhúng AI</h2></div></div>
-  <p class="lead">Năm bước đưa dữ liệu phát sinh hằng ngày trong vận hành thành <b>một màn hình điều hành có AI</b> cho Chủ tịch và Ban TGĐ.</p>
+  <div class="sec" style="margin-top:6mm"><div class="n">03</div><div><div class="k">Use case demo · góc nhìn Chủ tịch</div><h2>Một ngày làm việc của Chủ tịch</h2></div></div>
+  <p class="lead">Bảy tình huống cũng là kịch bản demo đề xuất.</p>
 
-  <div class="pipe">
-    <div class="node"><div class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M12 22v-5" /> <path d="M9 8V2" /> <path d="M15 8V2" /> <path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z" /> </svg></div><b>Nguồn dữ liệu</b><small>ứng dụng & file</small></div>
-    <div class="node"><div class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" /> </svg></div><b>Chuẩn hoá</b><small>kết nối, làm sạch</small></div>
-    <div class="node"><div class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <ellipse cx="12" cy="5" rx="9" ry="3" /> <path d="M3 5V19A9 3 0 0 0 21 19V5" /> <path d="M3 12A9 3 0 0 0 21 12" /> </svg></div><b>Data Warehouse</b><small>kho dữ liệu điều hành</small></div>
-    <div class="node"><div class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" /> <path d="M20 3v4" /> <path d="M22 5h-4" /> <path d="M4 17v2" /> <path d="M5 18H3" /> </svg></div><b>Lớp AI</b><small>chỉ số, hỏi đáp, cảnh báo</small></div>
-    <div class="node on"><div class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <rect width="7" height="9" x="3" y="3" rx="1" /> <rect width="7" height="5" x="14" y="3" rx="1" /> <rect width="7" height="9" x="14" y="12" rx="1" /> <rect width="7" height="5" x="3" y="16" rx="1" /> </svg></div><b>Dashboard</b><small>cho lãnh đạo</small></div>
-  </div>
-
-  <div class="steps5">
-    <div class="srow hd"><span></span><span>Bước</span><span>Làm gì</span><span>Đầu ra</span></div>
-    <div class="srow">
-      <div class="sn">1</div>
-      <div class="st"><b>Xác định nguồn dữ liệu</b><small>Biết dữ liệu nằm ở đâu, ai chịu trách nhiệm</small></div>
-      <ul><li>Kiểm kê nguồn: Meeting, Booking, E-office, Task, BPM, Project trên Base</li><li>Nguồn ngoài: file báo cáo của đơn vị, chi nhánh; ERP, kế toán ở giai đoạn sau</li><li>Chốt chủ sở hữu và tần suất cập nhật của từng nguồn</li></ul>
-      <div class="so">Bản đồ nguồn dữ liệu</div>
-    </div>
-    <div class="srow">
-      <div class="sn">2</div>
-      <div class="st"><b>Kết nối & chuẩn hoá</b><small>Một cách gọi tên cho mọi nơi</small></div>
-      <ul><li>Thu thập tự động qua API, Data Service theo lịch đồng bộ</li><li>Chuẩn hoá danh mục dùng chung: tổ chức, nhân sự, đơn vị, dự án, trạng thái</li><li>Làm sạch dữ liệu trùng, thiếu, sai định dạng; đặt quy tắc kiểm tra</li></ul>
-      <div class="so">Danh mục chuẩn & quy tắc chất lượng</div>
-    </div>
-    <div class="srow">
-      <div class="sn">3</div>
-      <div class="st"><b>Data Warehouse điều hành</b><small>Dữ liệu tập trung, có lịch sử</small></div>
-      <ul><li>Tổ chức theo chủ đề: công việc, tờ trình, cuộc họp & kết luận, lịch công tác, dự án</li><li>Gắn với các chiều phân tích: đơn vị, người, thời gian, dự án</li><li>Lưu lịch sử để so sánh theo tuần, tháng, vụ; phân quyền theo cấp</li></ul>
-      <div class="so">Mô hình dữ liệu & kho dữ liệu</div>
-    </div>
-    <div class="srow">
-      <div class="sn">4</div>
-      <div class="st"><b>Lớp AI</b><small>Hiểu câu hỏi, trả lời có nguồn</small></div>
-      <ul><li>Lớp ngữ nghĩa: định nghĩa thống nhất "đúng hạn", "trễ hạn", "chờ duyệt"…</li><li>AI hỏi đáp tiếng Việt trên kho dữ liệu, tuân thủ phân quyền, dẫn nguồn</li><li>AI tóm tắt tờ trình, biên bản; phát hiện bất thường để cảnh báo</li></ul>
-      <div class="so">Bộ chỉ số chuẩn & trợ lý AI</div>
-    </div>
-    <div class="srow">
-      <div class="sn">5</div>
-      <div class="st"><b>Executive Dashboard</b><small>Một màn hình mỗi sáng</small></div>
-      <ul><li>Năm khối: hỏi đáp AI, việc trọng tâm, việc chậm, lịch Ban TGĐ, chờ phê duyệt</li><li>Đi sâu từ chỉ số → đơn vị → bản ghi gốc</li><li>Bản tin sáng, báo cáo tuần tự sinh; cảnh báo qua thông báo, email</li></ul>
-      <div class="so">Dashboard cho Chủ tịch, Ban TGĐ</div>
-    </div>
-  </div>
-  <div class="foot"><span>Mức tự động hoá từng bước sẽ chốt cụ thể trong phạm vi PoC</span><b>04 / 08</b></div>
-</section>
-
-<!-- ═════════════ PAGE 5 · PHƯƠNG PHÁP (2) ═════════════ -->
-<section class="page">
-  <div class="gradbar"></div>
-  <div class="head"><div class="brandpair"><span class="b">Base.vn</span><span class="x">×</span><span class="v">Vinaseed</span></div><span>03 · Phương pháp số hoá</span></div>
-
-  <div class="sec" style="margin-top:6mm"><div class="n">03</div><div><div class="k">Phương pháp số hoá · tiếp theo</div><h2>Bộ chỉ số điều hành và nguyên tắc dữ liệu</h2></div></div>
-  <p class="lead">Dashboard chỉ có giá trị khi mỗi con số <b>được định nghĩa một lần, có nguồn rõ ràng</b> và cập nhật đúng nhịp. Bộ chỉ số dưới đây là đề xuất ban đầu, sẽ chốt cùng Vinaseed.</p>
-
-  <div class="h3">Bộ chỉ số đề xuất</div>
-  <table class="kpit">
-    <thead><tr><th>Nhóm</th><th>Chỉ số</th><th>Nguồn</th><th>Cập nhật</th></tr></thead>
+  <table class="uct">
+    <thead><tr><th>Use case</th><th>Bối cảnh</th><th>Dữ liệu dùng</th><th>Giá trị cho lãnh đạo</th></tr></thead>
     <tbody>
-      <tr><td rowspan="2"><span class="grp b"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="m3 17 2 2 4-4" /> <path d="m3 7 2 2 4-4" /> <path d="M13 6h8" /> <path d="M13 12h8" /> <path d="M13 18h8" /> </svg> Công việc</span></td><td>Tỷ lệ việc hoàn thành đúng hạn, theo đơn vị và người</td><td>Task</td><td>Hằng ngày</td></tr>
-      <tr><td>Số việc trễ hạn và số ngày trễ</td><td>Task</td><td>Liên tục</td></tr>
-      <tr><td rowspan="2"><span class="grp g"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M2 3h20" /> <path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3" /> <path d="m7 21 5-5 5 5" /> </svg> Kết luận họp</span></td><td>Tỷ lệ kết luận đã được giao thành việc</td><td>Meeting, Task</td><td>Sau mỗi cuộc họp</td></tr>
-      <tr><td>Tỷ lệ kết luận hoàn thành đúng hạn</td><td>Meeting, Task</td><td>Hằng tuần</td></tr>
-      <tr><td rowspan="2"><span class="grp b"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <rect width="8" height="8" x="3" y="3" rx="2" /> <path d="M7 11v4a2 2 0 0 0 2 2h4" /> <rect width="8" height="8" x="13" y="13" rx="2" /> </svg> Quy trình</span></td><td>Số tờ trình đang chờ duyệt, theo cấp duyệt</td><td>BPM</td><td>Liên tục</td></tr>
-      <tr><td>Thời gian xử lý trung bình ở từng bước</td><td>BPM</td><td>Hằng tuần</td></tr>
-      <tr><td rowspan="2"><span class="grp g"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" /> <path d="M8 10v4" /> <path d="M12 10v2" /> <path d="M16 10v6" /> </svg> Dự án</span></td><td>Tiến độ theo mốc trọng yếu</td><td>Project</td><td>Hằng tuần</td></tr>
-      <tr><td>Số mốc trễ và khối lượng việc theo thành viên</td><td>Project, Task</td><td>Hằng tuần</td></tr>
-      <tr><td rowspan="2"><span class="grp b"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M8 2v4" /> <path d="M16 2v4" /> <rect width="18" height="18" x="3" y="4" rx="2" /> <path d="M3 10h18" /> <path d="M8 14h.01" /> <path d="M12 14h.01" /> <path d="M16 14h.01" /> <path d="M8 18h.01" /> <path d="M12 18h.01" /> <path d="M16 18h.01" /> </svg> Lịch công tác</span></td><td>Lịch Ban TGĐ, các PTGĐ trong ngày</td><td>Meeting</td><td>Liên tục</td></tr>
-      <tr><td>Mức sử dụng phòng họp, xe công tác</td><td>Booking</td><td>Hằng tuần</td></tr>
+      <tr><td><span class="t">07:30</span><b>Bản tin sáng</b></td><td>Cần biết việc quan trọng, việc chậm, ai ở đâu, hồ sơ chờ duyệt.</td><td>Task, Project, Meeting, BPM</td><td>Nắm toàn cảnh trong vài phút</td></tr>
+      <tr><td><span class="t">07:40</span><b>Hỏi AI về dự án</b></td><td>"Dự án Hitech Hà Nam đang chậm ở đâu?"</td><td>Project, Task</td><td>Trả lời trong vài giây, có nguồn</td></tr>
+      <tr><td><span class="t">08:15</span><b>Duyệt giá thu mua</b></td><td>Tờ trình đã qua TC và SX ký song song, chờ Chủ tịch.</td><td>BPM, giá các vụ trước</td><td>Duyệt có so sánh; thấy điểm nghẽn</td></tr>
+      <tr><td><span class="t">09:00</span><b>Họp giao ban</b></td><td>Kết luận nằm trong biên bản, khó theo dõi.</td><td>Meeting, Task</td><td>Mọi kết luận có người nhận, có hạn</td></tr>
+      <tr><td><span class="t">10:30</span><b>Theo dõi chỉ đạo</b></td><td>Chỉ đạo từ văn bản, họp, giao trực tiếp chưa có nơi theo dõi chung.</td><td>E-office, Task</td><td>Thấy tỷ lệ đúng hạn theo đơn vị</td></tr>
+      <tr><td><span class="t">14:00</span><b>Lịch công tác</b></td><td>"Chiều nay các PTGĐ ở đâu?"; phòng ban xin lịch làm việc.</td><td>Meeting, Booking</td><td>Điều phối nhanh, không trùng lịch</td></tr>
+      <tr><td><span class="t">17:00</span><b>Cảnh báo, báo cáo tuần</b></td><td>Biết việc trễ khi đã muộn; báo cáo tuần tốn công tổng hợp.</td><td>Toàn bộ kho dữ liệu</td><td>Phát hiện sớm; báo cáo tự sinh</td></tr>
     </tbody>
   </table>
-
-  <div class="h3" style="margin-top:6mm">Nguyên tắc dữ liệu & AI</div>
-  <div class="princ">
-    <div><div class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="m12 14 4-4" /> <path d="M3.34 19a10 10 0 1 1 17.32 0" /> </svg></div><b>Một định nghĩa cho mỗi chỉ số</b><small>Mọi màn hình, mọi báo cáo dùng chung cách tính.</small></div>
-    <div><div class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M3 7V5a2 2 0 0 1 2-2h2" /> <path d="M17 3h2a2 2 0 0 1 2 2v2" /> <path d="M21 17v2a2 2 0 0 1-2 2h-2" /> <path d="M7 21H5a2 2 0 0 1-2-2v-2" /> <circle cx="12" cy="12" r="3" /> <path d="m16 16-1.9-1.9" /> </svg></div><b>Truy vết đến bản ghi gốc</b><small>Mỗi con số, mỗi câu trả lời AI đều mở được về nguồn.</small></div>
-    <div><div class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /> <path d="m9 12 2 2 4-4" /> </svg></div><b>Phân quyền theo cấp</b><small>AI chỉ trả lời trong phạm vi người hỏi được xem.</small></div>
-    <div><div class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /> <path d="M3 3v5h5" /> <path d="M12 7v5l4 2" /> </svg></div><b>Chất lượng được đo</b><small>Cảnh báo khi dữ liệu thiếu hoặc đồng bộ chậm.</small></div>
-  </div>
-
-  <div class="h3" style="margin-top:6mm">Lộ trình mở rộng nguồn dữ liệu</div>
-  <div class="road">
-    <div class="ph on"><span>Giai đoạn 1 · PoC</span><b>Dữ liệu từ các ứng dụng Base</b><small>Meeting, Booking, E-office, Task, BPM, Project</small></div>
-    <div class="ph"><span>Giai đoạn 2</span><b>Báo cáo của đơn vị, chi nhánh</b><small>Chuẩn hoá các file báo cáo định kỳ vào kho</small></div>
-    <div class="ph"><span>Giai đoạn 3</span><b>Hệ thống nghiệp vụ lõi</b><small>ERP, kế toán, sản xuất, kinh doanh</small></div>
-  </div>
-  <div class="foot"><span>Bộ chỉ số, nguồn và tần suất cập nhật là đề xuất; sẽ chốt cùng Vinaseed</span><b>05 / 08</b></div>
+  <div class="foot"><span>Tên dự án, chức danh là minh hoạ; khi demo sẽ dùng dữ liệu của Vinaseed</span><b>04 / 05</b></div>
 </section>
 
-<!-- ═════════════ PAGE 6 · USE CASE 1–4 ═════════════ -->
+<!-- ═════════════ PAGE 5 · PHƯƠNG PHÁP KIỂM THỬ ═════════════ -->
 <section class="page">
   <div class="gradbar"></div>
-  <div class="head"><div class="brandpair"><span class="b">Base.vn</span><span class="x">×</span><span class="v">Vinaseed</span></div><span>04 · Use case demo</span></div>
+  <div class="head"><div class="brandpair"><span class="b">Base.vn</span><span class="x">×</span><span class="v">Vinaseed</span></div><span>04 · Phương pháp kiểm thử</span></div>
 
-  <div class="sec" style="margin-top:6mm"><div class="n">04</div><div><div class="k">Use case demo · góc nhìn Chủ tịch</div><h2>Một ngày làm việc của Chủ tịch</h2></div></div>
-  <p class="lead">Bảy tình huống trong một ngày, mỗi tình huống nêu <b>bối cảnh, dữ liệu dùng và giá trị cho lãnh đạo</b>. Đây cũng là kịch bản demo đề xuất.</p>
+  <div class="sec" style="margin-top:6mm"><div class="n">04</div><div><div class="k">Phương pháp kiểm thử hệ thống</div><h2>Showcase hoặc PoC, cùng một khung chuẩn bị</h2></div></div>
 
-  <div class="tline">
-    <div><b>07:30</b>Bản tin sáng</div>
-    <div><b>07:40</b>Hỏi đáp AI</div>
-    <div><b>08:15</b>Phê duyệt</div>
-    <div><b>09:00</b>Họp giao ban</div>
-    <div><b>10:30</b>Giao việc</div>
-    <div><b>14:00</b>Lịch công tác</div>
-    <div><b>17:00</b>Cảnh báo, báo cáo</div>
-  </div>
-
-  <div class="ucs">
-    <div class="uc">
-      <div class="uh"><span class="num">1</span><div><span class="time">07:30 · Bản tin sáng</span><h3>Nắm toàn cảnh trong vài phút</h3></div></div>
-      <dl>
-        <dt>Bối cảnh</dt><dd>Đầu ngày, Chủ tịch cần biết việc gì quan trọng, việc gì đang chậm, ai đang ở đâu và hồ sơ nào chờ mình duyệt. Hiện phải hỏi thư ký hoặc đọc nhiều báo cáo rời.</dd>
-        <dt>Dữ liệu dùng</dt><dd>Việc trọng tâm, việc trễ hạn (Task); mốc dự án (Project); lịch Ban TGĐ (Meeting); tờ trình chờ duyệt (BPM), tổng hợp từ Data Warehouse.</dd>
-        <dt>Giá trị</dt><dd>Ưu tiên đúng việc ngay từ đầu ngày, không phụ thuộc người tổng hợp.</dd>
-      </dl>
-    </div>
-    <div class="uc">
-      <div class="uh"><span class="num">2</span><div><span class="time">07:40 · Hỏi đáp AI</span><h3>"Dự án Hitech Hà Nam đang chậm ở đâu?"</h3></div></div>
-      <dl>
-        <dt>Bối cảnh</dt><dd>Chủ tịch muốn biết ngay dự án chiến lược đang vướng ở mốc nào và ai phụ trách, không chờ họp hay báo cáo.</dd>
-        <dt>Dữ liệu dùng</dt><dd>Mốc, tiến độ, người phụ trách (Project); đầu việc liên quan (Task); định nghĩa "chậm" ở lớp ngữ nghĩa.</dd>
-        <dt>Giá trị</dt><dd>Câu trả lời trong vài giây, kèm nguồn để kiểm chứng; hỏi tiếp được theo mạch.</dd>
-      </dl>
-    </div>
-    <div class="uc">
-      <div class="uh"><span class="num">3</span><div><span class="time">08:15 · Phê duyệt</span><h3>Duyệt giá thu mua có đủ thông tin</h3></div></div>
-      <dl>
-        <dt>Bối cảnh</dt><dd>Tờ trình giá thu mua đã qua bước GĐ Tài chính và GĐ Sản xuất ký song song, đang chờ Chủ tịch phê duyệt ở bước cuối.</dd>
-        <dt>Dữ liệu dùng</dt><dd>Hồ sơ, lịch sử ký, thời gian chờ từng bước (BPM); giá thu mua các vụ trước trong kho dữ liệu.</dd>
-        <dt>Giá trị</dt><dd>AI tóm tắt và so sánh với vụ trước; duyệt hoặc trả lại có lý do; thấy điểm nghẽn quy trình.</dd>
-      </dl>
-    </div>
-    <div class="uc">
-      <div class="uh"><span class="num">4</span><div><span class="time">09:00 · Họp giao ban</span><h3>Kết luận họp không bị bỏ sót</h3></div></div>
-      <dl>
-        <dt>Bối cảnh</dt><dd>Sau họp giao ban, kết luận nằm trong biên bản, khó theo dõi ai làm gì, hạn nào.</dd>
-        <dt>Dữ liệu dùng</dt><dd>Biên bản, kết luận (Meeting); đầu việc được tách ra với người nhận, hạn, tiêu chí (Task).</dd>
-        <dt>Giá trị</dt><dd>Mọi kết luận có chủ, có hạn; tỷ lệ hoàn thành kết luận đo được hằng tuần.</dd>
-      </dl>
-    </div>
-  </div>
-  <div class="foot"><span>Tên dự án, chức danh trong kịch bản là minh hoạ; khi demo sẽ dùng dữ liệu của Vinaseed</span><b>06 / 08</b></div>
-</section>
-
-<!-- ═════════════ PAGE 7 · USE CASE 5–7 ═════════════ -->
-<section class="page">
-  <div class="gradbar"></div>
-  <div class="head"><div class="brandpair"><span class="b">Base.vn</span><span class="x">×</span><span class="v">Vinaseed</span></div><span>04 · Use case demo</span></div>
-
-  <div class="sec" style="margin-top:6mm"><div class="n">04</div><div><div class="k">Use case demo · tiếp theo</div><h2>Từ chỉ đạo đến báo cáo cuối tuần</h2></div></div>
-
-  <div class="ucs">
-    <div class="uc">
-      <div class="uh"><span class="num">5</span><div><span class="time">10:30 · Giao việc</span><h3>Chỉ đạo nào cũng theo dõi được</h3></div></div>
-      <dl>
-        <dt>Bối cảnh</dt><dd>Chỉ đạo đến từ văn bản, từ họp và giao trực tiếp, nhưng chưa có một nơi theo dõi chung.</dd>
-        <dt>Dữ liệu dùng</dt><dd>Văn bản chỉ đạo (E-office); đầu việc, tiến độ, kết quả đầu ra (Task).</dd>
-        <dt>Giá trị</dt><dd>Thấy tỷ lệ đúng hạn theo đơn vị, người; đánh giá dựa trên kết quả thay vì cảm nhận.</dd>
-      </dl>
-    </div>
-    <div class="uc">
-      <div class="uh"><span class="num">6</span><div><span class="time">14:00 · Lịch công tác</span><h3>"Chiều nay các PTGĐ ở đâu?"</h3></div></div>
-      <dl>
-        <dt>Bối cảnh</dt><dd>Chủ tịch cần biết PTGĐ nào đang đi chi nhánh, ai ở văn phòng; phòng ban muốn xin lịch làm việc với PTGĐ.</dd>
-        <dt>Dữ liệu dùng</dt><dd>Lịch công tác, lịch họp (Meeting); đặt phòng họp, xe công tác (Booking).</dd>
-        <dt>Giá trị</dt><dd>Điều phối nhanh, tránh trùng lịch; AI trả lời ngay bằng tiếng Việt.</dd>
-      </dl>
-    </div>
-    <div class="uc wide">
-      <div class="uh"><span class="num">7</span><div><span class="time">17:00 · Cuối ngày, cuối tuần</span><h3>Cảnh báo sớm và báo cáo tuần tự sinh</h3></div></div>
-      <dl>
-        <dt>Bối cảnh</dt><dd>Lãnh đạo thường chỉ biết việc trễ khi đã muộn; báo cáo tuần tốn nhiều công tổng hợp và số liệu giữa các báo cáo không khớp nhau.</dd>
-        <dt>Dữ liệu dùng</dt><dd>Toàn bộ kho dữ liệu điều hành: việc, kết luận họp, tờ trình, mốc dự án; quy tắc cảnh báo ở lớp AI.</dd>
-        <dt>Giá trị</dt><dd>Phát hiện sớm việc sắp trễ; báo cáo tuần tự sinh với cùng một con số ở mọi nơi; giảm thời gian tổng hợp của các phòng ban.</dd>
-      </dl>
-    </div>
-  </div>
-
-  <div class="h3" style="margin-top:6mm">Use case và nguồn dữ liệu</div>
-  <table class="mtx">
-    <thead><tr><th></th><th>Meeting</th><th>Booking</th><th>E-office</th><th>Task</th><th>BPM</th><th>Project</th><th>Lớp AI</th></tr></thead>
-    <tbody>
-      <tr><td>1 · Bản tin sáng</td><td>●</td><td></td><td></td><td>●</td><td>●</td><td>●</td><td>●</td></tr>
-      <tr><td>2 · Hỏi đáp tiến độ dự án</td><td></td><td></td><td></td><td>●</td><td></td><td>●</td><td>●</td></tr>
-      <tr><td>3 · Duyệt giá thu mua</td><td></td><td></td><td></td><td></td><td>●</td><td></td><td>●</td></tr>
-      <tr><td>4 · Kết luận họp thành việc</td><td>●</td><td></td><td></td><td>●</td><td></td><td></td><td>●</td></tr>
-      <tr><td>5 · Theo dõi chỉ đạo</td><td></td><td></td><td>●</td><td>●</td><td></td><td></td><td></td></tr>
-      <tr><td>6 · Lịch công tác</td><td>●</td><td>●</td><td></td><td></td><td></td><td></td><td>●</td></tr>
-      <tr><td>7 · Cảnh báo, báo cáo tuần</td><td>●</td><td></td><td>●</td><td>●</td><td>●</td><td>●</td><td>●</td></tr>
-    </tbody>
-  </table>
-  <div class="foot"><span>Mọi số liệu trong demo lấy từ Data Warehouse; không nhập tay cho dashboard</span><b>07 / 08</b></div>
-</section>
-<!-- ═════════════ PAGE 8 · POC ═════════════ -->
-<section class="page">
-  <div class="gradbar"></div>
-  <div class="head"><div class="brandpair"><span class="b">Base.vn</span><span class="x">×</span><span class="v">Vinaseed</span></div><span>05 · Kế hoạch PoC</span></div>
-
-  <div class="sec" style="margin-top:6mm"><div class="n">05</div><div><div class="k">Đề xuất kế hoạch thử nghiệm</div><h2>Hai phương án kiểm chứng</h2></div></div>
-
-  <div class="opts">
+  <div class="opts2">
     <div class="opt a">
-      <div class="hd"><span class="code">PHƯƠNG ÁN 1</span><span class="price">MIỄN PHÍ</span></div>
+      <div class="hd"><span class="code">HÌNH THỨC 1</span><span class="price">MIỄN PHÍ</span></div>
       <h3>Showcase</h3>
-      <p class="what">Chứng minh giải pháp trên dữ liệu thật của Vinaseed; các thành viên xem và đánh giá.</p>
-      <div class="kpis"><div class="kpi"><b>~2 tuần</b><small>từ khi nhận đủ dữ liệu</small></div><div class="kpi"><b>Thật</b><small>dữ liệu do Vinaseed cung cấp</small></div><div class="kpi"><b>1 buổi</b><small>trình diễn và chấm điểm</small></div></div>
-      <ul>
-        <li><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M21.801 10A10 10 0 1 1 17 3.335" /> <path d="m9 11 3 3L22 4" /> </svg>Base nạp dữ liệu vào kho, dựng dashboard và kịch bản demo</li>
-        <li><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M21.801 10A10 10 0 1 1 17 3.335" /> <path d="m9 11 3 3L22 4" /> </svg>Dữ liệu: lịch công tác, quy trình duyệt giá, danh sách dự án, mẫu biên bản</li>
-        <li><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M21.801 10A10 10 0 1 1 17 3.335" /> <path d="m9 11 3 3L22 4" /> </svg>Đầu ra: phiếu đánh giá theo từng kịch bản đã chốt</li>
-      </ul>
-      <div class="tl"><div class="row"><b>T1</b><div class="bar">Chốt kịch bản, nhận dữ liệu</div></div><div class="row"><b>T2</b><div class="bar">Dựng demo, trình diễn, chấm điểm</div></div></div>
+      <p class="what">Trình diễn trên dữ liệu thật của Vinaseed; các thành viên xem và chấm điểm.</p>
+      <div class="kpis"><div class="kpi"><b>~2 tuần</b><small>từ khi đủ dữ liệu</small></div><div class="kpi"><b>Demo</b><small>môi trường Base</small></div><div class="kpi"><b>1 buổi</b><small>trình diễn</small></div></div>
     </div>
     <div class="opt b">
-      <div class="hd"><span class="code">PHƯƠNG ÁN 2</span><span class="price">CÓ PHÍ</span></div>
+      <div class="hd"><span class="code">HÌNH THỨC 2</span><span class="price">CÓ PHÍ</span></div>
       <h3>PoC dùng thật</h3>
-      <p class="what">Mở hệ thống riêng, thiết lập và đào tạo để Ban lãnh đạo dùng thật trong công việc.</p>
-      <div class="kpis"><div class="kpi"><b>30</b><small>tài khoản</small></div><div class="kpi"><b>1 tháng</b><small>vận hành thật</small></div><div class="kpi"><b>Riêng</b><small>hệ thống của Vinaseed</small></div></div>
-      <ul>
-        <li><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M21.801 10A10 10 0 1 1 17 3.335" /> <path d="m9 11 3 3L22 4" /> </svg>Thiết lập Meeting, Booking, E-office, Task, BPM, Project</li>
-        <li><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M21.801 10A10 10 0 1 1 17 3.335" /> <path d="m9 11 3 3L22 4" /> </svg>Dựng Data Warehouse và Executive Dashboard có AI</li>
-        <li><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M21.801 10A10 10 0 1 1 17 3.335" /> <path d="m9 11 3 3L22 4" /> </svg>Đào tạo Ban TGĐ, các PTGĐ, Trưởng/Phó phòng</li>
-        <li><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M21.801 10A10 10 0 1 1 17 3.335" /> <path d="m9 11 3 3L22 4" /> </svg>Đầu ra: đánh giá tính đáp ứng theo phạm vi đã thống nhất</li>
-      </ul>
-      <div class="tl"><div class="row"><b>T1</b><div class="bar">Chuẩn bị: tổ chức, người dùng, quyền</div></div><div class="row"><b>T2</b><div class="bar">Cấu hình theo quy trình thật, đào tạo</div></div><div class="row"><b>T3</b><div class="bar">Dùng thật, thu phản hồi</div></div><div class="row"><b>T4</b><div class="bar">Báo cáo, đánh giá</div></div></div>
+      <p class="what">Hệ thống riêng, thiết lập và đào tạo để Ban lãnh đạo dùng thật.</p>
+      <div class="kpis"><div class="kpi"><b>30</b><small>tài khoản</small></div><div class="kpi"><b>1 tháng</b><small>vận hành</small></div><div class="kpi"><b>Riêng</b><small>hệ thống Vinaseed</small></div></div>
     </div>
   </div>
 
-  <div class="h3" style="margin-top:6mm">Phạm vi đánh giá đề xuất · chốt bằng văn bản trước khi bắt đầu</div>
-  <div class="scope" style="margin-top:0">
-    <div class="sc"><div class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <rect width="7" height="9" x="3" y="3" rx="1" /> <rect width="7" height="5" x="14" y="3" rx="1" /> <rect width="7" height="9" x="14" y="12" rx="1" /> <rect width="7" height="5" x="3" y="16" rx="1" /> </svg></div><b>Executive Dashboard</b><small>Chủ tịch dùng mỗi sáng; AI trả lời đúng, có nguồn</small></div>
-    <div class="sc"><div class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="m3 17 2 2 4-4" /> <path d="m3 7 2 2 4-4" /> <path d="M13 6h8" /> <path d="M13 12h8" /> <path d="M13 18h8" /> </svg></div><b>Giao việc từ họp</b><small>Kết luận thành việc có người nhận, hạn, tiêu chí</small></div>
-    <div class="sc"><div class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <rect width="8" height="8" x="3" y="3" rx="2" /> <path d="M7 11v4a2 2 0 0 0 2 2h4" /> <rect width="8" height="8" x="13" y="13" rx="2" /> </svg></div><b>Quy trình liên phòng ban</b><small>Duyệt giá thu mua chạy đầu cuối, có trả lại, ký</small></div>
-    <div class="sc"><div class="ic"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M8 2v4" /> <path d="M16 2v4" /> <rect width="18" height="18" x="3" y="4" rx="2" /> <path d="M3 10h18" /> <path d="M8 14h.01" /> <path d="M12 14h.01" /> <path d="M16 14h.01" /> <path d="M8 18h.01" /> <path d="M12 18h.01" /> <path d="M16 18h.01" /> </svg></div><b>Lịch & cảnh báo</b><small>Lịch Ban TGĐ, phòng, xe không trùng; tự nhắc hạn</small></div>
+  <div class="h3" style="margin-top:6mm">Cần chuẩn bị</div>
+  <div class="prep">
+    <div>
+      <div class="ph3"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <circle cx="12" cy="12" r="10" /> <circle cx="12" cy="12" r="6" /> <circle cx="12" cy="12" r="2" /> </svg> Phạm vi dự án</div>
+      <ul>
+        <li>Chốt các luồng đánh giá: Dashboard & AI, giao việc từ họp, duyệt giá thu mua, lịch & cảnh báo</li>
+        <li>Tiêu chí đạt và người đánh giá, ký trước khi bắt đầu</li>
+        <li>Ngoài phạm vi: chứng thư số, tích hợp ERP, kế toán</li>
+      </ul>
+    </div>
+    <div>
+      <div class="ph3"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M18 21a8 8 0 0 0-16 0" /> <circle cx="10" cy="8" r="5" /> <path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3" /> </svg> Nguồn lực nhân sự</div>
+      <ul>
+        <li><b>Vinaseed:</b> một đầu mối có thẩm quyền; người dùng chính cho từng luồng; người cung cấp dữ liệu</li>
+        <li><b>Base:</b> quản lý dự án, tư vấn giải pháp, kỹ thuật dữ liệu & AI</li>
+      </ul>
+    </div>
+    <div>
+      <div class="ph3"><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" /> <path d="M14 2v4a2 2 0 0 0 2 2h4" /> <path d="M8 13h2" /> <path d="M14 13h2" /> <path d="M8 17h2" /> <path d="M14 17h2" /> </svg> Dữ liệu đầu vào</div>
+      <ul>
+        <li>Sơ đồ tổ chức, danh sách người tham gia</li>
+        <li>Lịch công tác, danh sách dự án, quy trình duyệt giá, mẫu biên bản họp</li>
+      </ul>
+    </div>
   </div>
-  <div class="outscope"><b>NGOÀI PHẠM VI</b><span>Chứng thư số pháp lý (CA, USB token), tích hợp ERP và kế toán, chuyển toàn bộ quy trình hiện có: ghi nhận cho giai đoạn triển khai.</span></div>
+
+  <div class="h3" style="margin-top:6mm">Các buổi làm việc</div>
+  <table class="sess">
+    <thead><tr><th>Buổi</th><th>Showcase</th><th>PoC</th></tr></thead>
+    <tbody>
+      <tr><td><b>Khởi động & chốt phạm vi</b></td><td>●</td><td>●</td></tr>
+      <tr><td><b>Thu thập dữ liệu, quy trình</b></td><td>●</td><td>●</td></tr>
+      <tr><td><b>Thiết lập hệ thống & đào tạo người dùng</b></td><td>–</td><td>●</td></tr>
+      <tr><td><b>Rà soát tiến độ</b></td><td>–</td><td>Hằng tuần</td></tr>
+      <tr><td><b>Trình diễn / đánh giá cuối</b></td><td>1 buổi trình diễn, chấm điểm</td><td>Đánh giá theo phạm vi đã chốt</td></tr>
+    </tbody>
+  </table>
 
   <div class="commit">
-    <h4><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="m11 17 2 2a1 1 0 1 0 3-3" /> <path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4" /> <path d="m21 3 1 11h-2" /> <path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3" /> <path d="M3 4h8" /> </svg> Điều kiện cho cả hai phương án</h4>
-    <div class="cols">
-      <div><span class="n">01</span><b>Chốt rõ phạm vi</b><p>Luồng, tiêu chí đạt, người đánh giá ký trước. Yêu cầu mới ghi nhận cho giai đoạn sau, không phát sinh trong PoC.</p></div>
-      <div><span class="n">02</span><b>Hai bên cùng quyết tâm</b><p>Mỗi bên một đầu mối có thẩm quyền; dữ liệu đúng hạn; họp rà soát mỗi tuần để không lãng phí nguồn lực.</p></div>
-      <div><span class="n">03</span><b>Kết thúc bằng quyết định</b><p>Biên bản đánh giá theo đúng phạm vi là căn cứ quyết định bước triển khai.</p></div>
-    </div>
+    <h4><svg class="i" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="m11 17 2 2a1 1 0 1 0 3-3" /> <path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4" /> <path d="m21 3 1 11h-2" /> <path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3" /> <path d="M3 4h8" /> </svg> Chốt rõ trước, cùng quyết tâm làm</h4>
+    <p>Yêu cầu mới phát sinh được ghi nhận cho giai đoạn sau, không mở rộng trong kiểm thử. Hai bên cử đầu mối, cung cấp dữ liệu đúng hạn để không lãng phí nguồn lực. Biên bản đánh giá là căn cứ quyết định bước triển khai.</p>
   </div>
-  <div class="foot"><span>Bước tiếp theo: Vinaseed chọn phương án, cử đầu mối và gửi dữ liệu mẫu</span><b>08 / 08</b></div>
+  <div class="foot"><span>Bước tiếp theo: Vinaseed chọn hình thức, cử đầu mối và gửi dữ liệu mẫu</span><b>05 / 05</b></div>
 </section>
 
 <div id="editbar">

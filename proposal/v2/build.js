@@ -1,4 +1,4 @@
-// Build a single self-contained HTML (icons, fonts, screenshots embedded) from
+// Build a single self-contained HTML (icons and fonts embedded) from
 // proposal.html, then print it to an A4 PDF.
 // Usage: node build.js   (needs playwright; Chromium from PLAYWRIGHT_BROWSERS_PATH)
 const fs = require('fs');
@@ -28,9 +28,6 @@ html = html.replace(/@@([a-z0-9-]+)@@/g, (_, name) =>
 const fontsCss = fs.readFileSync(path.join(dir, 'assets/fonts.css'), 'utf8')
   .replace(/url\((fonts\/[^)]+)\)/g, (_, f) => `url(${dataUri('assets/' + f, 'font/woff2')})`);
 html = html.replace('<link rel="stylesheet" href="assets/fonts.css">', `<style id="fonts">${fontsCss}</style>`);
-
-// Screenshots
-html = html.replace(/url\((assets\/shots\/[^)]+\.jpg)\)/g, (_, f) => `url(${dataUri(f, 'image/jpeg')})`);
 
 fs.writeFileSync(htmlOut, html);
 console.log(htmlOut);

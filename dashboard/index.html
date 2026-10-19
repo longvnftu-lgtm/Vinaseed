@@ -1,0 +1,665 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Executive Dashboard · Vinaseed</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="vendor/chart.umd.min.js"></script>
+<script src="data.js"></script>
+<style>
+:root{
+  --blue:#1A6BF0; --blue-d:#0B3A8C; --navy:#0B2148; --blue-s:#EAF1FE;
+  --green:#0E9F4B; --green-d:#0A6B34; --green-s:#E8F6EE;
+  --ink:#13213A; --muted:#5A6A80; --line:#DCE4EE; --soft:#F5F8FC; --bg:#EEF2F7; --card:#fff;
+  --ok:#16a34a; --ok2:#84cc16; --doing:#1A6BF0; --soon:#f59e0b; --late:#dc2626; --idle:#94a3b8;
+  --grad:linear-gradient(115deg,#1A6BF0 0%,#1288B8 48%,#0E9F4B 100%);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Be Vietnam Pro',system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5}
+button,select,input{font:inherit;color:inherit}
+header{background:var(--grad);color:#fff;padding:18px 24px 64px}
+.hwrap{max-width:1360px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+header .brand{font-weight:800;font-size:13px;opacity:.9;letter-spacing:.02em}
+header h1{font-size:24px;font-weight:800;letter-spacing:-.01em;margin-top:4px}
+header p{opacity:.88;font-size:13px}
+.badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.18);border-radius:20px;padding:4px 12px;font-size:12px;font-weight:600}
+main{max-width:1360px;margin:-48px auto 40px;padding:0 16px}
+
+/* filter bar */
+.filters{background:var(--card);border-radius:14px;box-shadow:0 6px 20px rgba(11,33,72,.10);padding:14px 16px;display:flex;flex-wrap:wrap;gap:12px 18px;align-items:flex-end;position:sticky;top:8px;z-index:20}
+.f{display:flex;flex-direction:column;gap:4px;min-width:0}
+.f label{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.f select,.f input{border:1px solid var(--line);border-radius:9px;padding:7px 10px;background:#fff;min-width:170px}
+.f input[type=date]{min-width:0;width:140px}
+#fPerson{min-width:230px}
+.seg{display:flex;background:var(--soft);border-radius:10px;padding:3px;gap:2px;flex-wrap:wrap}
+.seg button{border:0;background:transparent;border-radius:8px;padding:6px 11px;cursor:pointer;font-weight:600;font-size:13px;color:var(--muted)}
+.seg button.on{background:#fff;color:var(--blue);box-shadow:0 1px 4px rgba(11,33,72,.12)}
+.reset{border:0;background:var(--blue-s);color:var(--blue-d);border-radius:9px;padding:8px 14px;font-weight:700;cursor:pointer;margin-left:auto}
+.chips{display:flex;flex-wrap:wrap;gap:6px;width:100%}
+.chips:empty{display:none}
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--blue-s);color:var(--blue-d);border-radius:20px;padding:3px 10px;font-size:12px;font-weight:600}
+.chip button{border:0;background:none;cursor:pointer;font-weight:800;color:var(--blue-d)}
+
+/* tabs */
+.tabs{display:flex;gap:4px;margin:16px 0 14px;overflow-x:auto;border-bottom:1px solid var(--line)}
+.tabs button{border:0;background:none;padding:10px 14px;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap}
+.tabs button.on{color:var(--blue);border-bottom-color:var(--blue)}
+.view{display:none}.view.on{display:block}
+
+/* grid & cards */
+.kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-bottom:14px}
+.kpi{background:var(--card);border-radius:12px;padding:14px 16px;border-top:3px solid var(--blue);cursor:default}
+.kpi.click{cursor:pointer}
+.kpi small{display:block;font-size:12px;color:var(--muted);font-weight:600}
+.kpi b{display:block;font-size:28px;font-weight:800;line-height:1.15;margin-top:4px}
+.kpi span{font-size:12px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.card{background:var(--card);border-radius:14px;padding:16px 18px;min-width:0}
+.card.s2{grid-column:span 2}.card.s3{grid-column:1/-1}
+.card h3{font-size:15px;font-weight:700;display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:10px}
+.card h3 small{font-size:12px;color:var(--muted);font-weight:500}
+.hint{font-size:12px;color:var(--muted);margin:-6px 0 10px}
+.cv{position:relative;height:260px}
+.cv.tall{height:340px}
+.empty{color:var(--muted);font-size:13px;padding:18px 0;text-align:center}
+
+/* lists */
+.list{display:flex;flex-direction:column}
+.li{display:grid;grid-template-columns:1fr auto;gap:2px 10px;padding:9px 0;border-top:1px solid var(--line)}
+.li:first-child{border-top:0}
+.li .t{font-weight:600;font-size:13.5px}
+.li .m{font-size:12px;color:var(--muted);grid-column:1}
+.li .r{grid-row:1/3;grid-column:2;align-self:center;text-align:right;font-size:12px}
+.tag{display:inline-block;border-radius:6px;padding:1px 8px;font-size:11.5px;font-weight:700;white-space:nowrap}
+.t-late{background:#FDECEC;color:#B42318}.t-soon{background:#FEF3E2;color:#B45309}.t-ok{background:var(--green-s);color:var(--green-d)}
+.t-doing{background:var(--blue-s);color:var(--blue-d)}.t-idle{background:#EEF1F5;color:#526070}
+.more{font-size:12px;color:var(--blue);font-weight:600;cursor:pointer;margin-top:6px;background:none;border:0;padding:0}
+
+/* AI */
+.ai{background:linear-gradient(160deg,#fff 0%,#F3F8FF 60%,#F1FAF4 100%);border:1px solid #D7E5FB}
+.ai .log{max-height:300px;overflow:auto;display:flex;flex-direction:column;gap:10px;margin-bottom:10px;padding-right:4px}
+.msg{border-radius:12px;padding:10px 13px;font-size:13.5px;max-width:92%}
+.msg.me{background:var(--blue);color:#fff;align-self:flex-end;border-bottom-right-radius:3px}
+.msg.bot{background:#fff;border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:3px}
+.msg.bot ul{margin:6px 0 0 18px}
+.msg .src{margin-top:8px;font-size:11.5px;color:var(--muted)}
+.ask{display:flex;gap:8px}
+.ask input{flex:1;border:1px solid var(--line);border-radius:10px;padding:9px 12px;background:#fff}
+.ask button{border:0;background:var(--grad);color:#fff;border-radius:10px;padding:0 16px;font-weight:700;cursor:pointer}
+.sugg{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.sugg button{border:1px solid #CFE0FA;background:#fff;color:var(--blue-d);border-radius:20px;padding:4px 11px;font-size:12px;cursor:pointer}
+
+/* people progress */
+.pp{display:grid;grid-template-columns:150px 1fr 70px;gap:10px;align-items:center;padding:6px 4px;border-radius:8px;cursor:pointer}
+.pp:hover{background:var(--soft)}
+.pp .n{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pp .n small{display:block;font-weight:400;color:var(--muted);font-size:11px}
+.bar{height:10px;border-radius:6px;background:#EEF1F5;display:flex;overflow:hidden}
+.bar i{display:block;height:100%}
+.pp .v{font-size:12px;text-align:right;color:var(--muted)}
+
+/* projects */
+.projs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.pj{border:1px solid var(--line);border-radius:12px;padding:14px 16px;border-left:4px solid var(--ok)}
+.pj.slow{border-left-color:var(--late)}.pj.risk{border-left-color:var(--soon)}
+.pj h4{font-size:14.5px;line-height:1.35;margin-bottom:4px}
+.pj .meta{font-size:12px;color:var(--muted);margin-bottom:10px}
+.pbar{position:relative;height:12px;background:#EEF1F5;border-radius:7px;margin:4px 0 2px}
+.pbar i{position:absolute;left:0;top:0;bottom:0;border-radius:7px;background:var(--blue)}
+.pbar u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.pj .row{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
+.pj .kv{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.pj .kv div{background:var(--soft);border-radius:8px;padding:6px 8px;font-size:11.5px;color:var(--muted)}
+.pj .kv b{display:block;color:var(--ink);font-size:13.5px}
+.pj ul{list-style:none;margin-top:10px;font-size:12.5px}
+.pj li{padding:2px 0}
+
+/* calendar matrix */
+.cal{overflow-x:auto}
+.cal table{border-collapse:separate;border-spacing:4px;min-width:100%}
+.cal th{font-size:12px;color:var(--muted);font-weight:700;text-align:left;padding:4px 6px;white-space:nowrap}
+.cal th.today{color:var(--blue)}
+.cal td{vertical-align:top;min-width:130px}
+.cal td.who{min-width:150px;font-size:13px;font-weight:600;cursor:pointer}
+.cal td.who small{display:block;font-weight:400;color:var(--muted);font-size:11px}
+.ev{border-radius:8px;padding:5px 7px;font-size:11.5px;line-height:1.35;margin-bottom:4px;background:var(--blue-s);border-left:3px solid var(--blue)}
+.ev.out{background:var(--green-s);border-left-color:var(--green)}
+.ev.guest{background:#FEF3E2;border-left-color:var(--soon)}
+.ev b{display:block;font-size:11px}
+
+/* tables */
+.tbar{display:flex;gap:10px;align-items:center;margin-bottom:10px;flex-wrap:wrap}
+.tbar input{border:1px solid var(--line);border-radius:9px;padding:7px 10px;min-width:240px}
+.tbar span{font-size:12px;color:var(--muted)}
+.tw{overflow-x:auto}
+table.dt{width:100%;border-collapse:collapse;font-size:13px}
+table.dt th{text-align:left;font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding:8px 10px;background:var(--soft);cursor:pointer;white-space:nowrap;user-select:none}
+table.dt td{padding:8px 10px;border-top:1px solid var(--line);vertical-align:top}
+table.dt tr:hover td{background:#FAFCFF}
+.pager{display:flex;gap:6px;justify-content:flex-end;margin-top:8px;font-size:12px;align-items:center}
+.pager button{border:1px solid var(--line);background:#fff;border-radius:7px;padding:3px 10px;cursor:pointer}
+
+/* data dictionary */
+.dd h4{font-size:14px;margin:6px 0 6px;display:flex;gap:8px;align-items:center}
+.dd .src{font-size:11.5px;font-weight:700;border-radius:6px;padding:1px 8px;background:var(--green-s);color:var(--green-d)}
+.dd code{font-family:ui-monospace,Menlo,monospace;font-size:12px;background:var(--soft);padding:1px 6px;border-radius:5px}
+
+.note{font-size:12px;color:var(--muted);margin-top:16px;text-align:center}
+@media (max-width:1100px){.kpis{grid-template-columns:repeat(3,1fr)}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.card.s2{grid-column:1/-1}}
+@media (max-width:720px){header{padding:16px 16px 60px}.kpis{grid-template-columns:repeat(2,1fr)}.grid,.projs{grid-template-columns:1fr}.f select,.f input{min-width:0;width:100%}.f{flex:1 1 100%}.reset{margin-left:0}.filters{position:static}.pp{grid-template-columns:110px 1fr 56px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="hwrap">
+    <div>
+      <div class="brand">Base.vn × Vinaseed</div>
+      <h1>Executive Dashboard</h1>
+      <p>Trang Home của Chủ tịch HĐQT · lịch, công việc, báo cáo, kết quả đầu ra, AI hỏi đáp</p>
+    </div>
+    <div style="text-align:right">
+      <div class="badge" id="asof"></div>
+      <div style="margin-top:6px"><span class="badge">Dữ liệu demo minh hoạ</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="filters" aria-label="Bộ lọc">
+    <div class="f"><label for="fDept">Phòng ban</label><select id="fDept"></select></div>
+    <div class="f"><label for="fPerson">Nhân sự</label><select id="fPerson"></select></div>
+    <div class="f"><label>Thời gian</label>
+      <div class="seg" id="fPreset">
+        <button data-p="today">Hôm nay</button><button data-p="week">Tuần này</button><button data-p="month">Tháng này</button><button data-p="quarter">Quý này</button><button data-p="all">Tất cả</button>
+      </div>
+    </div>
+    <div class="f"><label for="fFrom">Từ ngày</label><input type="date" id="fFrom"></div>
+    <div class="f"><label for="fTo">Đến ngày</label><input type="date" id="fTo"></div>
+    <button class="reset" id="fReset">Xoá bộ lọc</button>
+    <div class="chips" id="chips"></div>
+  </section>
+
+  <nav class="tabs" id="tabs">
+    <button data-v="home" class="on">Tổng quan</button>
+    <button data-v="tasks">Công việc</button>
+    <button data-v="projects">Dự án</button>
+    <button data-v="calendar">Lịch công tác</button>
+    <button data-v="approvals">Phê duyệt</button>
+    <button data-v="fields">Trường dữ liệu</button>
+  </nav>
+
+  <!-- ═══ Tổng quan ═══ -->
+  <section class="view on" id="v-home">
+    <div class="kpis" id="kpiHome"></div>
+    <div class="grid">
+      <div class="card s2 ai">
+        <h3>Hỏi đáp AI <small>trả lời theo bộ lọc đang chọn, kèm nguồn</small></h3>
+        <div class="log" id="aiLog"></div>
+        <form class="ask" id="aiForm"><input id="aiInput" placeholder="Hỏi về công việc, tiến độ, dự án, lịch công tác, tờ trình…" autocomplete="off"><button>Hỏi</button></form>
+        <div class="sugg" id="aiSugg"></div>
+      </div>
+      <div class="card"><h3>Chờ Chủ tịch phê duyệt <small id="apCount"></small></h3><div class="list" id="homeApprovals"></div></div>
+      <div class="card"><h3>Việc trọng tâm <small id="focusRange"></small></h3><div class="list" id="homeFocus"></div></div>
+      <div class="card"><h3>Việc, dự án chậm tiến độ <small>tính đến hôm nay</small></h3><div class="list" id="homeLate"></div></div>
+      <div class="card"><h3>Lịch công tác Ban TGĐ <small id="calDay"></small></h3><div class="list" id="homeCal"></div></div>
+    </div>
+  </section>
+
+  <!-- ═══ Công việc ═══ -->
+  <section class="view" id="v-tasks">
+    <div class="kpis" id="kpiTasks"></div>
+    <div class="grid">
+      <div class="card"><h3>Trạng thái tiến độ</h3><div class="hint">Nhấp một lát để lọc bảng</div><div class="cv"><canvas id="cStatus"></canvas></div></div>
+      <div class="card s2"><h3>Tiến độ theo phòng ban</h3><div class="hint">Nhấp một cột để lọc theo phòng ban</div><div class="cv"><canvas id="cDept"></canvas></div></div>
+      <div class="card"><h3>Nguồn giao việc</h3><div class="cv"><canvas id="cSource"></canvas></div></div>
+      <div class="card s2"><h3>Theo nhân sự <small>nhấp để lọc</small></h3><div id="people"></div></div>
+      <div class="card s3"><h3>Việc đến hạn theo tuần</h3><div class="cv"><canvas id="cWeek"></canvas></div></div>
+      <div class="card s3"><h3>Bảng công việc</h3><div id="tTasks"></div></div>
+    </div>
+  </section>
+
+  <!-- ═══ Dự án ═══ -->
+  <section class="view" id="v-projects">
+    <div class="kpis" id="kpiProjects"></div>
+    <div class="grid">
+      <div class="card s3"><h3>Tiến độ thực tế so với kế hoạch</h3><div class="hint">Kế hoạch = tỷ lệ thời gian đã qua; thực tế = tỷ lệ đầu việc hoàn thành</div><div class="cv"><canvas id="cProj"></canvas></div></div>
+    </div>
+    <div class="projs" id="projCards" style="margin-top:14px"></div>
+  </section>
+
+  <!-- ═══ Lịch công tác ═══ -->
+  <section class="view" id="v-calendar">
+    <div class="kpis" id="kpiCal"></div>
+    <div class="grid">
+      <div class="card s3"><h3>Ai đang ở đâu <small>theo ngày làm việc trong kỳ (tối đa 10 ngày)</small></h3><div class="cal" id="calMatrix"></div></div>
+      <div class="card"><h3>Theo loại lịch</h3><div class="cv"><canvas id="cEvType"></canvas></div></div>
+      <div class="card s2"><h3>Theo địa điểm</h3><div class="cv"><canvas id="cEvPlace"></canvas></div></div>
+      <div class="card s3"><h3>Danh sách lịch</h3><div id="tEvents"></div></div>
+    </div>
+  </section>
+
+  <!-- ═══ Phê duyệt ═══ -->
+  <section class="view" id="v-approvals">
+    <div class="kpis" id="kpiAp"></div>
+    <div class="grid">
+      <div class="card"><h3>Theo bước quy trình</h3><div class="cv"><canvas id="cStep"></canvas></div></div>
+      <div class="card s2"><h3>Thời gian chờ trung bình theo loại <small>ngày, hồ sơ đang mở</small></h3><div class="cv"><canvas id="cKind"></canvas></div></div>
+      <div class="card s3"><h3>Danh sách tờ trình, đề xuất</h3><div id="tAp"></div></div>
+    </div>
+  </section>
+
+  <!-- ═══ Trường dữ liệu ═══ -->
+  <section class="view" id="v-fields">
+    <div class="card dd" id="dict"></div>
+  </section>
+
+  <p class="note">Dữ liệu demo minh hoạ, mô phỏng các trường Data Warehouse gom từ Base (Task, Project, Meeting, Booking, BPM). Thay <code>data.js</code> bằng dữ liệu thật cùng cấu trúc để dùng thật.</p>
+</main>
+
+<script>
+(function () {
+  const D = window.VSD_DATA;
+  const TODAY = D.meta.today;
+  const P = Object.fromEntries(D.people.map(p => [p.id, p]));
+  const PROJ = Object.fromEntries(D.projects.map(p => [p.id, p]));
+  const LEADERS = D.people.filter(p => p.leader);
+
+  // ───── helpers ─────
+  const $ = s => document.querySelector(s);
+  const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const nf = new Intl.NumberFormat('vi-VN');
+  const fmtInt = n => nf.format(n);
+  const fmtPct = n => isFinite(n) ? nf.format(Math.round(n * 1000) / 10) + '%' : '–';
+  const fmtMoney = n => !n ? '–' : n >= 1e9 ? nf.format(Math.round(n / 1e8) / 10) + ' tỷ' : nf.format(Math.round(n / 1e6)) + ' tr';
+  const toD = s => new Date(s + 'T00:00:00');
+  const iso = dt => dt.toISOString().slice(0, 10);
+  const addDays = (s, n) => { const x = toD(s); x.setDate(x.getDate() + n); return iso(new Date(Date.UTC(x.getFullYear(), x.getMonth(), x.getDate()))); };
+  const diff = (a, b) => Math.round((toD(a) - toD(b)) / 864e5);
+  const dmy = s => s ? s.slice(8, 10) + '/' + s.slice(5, 7) : '';
+  const WD = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
+  const wd = s => WD[toD(s).getDay()];
+  const name = id => P[id] ? P[id].name : id;
+
+  // ───── trạng thái tiến độ công việc (tính đến hôm nay) ─────
+  const ST = ['Hoàn thành đúng hạn', 'Hoàn thành trễ', 'Đang làm', 'Sắp đến hạn', 'Quá hạn', 'Chưa bắt đầu'];
+  const STC = { 'Hoàn thành đúng hạn': '#16a34a', 'Hoàn thành trễ': '#84cc16', 'Đang làm': '#1A6BF0', 'Sắp đến hạn': '#f59e0b', 'Quá hạn': '#dc2626', 'Chưa bắt đầu': '#94a3b8' };
+  const STT = { 'Hoàn thành đúng hạn': 't-ok', 'Hoàn thành trễ': 't-ok', 'Đang làm': 't-doing', 'Sắp đến hạn': 't-soon', 'Quá hạn': 't-late', 'Chưa bắt đầu': 't-idle' };
+  D.tasks.forEach(t => {
+    if (t.status === 'Hoàn thành') t.track = t.done_on <= t.deadline ? ST[0] : ST[1];
+    else if (t.deadline < TODAY) t.track = 'Quá hạn';
+    else if (diff(t.deadline, TODAY) <= 3) t.track = 'Sắp đến hạn';
+    else if (t.status === 'Chưa bắt đầu') t.track = 'Chưa bắt đầu';
+    else t.track = 'Đang làm';
+    t.late_days = t.track === 'Quá hạn' ? diff(TODAY, t.deadline) : 0;
+  });
+  const isDone = t => t.status === 'Hoàn thành';
+
+  // ───── bộ lọc ─────
+  const F = { dept: '', person: '', preset: 'week', from: '', to: '' };
+  function presetRange(p) {
+    const t = toD(TODAY);
+    if (p === 'today') return [TODAY, TODAY];
+    if (p === 'week') { const dow = (t.getDay() + 6) % 7; const s = addDays(TODAY, -dow); return [s, addDays(s, 6)]; }
+    if (p === 'month') { const s = TODAY.slice(0, 8) + '01'; const e = new Date(t.getFullYear(), t.getMonth() + 1, 0); return [s, TODAY.slice(0, 8) + String(e.getDate()).padStart(2, '0')]; }
+    if (p === 'quarter') { const q = Math.floor(t.getMonth() / 3); const s = new Date(Date.UTC(t.getFullYear(), q * 3, 1)); const e = new Date(Date.UTC(t.getFullYear(), q * 3 + 3, 0)); return [iso(s), iso(e)]; }
+    return ['', ''];
+  }
+  const inR = s => (!F.from || s >= F.from) && (!F.to || s <= F.to);
+  const overlap = (a, b) => (!F.to || a <= F.to) && (!F.from || b >= F.from);
+  const personDept = id => P[id] ? P[id].dept : '';
+
+  const sel = {
+    tasks(withTime = true) {
+      // việc quá hạn chưa xong được mang sang mọi kỳ có chứa hôm nay
+      const carry = t => t.track === 'Quá hạn' && (!F.to || F.to >= TODAY) && (!F.from || F.from <= TODAY);
+      return D.tasks.filter(t => (!F.dept || t.dept === F.dept) && (!F.person || t.assignee === F.person || t.assigner === F.person) && (!withTime || inR(t.deadline) || carry(t)));
+    },
+    overdue() { return sel.tasks(false).filter(t => t.track === 'Quá hạn').sort((a, b) => b.late_days - a.late_days); },
+    projects(withTime = true) {
+      return D.projects.filter(p => (!F.dept || p.dept === F.dept) && (!F.person || p.owner === F.person) && (!withTime || overlap(p.start, p.end)));
+    },
+    events() {
+      return D.events.filter(e => (!F.dept || personDept(e.person) === F.dept || e.related_dept === F.dept) && (!F.person || e.person === F.person) && inR(e.date))
+        .sort((a, b) => (a.date + a.start).localeCompare(b.date + b.start));
+    },
+    approvals() {
+      return D.approvals.filter(a => (!F.dept || a.dept === F.dept) && (!F.person || a.submitter === F.person || a.approver === F.person) && (!a.closed || inR(a.closed)));
+    },
+  };
+
+  function initFilters() {
+    $('#fDept').innerHTML = '<option value="">Tất cả phòng ban</option>' + D.departments.map(d => `<option>${esc(d)}</option>`).join('');
+    fillPeople();
+    $('#fDept').onchange = e => { F.dept = e.target.value; if (F.person && personDept(F.person) !== F.dept && F.dept) F.person = ''; fillPeople(); render(); };
+    $('#fPerson').onchange = e => { F.person = e.target.value; render(); };
+    document.querySelectorAll('#fPreset button').forEach(b => b.onclick = () => setPreset(b.dataset.p));
+    $('#fFrom').onchange = e => { F.from = e.target.value; F.preset = 'custom'; syncTime(); render(); };
+    $('#fTo').onchange = e => { F.to = e.target.value; F.preset = 'custom'; syncTime(); render(); };
+    $('#fReset').onclick = () => { F.dept = ''; F.person = ''; $('#fDept').value = ''; fillPeople(); setPreset('week'); };
+    setPreset('week', true);
+  }
+  function fillPeople() {
+    const list = D.people.filter(p => !F.dept || p.dept === F.dept);
+    $('#fPerson').innerHTML = '<option value="">Tất cả nhân sự</option>' + list.map(p => `<option value="${p.id}">${esc(p.name)} · ${esc(p.title)}</option>`).join('');
+    $('#fPerson').value = F.person;
+  }
+  function setPreset(p, silent) { F.preset = p; [F.from, F.to] = presetRange(p); syncTime(); if (!silent) render(); }
+  function syncTime() {
+    document.querySelectorAll('#fPreset button').forEach(b => b.classList.toggle('on', b.dataset.p === F.preset));
+    $('#fFrom').value = F.from; $('#fTo').value = F.to;
+  }
+  function setDept(d) { F.dept = F.dept === d ? '' : d; $('#fDept').value = F.dept; if (F.person && personDept(F.person) !== F.dept) F.person = ''; fillPeople(); render(); }
+  function setPerson(id) { F.person = F.person === id ? '' : id; fillPeople(); render(); }
+  const rangeLabel = () => !F.from && !F.to ? 'mọi thời gian' : F.from === F.to ? dmy(F.from) : `${dmy(F.from) || '…'} – ${dmy(F.to) || '…'}`;
+  function renderChips() {
+    const c = [];
+    if (F.dept) c.push(['Phòng ban: ' + F.dept, () => setDept(F.dept)]);
+    if (F.person) c.push(['Nhân sự: ' + name(F.person), () => setPerson(F.person)]);
+    if (TF.track) c.push(['Tiến độ: ' + TF.track, () => { TF.track = ''; render(); }]);
+    c.push(['Thời gian: ' + rangeLabel(), null]);
+    const box = $('#chips'); box.innerHTML = '';
+    c.forEach(([t, fn]) => { const s = document.createElement('span'); s.className = 'chip'; s.textContent = t; if (fn) { const b = document.createElement('button'); b.textContent = '×'; b.title = 'Bỏ lọc'; b.onclick = fn; s.append(b); } box.append(s); });
+  }
+
+  // ───── KPI ─────
+  function kpis(el, items) {
+    $(el).innerHTML = items.map(k => `<div class="kpi" style="border-top-color:${k.c || 'var(--blue)'}"><small>${esc(k.l)}</small><b style="color:${k.vc || 'var(--ink)'}">${k.v}</b><span>${k.s || ''}</span></div>`).join('');
+  }
+
+  // ───── charts ─────
+  const charts = {};
+  const hasChart = typeof Chart !== 'undefined';
+  if (hasChart) { Chart.defaults.font.family = "'Be Vietnam Pro', sans-serif"; Chart.defaults.color = '#5A6A80'; Chart.defaults.plugins.legend.labels.boxWidth = 12; }
+  function chart(id, cfg) {
+    if (!hasChart) return;
+    if (charts[id]) charts[id].destroy();
+    charts[id] = new Chart(document.getElementById(id), cfg);
+  }
+  const countBy = (arr, f) => arr.reduce((m, x) => { const k = f(x); m[k] = (m[k] || 0) + 1; return m; }, {});
+
+  // ───── bảng có tìm kiếm / sắp xếp / phân trang ─────
+  const TS = {};
+  function table(el, cols, rows, key) {
+    const st = TS[key] || (TS[key] = { q: '', sort: null, dir: 1, page: 0 });
+    const wrap = $(el);
+    const q = st.q.toLowerCase();
+    let data = rows.filter(r => !q || cols.some(c => String(c.text ? c.text(r) : r[c.k] ?? '').toLowerCase().includes(q)));
+    if (st.sort != null) { const c = cols[st.sort]; const v = r => c.sortv ? c.sortv(r) : (c.text ? c.text(r) : r[c.k]); data = data.slice().sort((a, b) => (v(a) > v(b) ? 1 : v(a) < v(b) ? -1 : 0) * st.dir); }
+    const per = 12, pages = Math.max(1, Math.ceil(data.length / per)); st.page = Math.min(st.page, pages - 1);
+    const view = data.slice(st.page * per, st.page * per + per);
+    wrap.innerHTML = `<div class="tbar"><input placeholder="Tìm trong bảng…" value="${esc(st.q)}"><span>${fmtInt(data.length)} dòng</span></div>
+      <div class="tw"><table class="dt"><thead><tr>${cols.map((c, i) => `<th data-i="${i}">${esc(c.h)}${st.sort === i ? (st.dir > 0 ? ' ▲' : ' ▼') : ''}</th>`).join('')}</tr></thead>
+      <tbody>${view.map(r => `<tr>${cols.map(c => `<td>${c.html ? c.html(r) : esc(c.text ? c.text(r) : r[c.k])}</td>`).join('')}</tr>`).join('') || `<tr><td colspan="${cols.length}" class="empty">Không có dữ liệu trong bộ lọc hiện tại</td></tr>`}</tbody></table></div>
+      <div class="pager"><button data-p="-1">‹</button><span>Trang ${st.page + 1}/${pages}</span><button data-p="1">›</button></div>`;
+    const inp = wrap.querySelector('input');
+    inp.oninput = () => { st.q = inp.value; st.page = 0; table(el, cols, rows, key); const i2 = $(el).querySelector('input'); i2.focus(); i2.setSelectionRange(i2.value.length, i2.value.length); };
+    wrap.querySelectorAll('th').forEach(th => th.onclick = () => { const i = +th.dataset.i; st.dir = st.sort === i ? -st.dir : 1; st.sort = i; table(el, cols, rows, key); });
+    wrap.querySelectorAll('.pager button').forEach(b => b.onclick = () => { st.page = Math.max(0, Math.min(pages - 1, st.page + +b.dataset.p)); table(el, cols, rows, key); });
+  }
+  const trackTag = t => `<span class="tag ${STT[t.track]}">${t.track}${t.late_days ? ' ' + t.late_days + ' ngày' : ''}</span>`;
+
+  // ═════════ TỔNG QUAN ═════════
+  function renderHome() {
+    const tasks = sel.tasks(), od = sel.overdue();
+    const focus = tasks.filter(t => t.focus && !isDone(t)).sort((a, b) => a.deadline.localeCompare(b.deadline));
+    const doneIn = tasks.filter(isDone);
+    const onTime = doneIn.filter(t => t.track === ST[0]).length;
+    const projs = sel.projects(false), slowP = projs.filter(p => p.status === 'Chậm tiến độ');
+    const pending = sel.approvals().filter(a => !a.closed);
+    const forCT = pending.filter(a => a.step.startsWith('B3')).sort((a, b) => (b.urgent - a.urgent) || (b.waiting_days - a.waiting_days));
+    const evToday = D.events.filter(e => e.date === TODAY && (!F.dept || personDept(e.person) === F.dept || e.related_dept === F.dept) && (!F.person || e.person === F.person));
+    kpis('#kpiHome', [
+      { l: 'Việc trọng tâm', v: fmtInt(focus.length), s: 'chưa xong, hạn trong kỳ' },
+      { l: 'Việc quá hạn', v: fmtInt(od.length), vc: od.length ? 'var(--late)' : '', c: 'var(--late)', s: 'tính đến hôm nay' },
+      { l: 'Tỷ lệ xong đúng hạn', v: fmtPct(onTime / doneIn.length), c: 'var(--ok)', s: `${fmtInt(onTime)}/${fmtInt(doneIn.length)} việc xong trong kỳ` },
+      { l: 'Dự án chậm tiến độ', v: `${fmtInt(slowP.length)}/${fmtInt(projs.length)}`, c: 'var(--soon)', s: 'dự án chiến lược' },
+      { l: 'Lịch Ban TGĐ hôm nay', v: fmtInt(evToday.length), c: 'var(--green)', s: `${wd(TODAY)}, ${dmy(TODAY)}` },
+      { l: 'Chờ Chủ tịch duyệt', v: fmtInt(forCT.length), vc: 'var(--blue-d)', c: 'var(--blue-d)', s: `${fmtInt(forCT.filter(a => a.urgent).length)} hồ sơ gấp` },
+    ]);
+    $('#apCount').textContent = forCT.length + ' hồ sơ';
+    $('#homeApprovals').innerHTML = forCT.slice(0, 6).map(a => `<div class="li"><div class="t">${esc(a.title)}</div><div class="m">${esc(a.id)} · ${esc(a.dept)} · ${esc(name(a.submitter))}${a.amount ? ' · ' + fmtMoney(a.amount) : ''}</div><div class="r">${a.urgent ? '<span class="tag t-late">Gấp</span><br>' : ''}chờ ${a.waiting_days} ngày</div></div>`).join('') || '<div class="empty">Không có hồ sơ chờ duyệt</div>';
+    $('#focusRange').textContent = rangeLabel();
+    $('#homeFocus').innerHTML = focus.slice(0, 7).map(t => `<div class="li"><div class="t">${esc(t.title)}</div><div class="m">${esc(name(t.assignee))} · ${esc(t.dept)}</div><div class="r">${trackTag(t)}<br>hạn ${dmy(t.deadline)}</div></div>`).join('') || '<div class="empty">Không có việc trọng tâm trong kỳ</div>';
+    const lateItems = slowP.map(p => `<div class="li"><div class="t">📁 ${esc(p.name)}</div><div class="m">${esc(name(p.owner))} · thực tế ${p.progress}% / kế hoạch ${p.plan}%</div><div class="r"><span class="tag t-late">${p.late_days ? 'Trễ mốc ' + p.late_days + ' ngày' : 'Chậm'}</span></div></div>`)
+      .concat(od.slice(0, 6).map(t => `<div class="li"><div class="t">${esc(t.title)}</div><div class="m">${esc(name(t.assignee))} · ${esc(t.dept)}</div><div class="r">${trackTag(t)}</div></div>`));
+    $('#homeLate').innerHTML = lateItems.join('') || '<div class="empty">Không có việc chậm</div>';
+    const evs = evToday.length ? evToday : sel.events();
+    $('#calDay').textContent = evToday.length ? `hôm nay ${dmy(TODAY)}` : rangeLabel();
+    $('#homeCal').innerHTML = evs.slice(0, 7).map(e => `<div class="li"><div class="t">${esc(name(e.person))} · ${esc(e.title)}</div><div class="m">${esc(e.place)} · ${esc(e.resource)}</div><div class="r">${evToday.length ? '' : wd(e.date) + ' ' + dmy(e.date) + '<br>'}${e.start}–${e.end}</div></div>`).join('') || '<div class="empty">Không có lịch</div>';
+  }
+
+  // ───── AI hỏi đáp (mô phỏng trên dữ liệu đang lọc) ─────
+  const SUGG = ['Việc nào đang quá hạn?', 'Dự án Thu Đông 2026 đang vướng gì?', 'Hôm nay Ban TGĐ ở đâu?', 'Tờ trình nào đang chờ tôi duyệt?', 'Phòng ban nào nhiều việc trễ nhất?', 'Việc trọng tâm tuần này là gì?'];
+  const norm = s => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd');
+  function answer(q) {
+    const n = norm(q), scope = (F.dept || F.person) ? ` (đang lọc: ${[F.dept, F.person && name(F.person)].filter(Boolean).join(', ')})` : '';
+    const projHit = D.projects.find(p => [['thu dong', 'VSD26'], ['hitech', 'HTHN2'], ['ha nam', 'HTHN2'], ['khao nghiem', 'KN-DX27'], ['dai ly', 'DL-MT'], ['mien trung', 'DL-MT'], ['kho lanh', 'KHO-L'], ['base', 'B20'], ['chuyen doi so', 'B20']].some(([k, id]) => id === p.id && n.includes(k)));
+    if (projHit) {
+      const p = projHit, late = p.milestones.filter(m => !m.done && m.due < TODAY);
+      return { h: `<b>${esc(p.name)}</b> — ${esc(p.status.toLowerCase())}: hoàn thành ${p.tasks_done}/${p.tasks_total} đầu việc (${p.progress}%), kế hoạch theo thời gian ${p.plan}%.<ul>${late.map(m => `<li>Mốc “${esc(m.name)}” trễ ${diff(TODAY, m.due)} ngày (hạn ${dmy(m.due)})</li>`).join('')}${p.next_milestone && !late.length ? `<li>Mốc kế tiếp: ${esc(p.next_milestone)} (${dmy(p.next_due)})</li>` : ''}${p.risks.map(r => `<li>Rủi ro ${r.level === 'Cao' ? '<b>mức cao</b>' : 'mức ' + r.level.toLowerCase()}: ${esc(r.name)}</li>`).join('')}${p.cost_plan ? `<li>Chi phí kế hoạch ${fmtMoney(p.cost_plan)}${p.revenue_plan ? `, doanh thu dự kiến ${fmtMoney(p.revenue_plan)}` : ''}</li>` : ''}</ul>Phụ trách: ${esc(name(p.owner))}.`, src: `Project · ${p.id}` };
+    }
+    if (/qua han|tre han|bi tre|cham/.test(n) && !/du an|phong ban|don vi/.test(n)) {
+      const od = sel.overdue();
+      return { h: od.length ? `Có <b>${od.length}</b> việc quá hạn${scope}:<ul>${od.slice(0, 6).map(t => `<li>${esc(t.title)} — ${esc(name(t.assignee))}, trễ ${t.late_days} ngày</li>`).join('')}</ul>` : `Không có việc quá hạn${scope}.`, src: 'Task · ' + od.slice(0, 6).map(t => t.id).join(', ') };
+    }
+    if (/du an/.test(n)) {
+      const ps = sel.projects(false), slow = ps.filter(p => p.status !== 'Đúng tiến độ');
+      return { h: `${slow.length}/${ps.length} dự án cần chú ý${scope}:<ul>${slow.map(p => `<li><b>${esc(p.name)}</b>: ${esc(p.status.toLowerCase())}, ${p.progress}% so với kế hoạch ${p.plan}%${p.late_days ? `, trễ mốc ${p.late_days} ngày` : ''}</li>`).join('')}</ul>`, src: 'Project · ' + slow.map(p => p.id).join(', ') };
+    }
+    if (/lich|o dau|cong tac|di dau/.test(n)) {
+      const day = /mai/.test(n) ? addDays(TODAY, 1) : TODAY;
+      const ev = D.events.filter(e => e.date === day && (!F.person || e.person === F.person));
+      const by = {}; ev.forEach(e => (by[e.person] = by[e.person] || []).push(e));
+      return { h: `Lịch ${day === TODAY ? 'hôm nay' : 'ngày mai'} (${wd(day)} ${dmy(day)}):<ul>${Object.entries(by).map(([pid, es]) => `<li><b>${esc(name(pid))}</b> (${esc(P[pid].title)}): ${es.map(e => `${e.start} ${esc(e.title)} — ${esc(e.place)}`).join('; ')}</li>`).join('') || '<li>Không có lịch</li>'}</ul>`, src: 'Meeting, Booking · ' + ev.length + ' lịch' };
+    }
+    if (/duyet|to trinh|de xuat|phe duyet/.test(n)) {
+      const ap = sel.approvals().filter(a => !a.closed && a.step.startsWith('B3')).sort((a, b) => (b.urgent - a.urgent) || (b.waiting_days - a.waiting_days));
+      return { h: `Có <b>${ap.length}</b> hồ sơ chờ Chủ tịch duyệt, ${ap.filter(a => a.urgent).length} hồ sơ gấp:<ul>${ap.slice(0, 6).map(a => `<li>${a.urgent ? '<b>[Gấp]</b> ' : ''}${esc(a.title)} — ${esc(a.dept)}${a.amount ? ', ' + fmtMoney(a.amount) : ''}, chờ ${a.waiting_days} ngày</li>`).join('')}</ul>`, src: 'BPM · ' + ap.slice(0, 6).map(a => a.id).join(', ') };
+    }
+    if (/phong ban|don vi|khoi/.test(n)) {
+      const od = sel.overdue(), c = Object.entries(countBy(od, t => t.dept)).sort((a, b) => b[1] - a[1]);
+      return { h: c.length ? `Việc quá hạn theo phòng ban:<ul>${c.map(([d, k]) => `<li>${esc(d)}: <b>${k}</b> việc</li>`).join('')}</ul>${esc(c[0][0])} đang nhiều việc trễ nhất.` : 'Không phòng ban nào có việc quá hạn.', src: 'Task · ' + od.length + ' việc quá hạn' };
+    }
+    if (/trong tam|uu tien|hom nay lam|tuan nay/.test(n)) {
+      const f = sel.tasks().filter(t => t.focus && !isDone(t)).sort((a, b) => a.deadline.localeCompare(b.deadline));
+      return { h: `Việc trọng tâm (${rangeLabel()})${scope}:<ul>${f.slice(0, 7).map(t => `<li>${esc(t.title)} — ${esc(name(t.assignee))}, hạn ${dmy(t.deadline)}</li>`).join('') || '<li>Không có</li>'}</ul>`, src: 'Task · ' + f.slice(0, 7).map(t => t.id).join(', ') };
+    }
+    if (/ty le|dung han/.test(n)) {
+      const t = sel.tasks().filter(isDone), by = {};
+      t.forEach(x => { by[x.dept] = by[x.dept] || [0, 0]; by[x.dept][1]++; if (x.track === ST[0]) by[x.dept][0]++; });
+      return { h: `Tỷ lệ hoàn thành đúng hạn (${rangeLabel()}):<ul>${Object.entries(by).map(([d, [a, b]]) => `<li>${esc(d)}: ${fmtPct(a / b)} (${a}/${b})</li>`).join('') || '<li>Chưa có việc hoàn thành trong kỳ</li>'}</ul>`, src: 'Task · ' + t.length + ' việc' };
+    }
+    return { h: 'Tôi có thể trả lời về việc quá hạn, việc trọng tâm, tiến độ dự án, lịch công tác Ban TGĐ, tờ trình chờ duyệt và tỷ lệ đúng hạn theo phòng ban. Hãy thử một câu gợi ý bên dưới.', src: '' };
+  }
+  function ask(q) {
+    if (!q.trim()) return;
+    const log = $('#aiLog'), a = answer(q);
+    log.insertAdjacentHTML('beforeend', `<div class="msg me">${esc(q)}</div><div class="msg bot">${a.h}${a.src ? `<div class="src">Nguồn: ${esc(a.src)}</div>` : ''}</div>`);
+    log.scrollTop = log.scrollHeight;
+  }
+  function initAI() {
+    $('#aiSugg').innerHTML = SUGG.map(s => `<button type="button">${esc(s)}</button>`).join('');
+    $('#aiSugg').querySelectorAll('button').forEach(b => b.onclick = () => ask(b.textContent));
+    $('#aiForm').onsubmit = e => { e.preventDefault(); ask($('#aiInput').value); $('#aiInput').value = ''; };
+    $('#aiLog').innerHTML = `<div class="msg bot">Chào anh/chị, tôi là trợ lý AI trên Data Warehouse điều hành. Câu trả lời theo đúng bộ lọc phòng ban, nhân sự, thời gian đang chọn và dẫn nguồn bản ghi.</div>`;
+  }
+
+  // ═════════ CÔNG VIỆC ═════════
+  const TF = { track: '' };
+  function renderTasks() {
+    const all = sel.tasks(), tasks = all.filter(t => !TF.track || t.track === TF.track);
+    const c = countBy(all, t => t.track), doneN = all.filter(isDone).length;
+    kpis('#kpiTasks', [
+      { l: 'Tổng việc trong kỳ', v: fmtInt(all.length), s: 'hạn trong kỳ + quá hạn chưa xong' },
+      { l: 'Đã hoàn thành', v: fmtInt(doneN), c: 'var(--ok)', s: fmtPct(doneN / all.length) + ' tổng số' },
+      { l: 'Đang làm', v: fmtInt(c['Đang làm'] || 0), c: 'var(--doing)' },
+      { l: 'Sắp đến hạn (≤3 ngày)', v: fmtInt(c['Sắp đến hạn'] || 0), c: 'var(--soon)' },
+      { l: 'Quá hạn', v: fmtInt(c['Quá hạn'] || 0), vc: 'var(--late)', c: 'var(--late)' },
+      { l: 'Từ kết luận họp', v: fmtInt(all.filter(t => t.source === 'Kết luận họp giao ban').length), c: 'var(--green)', s: 'việc sinh ra sau họp' },
+    ]);
+    const lbl = ST.filter(s => c[s]);
+    chart('cStatus', { type: 'doughnut', data: { labels: lbl, datasets: [{ data: lbl.map(s => c[s]), backgroundColor: lbl.map(s => STC[s]), borderWidth: 2 }] },
+      options: { maintainAspectRatio: false, cutout: '62%', plugins: { legend: { position: 'bottom' } }, onClick: (e, el) => { if (el.length) { TF.track = TF.track === lbl[el[0].index] ? '' : lbl[el[0].index]; render(); } } } });
+    const depts = D.departments.filter(d => all.some(t => t.dept === d));
+    chart('cDept', { type: 'bar', data: { labels: depts, datasets: ST.map(s => ({ label: s, data: depts.map(d => all.filter(t => t.dept === d && t.track === s).length), backgroundColor: STC[s] })) },
+      options: { indexAxis: 'y', maintainAspectRatio: false, scales: { x: { stacked: true, ticks: { precision: 0 } }, y: { stacked: true } }, plugins: { legend: { position: 'bottom' } }, onClick: (e, el) => { if (el.length) setDept(depts[el[0].index]); } } });
+    const src = countBy(all, t => t.source), sl = Object.keys(src);
+    chart('cSource', { type: 'doughnut', data: { labels: sl, datasets: [{ data: sl.map(k => src[k]), backgroundColor: ['#1A6BF0', '#0E9F4B', '#1288B8', '#84cc16'], borderWidth: 2 }] }, options: { maintainAspectRatio: false, cutout: '58%', plugins: { legend: { position: 'bottom' } } } });
+    // theo người
+    const byP = {}; all.forEach(t => { (byP[t.assignee] = byP[t.assignee] || []).push(t); });
+    const rows = Object.entries(byP).sort((a, b) => b[1].length - a[1].length);
+    $('#people').innerHTML = rows.map(([pid, ts]) => {
+      const seg = ST.map(s => [s, ts.filter(t => t.track === s).length]).filter(x => x[1]);
+      const done = ts.filter(isDone).length;
+      return `<div class="pp" data-p="${pid}"><div class="n">${esc(name(pid))}<small>${esc(P[pid].dept)}</small></div><div class="bar">${seg.map(([s, k]) => `<i title="${s}: ${k}" style="width:${k / ts.length * 100}%;background:${STC[s]}"></i>`).join('')}</div><div class="v">${done}/${ts.length} · ${fmtPct(done / ts.length)}</div></div>`;
+    }).join('') || '<div class="empty">Không có dữ liệu</div>';
+    $('#people').querySelectorAll('.pp').forEach(r => r.onclick = () => setPerson(r.dataset.p));
+    // theo tuần đến hạn
+    const wk = s => { const x = toD(s); const dow = (x.getDay() + 6) % 7; return addDays(s, -dow); };
+    const weeks = [...new Set(all.map(t => wk(t.deadline)))].sort();
+    chart('cWeek', { type: 'bar', data: { labels: weeks.map(w => 'Tuần ' + dmy(w)), datasets: ST.map(s => ({ label: s, data: weeks.map(w => all.filter(t => wk(t.deadline) === w && t.track === s).length), backgroundColor: STC[s] })) },
+      options: { maintainAspectRatio: false, scales: { x: { stacked: true }, y: { stacked: true, ticks: { precision: 0 } } }, plugins: { legend: { position: 'bottom' } } } });
+    table('#tTasks', [
+      { h: 'Mã', k: 'id' }, { h: 'Công việc', k: 'title' }, { h: 'Phòng ban', k: 'dept' },
+      { h: 'Người thực hiện', text: t => name(t.assignee) }, { h: 'Người giao', text: t => name(t.assigner) },
+      { h: 'Nguồn', k: 'source' }, { h: 'Dự án', text: t => t.project ? PROJ[t.project].name : '' },
+      { h: 'Ưu tiên', k: 'priority' }, { h: 'Hạn', text: t => dmy(t.deadline), sortv: t => t.deadline },
+      { h: '%', k: 'progress', sortv: t => t.progress }, { h: 'Tiến độ', text: t => t.track, html: trackTag },
+    ], tasks.sort((a, b) => a.deadline.localeCompare(b.deadline)), 'tasks');
+  }
+
+  // ═════════ DỰ ÁN ═════════
+  function renderProjects() {
+    const ps = sel.projects();
+    kpis('#kpiProjects', [
+      { l: 'Dự án trong kỳ', v: fmtInt(ps.length) },
+      { l: 'Đúng tiến độ', v: fmtInt(ps.filter(p => p.status === 'Đúng tiến độ').length), c: 'var(--ok)' },
+      { l: 'Có rủi ro', v: fmtInt(ps.filter(p => p.status === 'Có rủi ro').length), c: 'var(--soon)' },
+      { l: 'Chậm tiến độ', v: fmtInt(ps.filter(p => p.status === 'Chậm tiến độ').length), vc: 'var(--late)', c: 'var(--late)' },
+      { l: 'Rủi ro mức cao', v: fmtInt(ps.reduce((s, p) => s + p.risks.filter(r => r.level === 'Cao').length, 0)), c: 'var(--late)' },
+      { l: 'Tổng chi phí kế hoạch', v: fmtMoney(ps.reduce((s, p) => s + p.cost_plan, 0)), c: 'var(--blue-d)' },
+    ]);
+    const short = s => s.length > 34 ? s.slice(0, 33) + '…' : s;
+    chart('cProj', { type: 'bar', data: { labels: ps.map(p => short(p.name)), datasets: [{ label: 'Thực tế %', data: ps.map(p => p.progress), backgroundColor: ps.map(p => p.status === 'Chậm tiến độ' ? '#dc2626' : p.status === 'Có rủi ro' ? '#f59e0b' : '#16a34a') }, { label: 'Kế hoạch %', data: ps.map(p => p.plan), backgroundColor: '#CBD5E1' }] },
+      options: { indexAxis: 'y', maintainAspectRatio: false, scales: { x: { max: 100, ticks: { callback: v => v + '%' } } }, plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { title: it => ps[it[0].dataIndex].name } } }, onClick: (e, el) => { if (el.length) setDept(ps[el[0].index].dept); } } });
+    $('#projCards').innerHTML = ps.map(p => {
+      const cls = p.status === 'Chậm tiến độ' ? 'slow' : p.status === 'Có rủi ro' ? 'risk' : '';
+      const tag = p.status === 'Chậm tiến độ' ? 't-late' : p.status === 'Có rủi ro' ? 't-soon' : 't-ok';
+      return `<div class="pj ${cls}"><div class="row" style="margin-bottom:4px"><span class="tag ${tag}">${esc(p.status)}</span><span>${esc(p.id)}</span></div>
+        <h4>${esc(p.name)}</h4><div class="meta">${esc(p.dept)} · phụ trách ${esc(name(p.owner))} · ${dmy(p.start)}/${p.start.slice(0, 4)} – ${dmy(p.end)}/${p.end.slice(0, 4)}</div>
+        <div class="row"><span>Thực tế ${p.progress}% (${p.tasks_done}/${p.tasks_total} việc)</span><span>Kế hoạch ${p.plan}%</span></div>
+        <div class="pbar"><i style="width:${p.progress}%;background:${cls === 'slow' ? 'var(--late)' : cls ? 'var(--soon)' : 'var(--ok)'}"></i><u style="left:${p.plan}%"></u></div>
+        <div class="kv"><div>Mốc kế tiếp<b>${p.next_milestone ? esc(p.next_milestone) : '–'}</b>${p.next_due ? dmy(p.next_due) + (p.next_due < TODAY ? ` · <span style="color:var(--late);font-weight:700">trễ ${diff(TODAY, p.next_due)} ngày</span>` : '') : ''}</div><div>Chi phí kế hoạch<b>${fmtMoney(p.cost_plan)}</b></div><div>Doanh thu dự kiến<b>${fmtMoney(p.revenue_plan)}</b></div></div>
+        ${p.risks.length ? `<ul>${p.risks.map(r => `<li><span class="tag ${r.level === 'Cao' ? 't-late' : 't-soon'}">${esc(r.level)}</span> ${esc(r.name)}</li>`).join('')}</ul>` : ''}</div>`;
+    }).join('') || '<div class="card empty">Không có dự án trong bộ lọc</div>';
+  }
+
+  // ═════════ LỊCH CÔNG TÁC ═════════
+  function renderCalendar() {
+    const ev = sel.events();
+    kpis('#kpiCal', [
+      { l: 'Lịch trong kỳ', v: fmtInt(ev.length), s: rangeLabel() },
+      { l: 'Đi công tác', v: fmtInt(ev.filter(e => e.type === 'Công tác').length), c: 'var(--green)' },
+      { l: 'Họp nội bộ', v: fmtInt(ev.filter(e => e.type === 'Họp nội bộ').length) },
+      { l: 'Làm việc với phòng ban', v: fmtInt(ev.filter(e => e.type === 'Làm việc với phòng ban').length) },
+      { l: 'Tiếp khách', v: fmtInt(ev.filter(e => e.type === 'Tiếp khách').length), c: 'var(--soon)' },
+      { l: 'Đặt xe công tác', v: fmtInt(ev.filter(e => /^Xe/.test(e.resource)).length), c: 'var(--blue-d)', s: 'từ Booking' },
+    ]);
+    let days = [...new Set(ev.map(e => e.date))].sort();
+    if (days.includes(TODAY)) { const i = days.indexOf(TODAY); days = days.slice(Math.max(0, i - 2), Math.max(0, i - 2) + 10); } else days = days.slice(0, 10);
+    const who = LEADERS.filter(p => !F.person || p.id === F.person).filter(p => ev.some(e => e.person === p.id));
+    const cls = e => e.type === 'Công tác' ? 'out' : e.type === 'Tiếp khách' ? 'guest' : '';
+    $('#calMatrix').innerHTML = days.length && who.length ? `<table><thead><tr><th></th>${days.map(d => `<th class="${d === TODAY ? 'today' : ''}">${wd(d)} ${dmy(d)}${d === TODAY ? ' · hôm nay' : ''}</th>`).join('')}</tr></thead><tbody>${who.map(p => `<tr><td class="who" data-p="${p.id}">${esc(p.name)}<small>${esc(p.title)}</small></td>${days.map(d => `<td>${ev.filter(e => e.person === p.id && e.date === d).map(e => `<div class="ev ${cls(e)}"><b>${e.start}–${e.end}</b>${esc(e.title)}<br><span style="color:var(--muted)">${esc(e.place)}</span></div>`).join('')}</td>`).join('')}</tr>`).join('')}</tbody></table>` : '<div class="empty">Không có lịch trong bộ lọc</div>';
+    $('#calMatrix').querySelectorAll('.who').forEach(td => td.onclick = () => setPerson(td.dataset.p));
+    const ty = countBy(ev, e => e.type), tl = Object.keys(ty);
+    chart('cEvType', { type: 'doughnut', data: { labels: tl, datasets: [{ data: tl.map(k => ty[k]), backgroundColor: ['#1A6BF0', '#0E9F4B', '#1288B8', '#f59e0b', '#84cc16'], borderWidth: 2 }] }, options: { maintainAspectRatio: false, cutout: '58%', plugins: { legend: { position: 'bottom' } } } });
+    const pl = Object.entries(countBy(ev, e => e.place)).sort((a, b) => b[1] - a[1]);
+    chart('cEvPlace', { type: 'bar', data: { labels: pl.map(x => x[0]), datasets: [{ label: 'Số lịch', data: pl.map(x => x[1]), backgroundColor: '#0E9F4B' }] }, options: { indexAxis: 'y', maintainAspectRatio: false, scales: { x: { ticks: { precision: 0 } } }, plugins: { legend: { display: false } } } });
+    table('#tEvents', [
+      { h: 'Ngày', text: e => `${wd(e.date)} ${dmy(e.date)}`, sortv: e => e.date + e.start }, { h: 'Giờ', text: e => `${e.start}–${e.end}` },
+      { h: 'Lãnh đạo', text: e => name(e.person) }, { h: 'Nội dung', k: 'title' }, { h: 'Loại', k: 'type' },
+      { h: 'Địa điểm', k: 'place' }, { h: 'Phòng / xe', k: 'resource' }, { h: 'Phòng ban liên quan', text: e => e.related_dept || '' },
+    ], ev, 'events');
+  }
+
+  // ═════════ PHÊ DUYỆT ═════════
+  const STEPS = ['B1 · Lập đề nghị', 'B2 · Rà soát TC & SX', 'B3 · Chờ Chủ tịch duyệt', 'Đã duyệt', 'Trả lại'];
+  const STEPC = ['#94a3b8', '#1288B8', '#1A6BF0', '#16a34a', '#dc2626'];
+  function renderApprovals() {
+    const ap = sel.approvals(), open = ap.filter(a => !a.closed);
+    const avg = open.length ? open.reduce((s, a) => s + a.waiting_days, 0) / open.length : 0;
+    kpis('#kpiAp', [
+      { l: 'Hồ sơ đang mở', v: fmtInt(open.length) },
+      { l: 'Chờ Chủ tịch duyệt', v: fmtInt(open.filter(a => a.step.startsWith('B3')).length), vc: 'var(--blue-d)', c: 'var(--blue-d)' },
+      { l: 'Hồ sơ gấp', v: fmtInt(open.filter(a => a.urgent).length), vc: 'var(--late)', c: 'var(--late)' },
+      { l: 'Chờ trung bình', v: nf.format(Math.round(avg * 10) / 10) + ' ngày', c: 'var(--soon)' },
+      { l: 'Đã duyệt trong kỳ', v: fmtInt(ap.filter(a => a.step === 'Đã duyệt').length), c: 'var(--ok)' },
+      { l: 'Giá trị chờ duyệt', v: fmtMoney(open.reduce((s, a) => s + (a.amount || 0), 0)), c: 'var(--green)' },
+    ]);
+    const sc = countBy(ap, a => a.step);
+    chart('cStep', { type: 'bar', data: { labels: STEPS.map(s => s.replace(' · ', ' ')), datasets: [{ data: STEPS.map(s => sc[s] || 0), backgroundColor: STEPC }] }, options: { maintainAspectRatio: false, scales: { y: { ticks: { precision: 0 } } }, plugins: { legend: { display: false } } } });
+    const kinds = [...new Set(open.map(a => a.kind))];
+    const kAvg = kinds.map(k => { const x = open.filter(a => a.kind === k); return Math.round(x.reduce((s, a) => s + a.waiting_days, 0) / x.length * 10) / 10; });
+    chart('cKind', { type: 'bar', data: { labels: kinds, datasets: [{ label: 'Ngày chờ TB', data: kAvg, backgroundColor: kAvg.map(v => v > 7 ? '#dc2626' : v > 3 ? '#f59e0b' : '#16a34a') }] }, options: { indexAxis: 'y', maintainAspectRatio: false, plugins: { legend: { display: false } } } });
+    table('#tAp', [
+      { h: 'Mã', k: 'id' }, { h: 'Nội dung', k: 'title' }, { h: 'Loại', k: 'kind' }, { h: 'Phòng ban', k: 'dept' },
+      { h: 'Người trình', text: a => name(a.submitter) }, { h: 'Ngày trình', text: a => dmy(a.submitted), sortv: a => a.submitted },
+      { h: 'Bước hiện tại', k: 'step' }, { h: 'Chờ (ngày)', k: 'waiting_days', sortv: a => a.waiting_days },
+      { h: 'Giá trị', text: a => fmtMoney(a.amount), sortv: a => a.amount || 0 },
+      { h: 'Mức độ', text: a => a.urgent ? 'Gấp' : '', html: a => a.urgent ? '<span class="tag t-late">Gấp</span>' : '' },
+    ], ap.sort((a, b) => (!!a.closed - !!b.closed) || (b.waiting_days - a.waiting_days)), 'ap');
+  }
+
+  // ═════════ TRƯỜNG DỮ LIỆU ═════════
+  const DICT = [
+    ['Công việc', 'tasks', 'Task · E-office · Meeting', 'Việc trọng tâm, việc chậm, tab Công việc, AI', [
+      ['id', 'Mã công việc', 'Chuỗi'], ['title', 'Tên công việc', 'Chuỗi'], ['dept', 'Phòng ban thực hiện', 'Danh mục'],
+      ['assignee', 'Người thực hiện', 'Nhân sự'], ['assigner', 'Người giao việc', 'Nhân sự'],
+      ['source', 'Nguồn giao: kết luận họp, văn bản chỉ đạo, giao trực tiếp, kế hoạch dự án', 'Danh mục'],
+      ['project', 'Dự án liên quan (nếu có)', 'Mã dự án'], ['priority', 'Mức ưu tiên', 'Danh mục'], ['focus', 'Đánh dấu việc trọng tâm', 'Có/Không'],
+      ['created / deadline / done_on', 'Ngày tạo, hạn chót, ngày hoàn thành', 'Ngày'], ['status / progress', 'Trạng thái, % hoàn thành', 'Danh mục / Số'],
+      ['track*', 'Tiến độ tính đến hôm nay: đúng hạn, trễ, sắp đến hạn, quá hạn…', 'Tính toán']]],
+    ['Dự án chiến lược', 'projects', 'Project', 'Việc & dự án chậm, tab Dự án, AI', [
+      ['id / name', 'Mã, tên dự án', 'Chuỗi'], ['dept / owner', 'Đơn vị, người phụ trách', 'Danh mục / Nhân sự'], ['start / end', 'Thời gian dự án', 'Ngày'],
+      ['tasks_total / tasks_done', 'Số đầu việc, số đã xong', 'Số'], ['progress*', 'Tiến độ thực tế (% đầu việc xong)', 'Tính toán'], ['plan*', 'Tiến độ kế hoạch (% thời gian đã qua)', 'Tính toán'],
+      ['milestones', 'Mốc trọng yếu: tên, hạn, ngày đạt', 'Danh sách'], ['risks', 'Rủi ro: nội dung, mức độ', 'Danh sách'],
+      ['cost_plan / revenue_plan', 'Chi phí kế hoạch, doanh thu dự kiến', 'Tiền'], ['status*', 'Đúng tiến độ / Có rủi ro / Chậm tiến độ', 'Tính toán']]],
+    ['Lịch công tác', 'events', 'Meeting · Booking', 'Lịch Ban TGĐ, tab Lịch công tác, AI', [
+      ['date / start / end', 'Ngày, giờ bắt đầu, kết thúc', 'Ngày / Giờ'], ['person', 'Lãnh đạo', 'Nhân sự'], ['title', 'Nội dung', 'Chuỗi'],
+      ['type', 'Loại: họp nội bộ, công tác, tiếp khách, làm việc với phòng ban', 'Danh mục'], ['place', 'Địa điểm', 'Danh mục'],
+      ['resource', 'Phòng họp hoặc xe đã đặt', 'Booking'], ['related_dept', 'Phòng ban liên quan', 'Danh mục']]],
+    ['Tờ trình, phê duyệt', 'approvals', 'BPM', 'Chờ phê duyệt, tab Phê duyệt, AI', [
+      ['id / title', 'Mã, nội dung tờ trình/đề xuất', 'Chuỗi'], ['kind', 'Loại: duyệt giá thu mua, đề xuất chi, hợp đồng, quyết định, xin ý kiến', 'Danh mục'],
+      ['dept / submitter / approver', 'Đơn vị trình, người trình, người duyệt', 'Danh mục / Nhân sự'], ['submitted / step_since / closed', 'Ngày trình, ngày vào bước hiện tại, ngày kết thúc', 'Ngày'],
+      ['step', 'Bước: B1 lập đề nghị, B2 rà soát TC & SX, B3 Chủ tịch duyệt, đã duyệt, trả lại', 'Danh mục'],
+      ['waiting_days', 'Số ngày chờ ở bước hiện tại', 'Số'], ['urgent', 'Hồ sơ gấp', 'Có/Không'], ['amount', 'Giá trị (nếu có)', 'Tiền']]],
+    ['Tổ chức & nhân sự', 'people', 'Base Account', 'Bộ lọc phòng ban, nhân sự; phân quyền', [
+      ['id / name / title', 'Mã, họ tên, chức danh', 'Chuỗi'], ['dept', 'Phòng ban', 'Danh mục'], ['leader', 'Thuộc Ban lãnh đạo (hiện trên lịch công tác)', 'Có/Không']]],
+  ];
+  function renderFields() {
+    const cnt = { tasks: sel.tasks().length, projects: sel.projects().length, events: sel.events().length, approvals: sel.approvals().length, people: D.people.filter(p => (!F.dept || p.dept === F.dept)).length };
+    $('#dict').innerHTML = `<h3>Trường dữ liệu trên Data Warehouse điều hành <small>* trường tính toán ở lớp ngữ nghĩa</small></h3>` + DICT.map(([t, k, src, used, fields]) =>
+      `<h4>${esc(t)} <span class="src">${esc(src)}</span> <small style="color:var(--muted);font-weight:500">${fmtInt(cnt[k])} bản ghi theo bộ lọc · dùng cho: ${esc(used)}</small></h4>
+       <div class="tw" style="margin-bottom:14px"><table class="dt"><thead><tr><th>Trường</th><th>Ý nghĩa</th><th>Kiểu</th></tr></thead><tbody>${fields.map(f => `<tr><td><code>${esc(f[0])}</code></td><td>${esc(f[1])}</td><td>${esc(f[2])}</td></tr>`).join('')}</tbody></table></div>`).join('');
+  }
+
+  // ───── điều phối ─────
+  let current = 'home';
+  const R = { home: renderHome, tasks: renderTasks, projects: renderProjects, calendar: renderCalendar, approvals: renderApprovals, fields: renderFields };
+  function render() { renderChips(); R[current](); }
+  document.querySelectorAll('#tabs button').forEach(b => b.onclick = () => {
+    current = b.dataset.v;
+    document.querySelectorAll('#tabs button').forEach(x => x.classList.toggle('on', x === b));
+    document.querySelectorAll('.view').forEach(v => v.classList.toggle('on', v.id === 'v-' + current));
+    render();
+  });
+  $('#asof').textContent = `Số liệu đến ${wd(TODAY)}, ${dmy(TODAY)}/${TODAY.slice(0, 4)}`;
+  if (!hasChart) document.querySelectorAll('.cv').forEach(c => c.innerHTML = '<div class="empty">Không tải được thư viện biểu đồ (thiếu file vendor/chart.umd.min.js). KPI và bảng vẫn dùng được.</div>');
+  initFilters(); initAI(); render();
+})();
+</script>
+</body>
+</html>

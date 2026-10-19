@@ -29,7 +29,14 @@
 .vs-scope { width: 100%; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
 .vs-scope b { color: var(--color-fg); font-weight: 600; }
 
+.vs-nav { display: flex; flex-direction: column; gap: var(--cds-gap-sm); }
+.vs-groups { display: flex; flex-wrap: wrap; gap: 6px; }
+.vs-groups button { font: inherit; font-weight: 700; border: 1px solid var(--color-border-line); background: var(--color-panel); color: var(--color-fg); border-radius: 999px; padding: 8px 18px; cursor: pointer; min-height: 40px; }
+.vs-groups button[aria-selected="true"] { background: var(--vs-green); border-color: var(--vs-green); color: #FFFFFF; }
 .vs-tabs { display: flex; gap: 2px; overflow-x: auto; border-bottom: 1px solid var(--color-border-line); }
+.vs-tabs button[hidden] { display: none; }
+.vs-sec { margin: var(--cds-gap-sm) 0 0; padding-top: var(--cds-pad-md); border-top: 1px solid var(--color-border-line); font-size: var(--cds-font-size-heading); font-weight: 700; color: var(--vs-brown); }
+.vs-page:not([hidden]) ~ .vs-page:not([hidden]) { margin-top: var(--cds-gap-lg); }
 .vs-tabs button { font: inherit; font-weight: 600; border: 0; background: none; color: var(--color-fg-muted); padding: 10px 12px; border-bottom: 3px solid transparent; cursor: pointer; white-space: nowrap; }
 .vs-tabs button[aria-selected="true"] { color: var(--color-fg); border-bottom-color: var(--vs-green); }
 .vs-page { display: flex; flex-direction: column; gap: var(--cds-gap-md); }
@@ -109,16 +116,18 @@
     <div class="vs-scope" id="vs-scope"></div>
   </section>
 
-  <nav class="vs-tabs" role="tablist" aria-label="Góc nhìn báo cáo">
-    <button type="button" role="tab" data-tab="dieu-hanh" aria-selected="true">Điều hành</button>
-    <button type="button" role="tab" data-tab="kinh-doanh">Kinh doanh</button>
-    <button type="button" role="tab" data-tab="dai-ly">Đại lý &amp; thị trường</button>
-    <button type="button" role="tab" data-tab="san-xuat">Sản xuất &amp; thu mua</button>
-    <button type="button" role="tab" data-tab="don-hang">Đơn đặt hàng</button>
-    <button type="button" role="tab" data-tab="tai-chinh">Tài chính</button>
-    <button type="button" role="tab" data-tab="chat-luong">Chất lượng</button>
-    <button type="button" role="tab" data-tab="nhan-su">Nhân sự</button>
-    <button type="button" role="tab" data-tab="danh-muc">Danh mục báo cáo</button>
+  <nav class="vs-nav" aria-label="Góc nhìn báo cáo">
+    <div class="vs-groups" role="tablist" aria-label="Nhóm báo cáo">
+      <button type="button" role="tab" data-group="g-dh" aria-selected="true">Điều hành</button>
+      <button type="button" role="tab" data-group="g-sx">Sản xuất kinh doanh</button>
+    </div>
+    <div class="vs-tabs" role="tablist" aria-label="Báo cáo trong nhóm">
+      <button type="button" role="tab" data-tab="van-phong" data-group="g-dh" aria-selected="true">Văn phòng</button>
+      <button type="button" role="tab" data-tab="nhan-su" data-group="g-dh">Nhân sự</button>
+      <button type="button" role="tab" data-tab="dai-ly" data-group="g-sx" hidden>Đại lý</button>
+      <button type="button" role="tab" data-tab="san-xuat" data-group="g-sx" hidden>Sản xuất</button>
+      <button type="button" role="tab" data-tab="tai-chinh" data-group="g-sx" hidden>Tài chính</button>
+    </div>
   </nav>
 
   <!-- ══════ Điều hành ══════ -->
@@ -139,6 +148,7 @@
 
   <!-- ══════ Kinh doanh (BC1) ══════ -->
   <section class="vs-page" id="kinh-doanh" role="tabpanel" hidden>
+    <h2 class="vs-sec">Bán hàng</h2>
     <p class="vs-lead" id="kd-lead">—</p>
     <div class="vs-kpis" id="kd-kpis" data-source="sales"></div>
     <div class="vs-grid">
@@ -154,6 +164,7 @@
 
   <!-- ══════ Đại lý & thị trường (BC2–BC4) ══════ -->
   <section class="vs-page" id="dai-ly" role="tabpanel" hidden>
+    <h2 class="vs-sec">Đại lý và thị trường</h2>
     <p class="vs-lead" id="dl-lead">—</p>
     <div class="vs-kpis" id="dl-kpis" data-source="dealers visits"></div>
     <div class="vs-grid">
@@ -171,6 +182,7 @@
 
   <!-- ══════ Sản xuất & thu mua (BC6, BC7, BC9) ══════ -->
   <section class="vs-page" id="san-xuat" role="tabpanel" hidden>
+    <h2 class="vs-sec">Tiến độ sản xuất và thu mua</h2>
     <div class="vs-tbar"><div class="vs-seg" id="sx-season" role="group" aria-label="Vụ sản xuất"><button type="button" data-s="Mùa 2026">Vụ Mùa 2026</button><button type="button" data-s="Thu Đông 2026">Vụ Thu Đông 2026</button></div><span>Tiến độ sản xuất theo vụ; thu mua và nhập kho theo kỳ đang lọc</span></div>
     <p class="vs-lead" id="sx-lead">—</p>
     <div class="vs-kpis" id="sx-kpis" data-source="production intake"></div>
@@ -189,6 +201,7 @@
 
   <!-- ══════ Đơn đặt hàng (BC8) ══════ -->
   <section class="vs-page" id="don-hang" role="tabpanel" hidden>
+    <h2 class="vs-sec">Đơn đặt hàng</h2>
     <p class="vs-lead" id="dhg-lead">—</p>
     <div class="vs-kpis" id="dhg-kpis" data-source="orders"></div>
     <div class="vs-grid">
@@ -218,6 +231,7 @@
 
   <!-- ══════ Chất lượng (BC10) ══════ -->
   <section class="vs-page" id="chat-luong" role="tabpanel" hidden>
+    <h2 class="vs-sec">Chất lượng lô giống</h2>
     <p class="vs-lead" id="cl-lead">—</p>
     <div class="vs-kpis" id="cl-kpis" data-source="quality"></div>
     <div class="vs-grid">
@@ -241,15 +255,6 @@
     </div>
   </section>
 
-  <!-- ══════ Danh mục báo cáo ══════ -->
-  <section class="vs-page" id="danh-muc" role="tabpanel" hidden>
-    <p class="vs-lead">Danh mục báo cáo theo <b>phiếu khảo sát hệ thống dữ liệu Base × Vinaseed</b>: người dùng, tần suất, nguồn trích xuất và trạng thái phạm vi Data Service. Cột "Tab" cho biết báo cáo được minh hoạ ở góc nhìn nào trên dashboard này.</p>
-    <div class="vs-kpis" id="dm-kpis" data-source="catalog"></div>
-    <article class="vs-card" id="dm-card"><h2>Danh mục báo cáo</h2><p class="vs-note">Nguồn: Fast, CRM, DMS, Facefarm, Voffice, Excel và Base</p>
-      <div class="vs-tbar"><input id="dm-q" type="search" placeholder="Tìm báo cáo, nguồn, phạm vi…" aria-label="Tìm báo cáo"><span id="dm-n"></span></div>
-      <div class="vs-tw"><table class="vs-table" id="dm-table" data-source="catalog" data-row-key="code"><thead><tr><th data-field="code">Mã</th><th data-field="report">Báo cáo</th><th data-field="users">Bộ phận sử dụng</th><th data-field="frequency">Tần suất</th><th data-field="source">Nguồn dữ liệu</th><th data-field="scope">Phạm vi</th><th data-field="tab">Tab</th></tr></thead><tbody></tbody></table></div>
-    </article>
-  </section>
 </div>
 <p class="vs-foot">Bản trình diễn giải pháp · Base.vn</p>
 <script src="core.js"></script>

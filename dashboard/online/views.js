@@ -26,7 +26,6 @@
     'tai-chinh': ['people', 'finance', 'dealers'],
     'chat-luong': ['people', 'quality'],
     'nhan-su': ['people', 'hr', 'tasks'],
-    'danh-muc': ['catalog'],
   };
   function pageState(page, st) {
     const root = $(page);
@@ -355,32 +354,18 @@
       endLabel: (i) => { const a = tasks.filter((t) => t.dept === tdep[i]); return f.pct(a.filter((t) => t.track === ST[0]).length / a.length) + ` (${a.length} việc)`; } });
   }
 
-  // ─────────────── Danh mục báo cáo ───────────────
-  function danhMuc() {
-    const cat = V.rows('catalog');
-    const grp = (re) => cat.filter((r) => re.test(r.scope)).length;
-    V.kpis($('dm-kpis'), [
-      { l: 'Báo cáo khảo sát', v: f.int(cat.length) },
-      { l: 'Trong phạm vi', v: f.int(grp(/^Trong phạm vi/)), s: 'làm được ngay' },
-      { l: 'Có khả năng', v: f.int(grp(/^Có khả năng/)), tone: 'gold', s: 'cần số hoá quy trình trên Base' },
-      { l: 'Khó', v: f.int(grp(/^Khó/)), tone: 'warn', s: 'cần làm rõ nguồn dữ liệu' },
-      { l: 'Ngoài phạm vi', v: f.int(grp(/^Ngoài phạm vi/)), tone: 'bad', s: 'Vinaseed tự thực hiện' },
-    ]);
-    V.table('dm-table', cat, [
-      { k: 'code' }, { k: 'report' }, { k: 'users' }, { k: 'frequency' }, { k: 'source' },
-      { k: 'scope', node: (r) => V.tag(r.scope, /^Trong/.test(r.scope) ? 'ok' : /^Có khả năng/.test(r.scope) ? 'gold' : /^Khó/.test(r.scope) ? 'soon' : 'late') }, { k: 'tab' },
-    ], { key: 'code', q: 'dm-q', count: 'dm-n' });
-  }
-
-  const R = { 'dieu-hanh': dieuHanh, 'kinh-doanh': kinhDoanh, 'dai-ly': daiLy, 'san-xuat': sanXuat, 'don-hang': donHang, 'tai-chinh': taiChinh, 'chat-luong': chatLuong, 'nhan-su': nhanSu, 'danh-muc': danhMuc };
+  const R = { 'dieu-hanh': dieuHanh, 'kinh-doanh': kinhDoanh, 'dai-ly': daiLy, 'san-xuat': sanXuat, 'don-hang': donHang, 'tai-chinh': taiChinh, 'chat-luong': chatLuong, 'nhan-su': nhanSu };
   function draw() {
     V.drawFilters();
-    const page = V.current(), st = V.state(NEED[page]);
-    if (st !== 'ok') return pageState(page, st);
-    R[page](V.F());
+    const x = V.F();
+    V.PAGES[V.current()].forEach((sec) => {
+      const st = V.state(NEED[sec]);
+      if (st !== 'ok') pageState(sec, st); else R[sec](x);
+    });
   }
   V.onShow.push(draw);
   dash.onData(draw);
+  const OLD = { 'dieu-hanh': 'van-phong', 'kinh-doanh': 'dai-ly', 'don-hang': 'san-xuat', 'chat-luong': 'san-xuat' };
   const named = location.hash.slice(1);
-  if (named && R[named]) V.show(named, false);
+  if (V.PAGES[named] || OLD[named]) V.show(OLD[named] || named, false);
 })();

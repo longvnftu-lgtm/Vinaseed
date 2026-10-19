@@ -103,18 +103,26 @@ window.VS = (function () {
     });
   }
 
-  // ───── tab ─────
+  // ───── nhóm & tab ─────
+  // Mỗi tab gom một hoặc nhiều mục (section) của trang.
+  const PAGES = { 'van-phong': ['dieu-hanh'], 'nhan-su': ['nhan-su'], 'dai-ly': ['kinh-doanh', 'dai-ly'], 'san-xuat': ['san-xuat', 'don-hang', 'chat-luong'], 'tai-chinh': ['tai-chinh'] };
+  const GROUP = { 'van-phong': 'g-dh', 'nhan-su': 'g-dh', 'dai-ly': 'g-sx', 'san-xuat': 'g-sx', 'tai-chinh': 'g-sx' };
+  const FIRST = { 'g-dh': 'van-phong', 'g-sx': 'dai-ly' };
+  const groups = [...document.querySelectorAll('.vs-groups [data-group]')];
   const tabs = [...document.querySelectorAll('.vs-tabs [data-tab]')];
-  let current = 'dieu-hanh';
+  let current = 'van-phong';
   const onShow = [];
   function show(id, link) {
-    if (!document.getElementById(id)) return;
+    if (!PAGES[id]) return;
     current = id;
-    tabs.forEach((t) => t.setAttribute('aria-selected', String(t.dataset.tab === id)));
-    document.querySelectorAll('.vs-page').forEach((p) => { p.hidden = p.id !== id; });
+    const g = GROUP[id];
+    groups.forEach((b) => b.setAttribute('aria-selected', String(b.dataset.group === g)));
+    tabs.forEach((t) => { t.hidden = t.dataset.group !== g; t.setAttribute('aria-selected', String(t.dataset.tab === id)); });
+    document.querySelectorAll('.vs-page').forEach((p) => { p.hidden = !PAGES[id].includes(p.id); });
     if (link !== false) dash.setLink(id);
     onShow.forEach((fn) => fn(id));
   }
+  groups.forEach((b) => b.addEventListener('click', () => show(FIRST[b.dataset.group])));
   tabs.forEach((t) => t.addEventListener('click', () => show(t.dataset.tab)));
 
   // ───── màu ─────
@@ -398,5 +406,5 @@ window.VS = (function () {
   }
 
   return { TODAY, f, num, bool, rows, data, add, diff, wd, range, F, inR, monthIn, overlap, pass, name, deptOf, periodLabel, REGION_OF,
-    drawFilters, show, onShow, current: () => current, C, state, placeholder, vbar, hbar, lines, legend, tag, list, kpis, kpiState, table, tableState, empty, setPeriod };
+    drawFilters, show, onShow, PAGES, current: () => current, C, state, placeholder, vbar, hbar, lines, legend, tag, list, kpis, kpiState, table, tableState, empty, setPeriod };
 })();

@@ -118,7 +118,7 @@ window.VS = (function () {
   tabs.forEach((t) => t.addEventListener('click', () => show(t.dataset.tab)));
 
   // ───── màu ─────
-  const C = { green: '#2E8B3E', green2: '#8DB58F', brown: '#4E2C18', brown2: '#7A4E2D', gold: '#C8962E', late: '#C2412D', soon: '#D9A21B', doing: '#4F7CAC', idle: '#A59B8F' };
+  const C = { green: '#127A47', green2: '#8DB58F', brown: '#351400', brown2: '#7A4E2D', gold: '#C8962E', late: '#C2412D', soon: '#D9A21B', doing: '#4F7CAC', idle: '#A59B8F' };
 
   // ───── trạng thái nạp ─────
   function state(ids) {

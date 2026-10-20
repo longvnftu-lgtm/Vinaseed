@@ -86,11 +86,7 @@
     V.list($('dh-focus'), focus.slice(0, 7).map((t) => ({ t: t.title, m: `${V.name(t.assignee)} · ${t.dept}`, r: [V.tag(t.late ? `Quá hạn ${t.late} ngày` : t.track, STCLS[t.track]), 'hạn ' + f.dmy(t.deadline)] })), 'Không có việc trọng tâm trong kỳ');
     V.list($('dh-late'), slow.map((p) => ({ t: p.name, m: `Dự án · ${V.name(p.owner)} · thực tế ${p.progress}% / kế hoạch ${p.plan}%`, r: [V.tag(Number(p.late_days) ? `Trễ mốc ${p.late_days} ngày` : 'Chậm', 'late')] }))
       .concat(overdue.slice(0, 6).map((t) => ({ t: t.title, m: `${V.name(t.assignee)} · ${t.dept}`, r: [V.tag(`Quá hạn ${t.late} ngày`, 'late')] }))), 'Không có việc chậm');
-    const ev = evToday.length ? evToday : events.filter((e) => V.inR(e.date, x));
-    $('dh-cal-note').textContent = evToday.length ? `Hôm nay, ${V.wd(TODAY)} ${f.dmyy(TODAY)}` : 'Kỳ đang lọc không có hôm nay: lịch trong kỳ';
-    V.list($('dh-cal'), ev.sort((a, b) => (a.date + a.start).localeCompare(b.date + b.start)).slice(0, 8).map((e) => ({
-      t: `${V.name(e.person)} · ${e.title}`, m: `${e.place} · ${e.resource}`, r: [evToday.length ? '' : `${V.wd(e.date)} ${f.dmy(e.date)}`, `${e.start}–${e.end}`].filter(Boolean),
-    })), 'Không có lịch');
+    calendar(x, events);
     const depts = [...new Set(tasks.map((t) => t.dept))];
     V.legend('dh-dept-legend', ST.map((s) => [STC[s], s]));
     V.hbar($('dh-dept'), {
@@ -104,6 +100,113 @@
       { k: 'status', node: (p) => V.tag(p.status, p.status === 'Chậm tiến độ' ? 'late' : p.status === 'Có rủi ro' ? 'soon' : 'ok') },
     ], { key: 'id' });
   }
+
+  // ─────────────── Lịch công tác dạng calendar ───────────────
+  const PCOL = { CT: '#127A47', TGD: '#7A4E2D', 'PTGD-SX': '#4F7CAC', 'PTGD-KD': '#C8962E', 'PTGD-TC': '#8E5BA6', 'PTGD-RD': '#2A8C8C' };
+  const pcol = (id) => PCOL[id] || '#5C6A61';
+  const CAL = { view: 'week', anchor: TODAY, people: new Set(), type: '', place: '', from: undefined, sel: null, events: [] };
+  const mk = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+  const monday = (s) => V.add(s, -((new Date(s + 'T00:00:00Z').getUTCDay() + 6) % 7));
+  const MONTHS = ['tháng 1', 'tháng 2', 'tháng 3', 'tháng 4', 'tháng 5', 'tháng 6', 'tháng 7', 'tháng 8', 'tháng 9', 'tháng 10', 'tháng 11', 'tháng 12'];
+  function calRange() {
+    if (CAL.view === 'week') { const s = monday(CAL.anchor); return { start: s, days: 7, first: s, last: V.add(s, 6) }; }
+    const first = CAL.anchor.slice(0, 8) + '01';
+    const y = +first.slice(0, 4), m = +first.slice(5, 7);
+    const last = new Date(Date.UTC(y, m, 0)).toISOString().slice(0, 10);
+    const s = monday(first), n = V.diff(last, s) + 1;
+    return { start: s, days: Math.ceil(n / 7) * 7, first, last };
+  }
+  function calendar(x, events) {
+    // kỳ ở bộ lọc chung đổi thì lịch nhảy tới kỳ đó
+    if (CAL.from !== x.from) {
+      CAL.from = x.from;
+      CAL.anchor = !x.from || (x.from <= TODAY && (!x.to || TODAY <= x.to)) ? TODAY : x.from;
+      CAL.view = x.period === 'today' || x.period === 'week' ? 'week' : 'month';
+    }
+    CAL.events = events;
+    drawCal();
+  }
+  function drawCal() {
+    const grid = $('cal-grid'); grid.classList.remove('dash-skeleton');
+    const events = CAL.events;
+    const leaders = [...new Set(events.map((e) => e.person))].sort((a, b) => Object.keys(PCOL).indexOf(a) - Object.keys(PCOL).indexOf(b));
+    // chọn lãnh đạo
+    const pp = $('cal-people'); pp.replaceChildren();
+    const all = mk('button', '', 'Tất cả lãnh đạo'); all.type = 'button'; all.setAttribute('aria-pressed', String(!CAL.people.size));
+    all.addEventListener('click', () => { CAL.people.clear(); drawCal(); }); pp.appendChild(all);
+    leaders.forEach((id) => {
+      const b = mk('button'); b.type = 'button'; const i = mk('i'); i.style.background = pcol(id);
+      b.append(i, V.name(id)); 
+      b.setAttribute('aria-pressed', String(CAL.people.has(id)));
+      b.addEventListener('click', () => { CAL.people.has(id) ? CAL.people.delete(id) : CAL.people.add(id); drawCal(); });
+      pp.appendChild(b);
+    });
+    const fill = (sel, label, vals, cur) => { sel.replaceChildren(new Option(label, ''), ...vals.map((v) => new Option(v, v))); sel.value = cur; };
+    fill($('cal-type'), 'Tất cả mục đích', [...new Set(events.map((e) => e.type))].sort(), CAL.type);
+    fill($('cal-place'), 'Tất cả địa điểm', [...new Set(events.map((e) => e.place))].sort(), CAL.place);
+    document.querySelectorAll('#cal-view button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === CAL.view)));
+
+    const r = calRange();
+    $('cal-title').textContent = CAL.view === 'week' ? `Tuần ${f.dmy(r.first)} – ${f.dmyy(r.last)}` : `${MONTHS[+r.first.slice(5, 7) - 1][0].toUpperCase()}${MONTHS[+r.first.slice(5, 7) - 1].slice(1)}/${r.first.slice(0, 4)}`;
+    const shown = events.filter((e) => (!CAL.people.size || CAL.people.has(e.person)) && (!CAL.type || e.type === CAL.type) && (!CAL.place || e.place === CAL.place))
+      .sort((a, b) => (a.date + a.start).localeCompare(b.date + b.start));
+    const inView = shown.filter((e) => e.date >= r.first && e.date <= r.last);
+
+    // tóm tắt: số lịch, lượt công tác, ngày đi công tác theo lãnh đạo
+    const sum = $('cal-sum'); sum.replaceChildren();
+    const trips = inView.filter((e) => e.type === 'Công tác');
+    const line = (label, val) => { const s = mk('span'); s.append(label + ': '); s.appendChild(mk('b', '', val)); sum.appendChild(s); };
+    line(CAL.view === 'week' ? 'Lịch trong tuần' : 'Lịch trong tháng', f.int(inView.length));
+    line('Lượt đi công tác', f.int(trips.length));
+    const days = {}; trips.forEach((e) => { (days[e.person] = days[e.person] || new Set()).add(e.date); });
+    Object.entries(days).sort((a, b) => b[1].size - a[1].size).forEach(([id, d]) => line(V.name(id), f.int(d.size) + ' ngày công tác'));
+
+    // lưới ngày
+    grid.replaceChildren();
+    ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'].forEach((w, k) => {
+      const d = V.add(r.start, k);
+      grid.appendChild(mk('div', 'hd' + (CAL.view === 'week' && d === TODAY ? ' today' : ''), CAL.view === 'week' ? `${w} ${f.dmy(d)}` : w));
+    });
+    for (let k = 0; k < r.days; k++) {
+      const d = V.add(r.start, k);
+      const cell = mk('div', 'day' + (CAL.view === 'week' ? ' wk' : '') + (d < r.first || d > r.last ? ' out' : '') + (d === TODAY ? ' today' : ''));
+      if (CAL.view === 'month') cell.appendChild(mk('span', 'dn', String(+d.slice(8, 10))));
+      const evs = shown.filter((e) => e.date === d);
+      const cap = CAL.view === 'month' ? 3 : 99;
+      evs.slice(0, cap).forEach((e) => {
+        const b = mk('button', 'vs-ev' + (CAL.view === 'month' ? ' mini' : '')); b.type = 'button';
+        b.style.setProperty('--c', pcol(e.person)); b.setAttribute('aria-pressed', String(CAL.sel === e.id));
+        if (CAL.view === 'month') { b.append(mk('b', '', e.start)); b.append(mk('span', '', V.name(e.person).split(' ').pop() + ' · ' + e.title)); }
+        else { b.append(mk('b', '', `${e.start}–${e.end} · ${V.name(e.person)}`)); b.append(mk('span', '', e.title)); b.append(mk('span', '', e.place)); }
+        b.title = `${e.start}–${e.end} ${V.name(e.person)}: ${e.title} (${e.place})`;
+        b.addEventListener('click', () => { CAL.sel = CAL.sel === e.id ? null : e.id; drawCal(); });
+        cell.appendChild(b);
+      });
+      if (evs.length > cap) {
+        const more = mk('button', 'vs-more', `+${evs.length - cap} lịch`); more.type = 'button';
+        more.addEventListener('click', () => { CAL.view = 'week'; CAL.anchor = d; drawCal(); });
+        cell.appendChild(more);
+      }
+      grid.appendChild(cell);
+    }
+
+    // chi tiết lịch đang chọn
+    const det = $('cal-detail'), e = events.find((q) => q.id === CAL.sel);
+    det.hidden = !e; det.replaceChildren();
+    if (e) {
+      det.style.setProperty('--c', pcol(e.person));
+      [['Lãnh đạo', `${V.name(e.person)}`], ['Thời gian', `${V.wd(e.date)} ${f.dmyy(e.date)}, ${e.start}–${e.end}`], ['Nội dung', e.title], ['Mục đích', e.type],
+        ['Địa điểm', e.place], ['Phòng họp / xe', e.resource], ['Phòng ban liên quan', e.related_dept || '—'], ['Mã lịch', e.id]]
+        .forEach(([k, v]) => { det.appendChild(mk('dt', '', k)); det.appendChild(mk('dd', '', v)); });
+      const x = mk('button', 'vs-btn x', 'Đóng'); x.type = 'button'; x.addEventListener('click', () => { CAL.sel = null; drawCal(); }); det.appendChild(x);
+    }
+  }
+  document.querySelectorAll('#cal-view button').forEach((b) => b.addEventListener('click', () => { CAL.view = b.dataset.v; drawCal(); }));
+  $('cal-prev').addEventListener('click', () => { CAL.anchor = CAL.view === 'week' ? V.add(CAL.anchor, -7) : V.add(CAL.anchor.slice(0, 8) + '01', -1); drawCal(); });
+  $('cal-next').addEventListener('click', () => { CAL.anchor = CAL.view === 'week' ? V.add(CAL.anchor, 7) : V.add(CAL.anchor.slice(0, 8) + '28', 7); drawCal(); });
+  $('cal-today').addEventListener('click', () => { CAL.anchor = TODAY; drawCal(); });
+  $('cal-type').addEventListener('change', (ev) => { CAL.type = ev.target.value; drawCal(); });
+  $('cal-place').addEventListener('change', (ev) => { CAL.place = ev.target.value; drawCal(); });
 
   // ─────────────── Kinh doanh (BC1) ───────────────
   function kinhDoanh(x) {

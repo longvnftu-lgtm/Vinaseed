@@ -78,14 +78,17 @@
       { l: 'Lịch Ban TGĐ hôm nay', v: f.int(evToday.length), tone: 'brown', s: `${V.wd(TODAY)}, ${f.dmyy(TODAY)}` },
       { l: 'Chờ Chủ tịch duyệt', v: f.int(forCT.length), tone: 'gold', s: `${f.int(urgent)} hồ sơ gấp` },
     ]);
-    V.list($('dh-approvals'), forCT.slice(0, 6).map((a) => ({
+    $('dh-approvals-n').textContent = f.int(forCT.length);
+    V.list($('dh-approvals'), forCT.map((a) => ({
       t: a.title, m: `${a.id} · ${a.dept} · ${V.name(a.submitter)}${a.amount ? ' · ' + f.bn(a.amount / 1e9) : ''}`,
       r: [V.bool(a.urgent) ? V.tag('Gấp', 'late') : '', `chờ ${f.int(a.waiting_days)} ngày`].filter(Boolean),
     })), 'Không có hồ sơ chờ duyệt');
     $('dh-focus-note').textContent = 'Chưa xong, hạn trong kỳ ' + V.periodLabel(x) + ' và việc quá hạn';
-    V.list($('dh-focus'), focus.slice(0, 7).map((t) => ({ t: t.title, m: `${V.name(t.assignee)} · ${t.dept}`, r: [V.tag(t.late ? `Quá hạn ${t.late} ngày` : t.track, STCLS[t.track]), 'hạn ' + f.dmy(t.deadline)] })), 'Không có việc trọng tâm trong kỳ');
+    $('dh-focus-n').textContent = f.int(focus.length);
+    V.list($('dh-focus'), focus.map((t) => ({ t: t.title, m: `${V.name(t.assignee)} · ${t.dept}`, r: [V.tag(t.late ? `Quá hạn ${t.late} ngày` : t.track, STCLS[t.track]), 'hạn ' + f.dmy(t.deadline)] })), 'Không có việc trọng tâm trong kỳ');
+    $('dh-late-n').textContent = f.int(slow.length + overdue.length);
     V.list($('dh-late'), slow.map((p) => ({ t: p.name, m: `Dự án · ${V.name(p.owner)} · thực tế ${p.progress}% / kế hoạch ${p.plan}%`, r: [V.tag(Number(p.late_days) ? `Trễ mốc ${p.late_days} ngày` : 'Chậm', 'late')] }))
-      .concat(overdue.slice(0, 6).map((t) => ({ t: t.title, m: `${V.name(t.assignee)} · ${t.dept}`, r: [V.tag(`Quá hạn ${t.late} ngày`, 'late')] }))), 'Không có việc chậm');
+      .concat(overdue.map((t) => ({ t: t.title, m: `${V.name(t.assignee)} · ${t.dept}`, r: [V.tag(`Quá hạn ${t.late} ngày`, 'late')] }))), 'Không có việc chậm');
     calendar(x, events);
     const depts = [...new Set(tasks.map((t) => t.dept))];
     V.legend('dh-dept-legend', ST.map((s) => [STC[s], s]));
@@ -274,7 +277,7 @@
       { k: 'staff', f: (r) => V.name(r.staff) }, { k: 'n', n: 1, f: (r) => f.int(r.n) }, { k: 'inr', n: 1, f: (r) => f.pct(r.inr / r.n) },
       { k: 'ord', n: 1, f: (r) => f.int(r.ord) }, { k: 'km', n: 1, f: (r) => f.int(r.km) }, { k: 'min', n: 1, f: (r) => f.int(r.min) },
     ], { sort: 1, dir: -1, onRow: (r) => dash.setParams({ person: x.person === r.staff ? null : r.staff, dept: 'Khối Kinh doanh' }) });
-    V.list($('dl-stale'), stale.slice(0, 8).map((d) => ({ t: d.dealer, m: `${d.province} · ${V.name(d.owner)}`, r: [V.tag(d.gap === 999 ? 'Chưa ghé' : `${d.gap} ngày`, d.gap > 20 ? 'late' : 'soon')] })), 'Mọi đại lý chính thức đều được ghé trong 10 ngày');
+    V.list($('dl-stale'), stale.map((d) => ({ t: d.dealer, m: `${d.province} · ${V.name(d.owner)}`, r: [V.tag(d.gap === 999 ? 'Chưa ghé' : `${d.gap} ngày`, d.gap > 20 ? 'late' : 'soon')] })), 'Mọi đại lý chính thức đều được ghé trong 10 ngày');
     V.table('dl-table', dl, [
       { k: 'dealer_id' }, { k: 'dealer' }, { k: 'province' }, { k: 'status' },
       { k: 'visits_in_route', n: 1, f: (d) => f.int(d.visits_in_route) }, { k: 'visits_off_route', n: 1, f: (d) => f.int(d.visits_off_route) },

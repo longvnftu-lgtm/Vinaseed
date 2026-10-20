@@ -67,7 +67,9 @@
 .vs-tip .h { color: var(--cds-text-secondary); margin-bottom: 2px; }
 .vs-tip i { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 5px; }
 
-.vs-list { display: flex; flex-direction: column; min-height: 120px; }
+.vs-list { display: flex; flex-direction: column; min-height: 120px; max-height: 440px; overflow-y: auto; padding-right: 4px; }
+.vs-count { display: inline-block; min-width: 1.6em; text-align: center; font-size: var(--cds-font-size-caption); font-weight: 700; color: #FFFFFF; background: var(--vs-green); border-radius: 999px; padding: 1px 8px; vertical-align: 2px; margin-left: 4px; }
+.vs-count:empty { display: none; }
 .vs-li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 10px; padding: 8px 0; border-top: 1px solid var(--color-border-line); }
 .vs-li:first-child { border-top: 0; }
 .vs-li .t { font-weight: 600; font-size: var(--cds-font-size-body); }
@@ -171,9 +173,9 @@
     <p class="vs-lead" id="dh-lead">—</p>
     <div class="vs-kpis" id="dh-kpis" data-source="tasks projects events approvals"></div>
     <div class="vs-grid">
-      <article class="vs-card" id="dh-approvals-card"><h2>Chờ Chủ tịch phê duyệt</h2><p class="vs-note">Tờ trình đang ở bước B3, gấp lên trước</p><div class="vs-list" id="dh-approvals" data-source="approvals"></div></article>
-      <article class="vs-card" id="dh-focus-card"><h2>Việc trọng tâm</h2><p class="vs-note" id="dh-focus-note">Chưa xong, hạn trong kỳ</p><div class="vs-list" id="dh-focus" data-source="tasks"></div></article>
-      <article class="vs-card" id="dh-late-card"><h2>Việc và dự án chậm tiến độ</h2><p class="vs-note">Tính đến ngày chốt số liệu</p><div class="vs-list" id="dh-late" data-source="tasks projects"></div></article>
+      <article class="vs-card" id="dh-approvals-card"><h2>Chờ Chủ tịch phê duyệt <span class="vs-count" id="dh-approvals-n"></span></h2><p class="vs-note">Tờ trình đang ở bước B3, gấp lên trước</p><div class="vs-list" id="dh-approvals" data-source="approvals"></div></article>
+      <article class="vs-card" id="dh-focus-card"><h2>Việc trọng tâm <span class="vs-count" id="dh-focus-n"></span></h2><p class="vs-note" id="dh-focus-note">Chưa xong, hạn trong kỳ</p><div class="vs-list" id="dh-focus" data-source="tasks"></div></article>
+      <article class="vs-card" id="dh-late-card"><h2>Việc và dự án chậm tiến độ <span class="vs-count" id="dh-late-n"></span></h2><p class="vs-note">Tính đến ngày chốt số liệu</p><div class="vs-list" id="dh-late" data-source="tasks projects"></div></article>
       <article class="vs-card wide" id="dh-cal-card">
         <h2>Lịch công tác Ban TGĐ</h2>
         <p class="vs-note">Lọc theo lãnh đạo, mục đích, địa điểm; bộ lọc phòng ban và nhân sự chung cũng áp dụng. Nhấp một lịch để xem chi tiết.</p>

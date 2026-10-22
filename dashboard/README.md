@@ -36,3 +36,10 @@ AI hỏi đáp ở bản demo là mô phỏng theo luật, trả lời trên d�
 Thay `data.js` bằng dữ liệu xuất từ Data Warehouse theo đúng cấu trúc
 (`departments`, `people`, `tasks`, `projects`, `events`, `approvals`; xem tab *Trường dữ liệu*).
 Sinh lại dữ liệu demo: `python3 dashboard/generate_demo_data.py`.
+
+## Bản online trên GitHub Pages
+
+- Nguồn trang: `dashboard/online/` (giống bản artifact); khung chạy độc lập: `dashboard/site/` (`dash-shim.js` thay runtime, `tokens.css`, d3 7.9.0).
+- Đóng gói: `node dashboard/site/build.js` → thư mục `docs/` (trang tĩnh, dữ liệu mẫu đọc từ `docs/data/*.json`).
+- Bật Pages: Settings → Pages → Source "Deploy from a branch" → chọn nhánh chứa `docs/`, thư mục `/docs`.
+- Bộ lọc được ghi lên URL (`?period=week&dept=…#van-phong`) nên có thể gửi link đúng góc nhìn.

@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Base 2.0 cho Vinaseed — Đề xuất sơ bộ</title>
+<link rel="stylesheet" href="assets/fonts.css">
+<style>
+:root{
+  --blue:#1A6BF0; --blue-d:#0B3A8C; --navy:#0B2148; --blue-s:#EAF1FE;
+  --green:#0E9F4B; --green-d:#0A6B34; --leaf:#7CC242; --green-s:#E8F6EE;
+  --ink:#13213A; --muted:#5A6A80; --line:#DCE4EE; --soft:#F5F8FC; --amber:#F2A93B; --red:#E2513E;
+  --grad:linear-gradient(115deg,#1A6BF0 0%,#1288B8 48%,#0E9F4B 100%);
+}
+@page{size:A4;margin:0}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#fff}
+body{font-family:'Be Vietnam Pro',sans-serif;color:var(--ink);font-size:9.6pt;line-height:1.5;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{width:210mm;height:297mm;position:relative;overflow:hidden;padding:16mm 15mm 16mm;page-break-after:always;background:#fff}
+.page:last-child{page-break-after:auto}
+svg.i{width:1em;height:1em;stroke-width:2;vertical-align:-.15em}
+
+/* running head & foot */
+.head{position:absolute;top:8mm;left:15mm;right:15mm;display:flex;justify-content:space-between;align-items:center;font-size:7pt;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.brandpair{display:flex;align-items:center;gap:6px;font-weight:700;letter-spacing:0;text-transform:none;font-size:8pt}
+.brandpair .b{color:var(--blue)} .brandpair .v{color:var(--green)} .brandpair .x{color:#9AA8BA;font-weight:400}
+.foot{position:absolute;bottom:7mm;left:15mm;right:15mm;display:flex;justify-content:space-between;font-size:7pt;color:var(--muted);border-top:1px solid var(--line);padding-top:2.2mm}
+.foot b{color:var(--ink)}
+.gradbar{position:absolute;left:0;right:0;top:0;height:3.2mm;background:var(--grad)}
+
+/* section titles */
+.sec{display:flex;align-items:flex-end;gap:5mm;margin:4mm 0 2.5mm}
+.sec .n{font-size:34pt;font-weight:800;line-height:.9;color:var(--blue)}
+.sec h2{font-size:19pt;font-weight:700;line-height:1.15;letter-spacing:-.01em}
+.sec .k{font-size:7.2pt;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;font-weight:600;margin-bottom:1mm}
+.lead{font-size:10.4pt;color:#33445C;max-width:150mm;margin-bottom:6mm}
+.lead b{color:var(--ink)}
+
+/* chips */
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:7pt;font-weight:600;border-radius:20px;padding:1.6px 8px;white-space:nowrap}
+.chip.b{background:var(--blue-s);color:var(--blue-d)} .chip.g{background:var(--green-s);color:var(--green-d)}
+.chip.w{background:#fff;color:var(--ink);box-shadow:0 0 0 1px var(--line)}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:3px}
+.flow .ar{color:#9AA8BA;font-size:8pt}
+
+/* ───────── cover ───────── */
+.cover{padding:0}
+.cover .top{height:158mm;background:var(--navy);position:relative;overflow:hidden;color:#fff;padding:14mm 15mm}
+.cover .top::before{content:"";position:absolute;inset:0;background:radial-gradient(120mm 90mm at 105% 110%,rgba(14,159,75,.85),transparent 60%),radial-gradient(110mm 80mm at -10% -20%,rgba(26,107,240,.9),transparent 60%)}
+.cover .top>*:not(.hero){position:relative}
+.cover .logos{display:flex;align-items:center;gap:8px;font-weight:800;font-size:12pt}
+.cover .logos .b{color:#8DB8FF}.cover .logos .v{color:#8BE0A9}.cover .logos .x{color:rgba(255,255,255,.5);font-weight:300}
+.cover .kick{margin-top:12mm;font-size:8pt;letter-spacing:.18em;font-weight:600;color:#BFD4F6}
+.cover h1{font-size:30pt;line-height:1.1;font-weight:800;letter-spacing:-.02em;margin-top:3mm;max-width:175mm}
+.cover h1 em{font-style:normal;color:#8BE0A9}
+.cover .sub{margin-top:5mm;font-size:10.5pt;color:#D6E2F5;max-width:150mm;line-height:1.5}
+.cover .hero{position:absolute;left:15mm;right:15mm;top:98mm}
+.cpipe{display:grid;grid-template-columns:repeat(5,1fr);gap:3mm;position:relative}
+.cpipe::before{content:"";position:absolute;left:8%;right:8%;top:9mm;height:2px;background:linear-gradient(90deg,#8DB8FF,#8BE0A9)}
+.cpipe>div{text-align:center;position:relative}
+.cpipe .ic{width:18mm;height:18mm;margin:0 auto 3mm;border-radius:50%;display:grid;place-items:center;font-size:20pt;color:#fff;background:#13306A;border:1.5px solid rgba(141,184,255,.7)}
+.cpipe .on .ic{background:linear-gradient(135deg,#1A6BF0,#0E9F4B);border:0}
+.cpipe b{display:block;font-size:9.4pt;line-height:1.25}
+.cpipe small{display:block;font-size:7pt;color:#BFD4F6;line-height:1.35;margin-top:1mm}
+.cover .bottom{padding:10mm 15mm 0}
+.meta{display:grid;grid-template-columns:repeat(4,1fr);gap:5mm;border-bottom:1px solid var(--line);padding-bottom:7mm}
+.meta div small{display:block;font-size:6.8pt;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;font-weight:600;margin-bottom:1mm}
+.meta div{font-size:9pt;font-weight:600;line-height:1.35}
+.toc{display:grid;grid-template-columns:repeat(4,1fr);gap:5mm;margin-top:7mm}
+.toc div{border-top:3px solid var(--blue);padding-top:3mm}
+.toc div:nth-child(even){border-color:var(--green)}
+.toc b{display:block;font-size:20pt;font-weight:800;color:var(--ink);line-height:1}
+.toc span{font-size:9pt;font-weight:600;display:block;margin-top:2mm}
+.toc small{font-size:7.6pt;color:var(--muted);display:block;margin-top:1mm;line-height:1.4}
+.cover .note{margin-top:9mm;display:flex;gap:4mm;align-items:center;background:var(--soft);border-radius:8px;padding:4mm 5mm;font-size:8.6pt;color:#33445C}
+.cover .note .ic{flex:none;width:26px;height:26px;border-radius:50%;background:var(--grad);display:grid;place-items:center;color:#fff}
+
+/* ───────── page 2 ───────── */
+.goals{display:grid;grid-template-columns:repeat(4,1fr);gap:4mm;margin-bottom:7mm}
+.goal{background:var(--soft);border-radius:9px;padding:4mm;display:flex;flex-direction:column;gap:2mm}
+.goal .ic{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;color:#fff;font-size:14pt;background:var(--blue)}
+.goal:nth-child(even) .ic{background:var(--green)}
+.goal b{font-size:8.8pt;line-height:1.3}
+.h3{font-size:8pt;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 3mm;display:flex;align-items:center;gap:3mm}
+.h3::after{content:"";flex:1;height:1px;background:var(--line)}
+.reqs{display:grid;grid-template-columns:repeat(3,1fr);gap:4mm}
+.req{border:1px solid var(--line);border-radius:9px;padding:4mm 4mm 3.5mm;position:relative}
+.req .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:2.5mm}
+.req .ic{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:14pt;color:var(--blue);background:var(--blue-s)}
+.req:nth-child(even) .ic{color:var(--green);background:var(--green-s)}
+.req .no{font-size:15pt;font-weight:800;color:#D3DCE8}
+.req h4{font-size:10pt;font-weight:700;line-height:1.25;margin-bottom:1.2mm}
+.req p{font-size:8pt;color:var(--muted);line-height:1.45;margin-bottom:2.5mm;min-height:23pt}
+.position{margin-top:7mm;border-radius:12px;background:var(--grad);color:#fff;padding:6mm 7mm;display:grid;grid-template-columns:62mm 1fr;gap:6mm;align-items:center}
+.position .q small{font-size:7pt;letter-spacing:.16em;font-weight:600;opacity:.8}
+.position .q h3{font-size:16pt;line-height:1.2;font-weight:800;margin-top:1.5mm}
+.position .q p{font-size:8.2pt;opacity:.9;margin-top:2mm}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.step{background:rgba(255,255,255,.14);padding:3.5mm 2mm 3.5mm 6mm;clip-path:polygon(0 0,88% 0,100% 50%,88% 100%,0 100%,12% 50%);text-align:center}
+.step:first-child{clip-path:polygon(0 0,88% 0,100% 50%,88% 100%,0 100%);padding-left:2mm}
+.step .ic{font-size:15pt;display:block;margin-bottom:1mm}
+.step b{font-size:8.6pt;display:block}
+.step small{font-size:6.8pt;opacity:.85;display:block;line-height:1.3}
+
+/* ───────── page 3: architecture ───────── */
+.arch{display:grid;grid-template-columns:1fr 52mm;gap:7mm}
+.layer{position:relative;border-radius:10px;padding:3.5mm 4mm}
+.lab{font-size:6.6pt;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 1.5mm 1mm;display:flex;gap:2mm;align-items:center}
+.lab i{font-style:normal;color:#fff;background:var(--ink);border-radius:3px;padding:0 4px;letter-spacing:.04em}
+.l4{background:var(--navy);color:#fff;display:flex;align-items:center;gap:4mm}
+.l4 .who{display:flex;align-items:center;gap:3mm;flex:none}
+.avatar{width:34px;height:34px;border-radius:50%;background:var(--grad);display:grid;place-items:center;font-size:15pt;color:#fff}
+.l4 .who b{font-size:10pt;display:block;line-height:1.2}.l4 .who small{font-size:7pt;opacity:.75}
+.l4 .blocks{display:grid;grid-template-columns:repeat(5,1fr);gap:1.6mm;flex:1}
+.l4 .blocks span{background:rgba(255,255,255,.1);border-radius:6px;font-size:6.4pt;text-align:center;padding:2mm 1mm;line-height:1.25}
+.l4 .blocks span:first-child{background:var(--green)}
+.conn{height:6mm;display:flex;justify-content:space-around;padding:0 18mm}
+.conn i{width:2px;background:repeating-linear-gradient(var(--blue) 0 3px,transparent 3px 6px)}
+.conn.g i{background:repeating-linear-gradient(var(--green) 0 3px,transparent 3px 6px)}
+.l3{display:grid;grid-template-columns:repeat(3,1fr);gap:3mm;padding:0}
+.ai{border:1.5px solid var(--blue);border-radius:10px;padding:3mm;display:flex;gap:2.5mm;align-items:center;background:#fff}
+.ai .ic{width:28px;height:28px;border-radius:8px;background:var(--blue-s);color:var(--blue);display:grid;place-items:center;font-size:13pt;flex:none}
+.ai b{font-size:8.6pt;display:block;line-height:1.2}.ai small{font-size:6.8pt;color:var(--muted)}
+.l2{background:var(--grad);color:#fff;text-align:center;padding:4.5mm}
+.l2 b{font-size:12pt;display:block}
+.l2 small{font-size:7.6pt;opacity:.92}
+.l2 .pills{display:flex;justify-content:center;gap:2mm;margin-top:2mm}
+.l2 .pills span{background:rgba(255,255,255,.18);border-radius:20px;padding:.5mm 3mm;font-size:7pt;font-weight:600}
+.l1{display:grid;grid-template-columns:repeat(6,1fr);gap:2mm;padding:0}
+.app{background:var(--soft);border-radius:9px;text-align:center;padding:3mm 1mm}
+.app .ic{font-size:15pt;color:var(--green)}
+.app:nth-child(odd) .ic{color:var(--blue)}
+.app b{display:block;font-size:8.2pt}.app small{font-size:6.6pt;color:var(--muted);display:block;line-height:1.3}
+.l0{border:1.5px dashed #B9C6D6;text-align:center;font-size:8pt;color:#33445C;padding:2.6mm}
+.l0 b{color:var(--ink)}
+.side .pr{display:flex;gap:3mm;margin-bottom:6mm}
+.side .pr .ic{width:30px;height:30px;flex:none;border-radius:50%;background:var(--green-s);color:var(--green);display:grid;place-items:center;font-size:13pt}
+.side .pr:nth-child(odd) .ic{background:var(--blue-s);color:var(--blue)}
+.side .pr b{font-size:9pt;display:block;line-height:1.25;margin-bottom:1mm}
+.side .pr p{font-size:7.8pt;color:var(--muted);line-height:1.45}
+.compare{margin-top:7mm;display:grid;grid-template-columns:1fr 1fr;gap:4mm}
+.compare>div{border-radius:10px;padding:4mm 5mm}
+.compare .before{background:#FBF1EF}
+.compare .after{background:var(--green-s)}
+.compare h5{font-size:9pt;margin-bottom:2mm;display:flex;align-items:center;gap:2mm}
+.compare .before h5{color:#B23E2E}.compare .after h5{color:var(--green-d)}
+.compare ul{list-style:none;font-size:8.2pt;color:#33445C}
+.compare li{padding-left:4mm;position:relative;margin-bottom:1mm}
+.compare li::before{content:"";position:absolute;left:0;top:.55em;width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.5}
+
+/* ───────── phương pháp ───────── */
+.pipe{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-bottom:6mm;position:relative}
+.pipe::before{content:"";position:absolute;left:10%;right:10%;top:7.5mm;height:2px;background:var(--grad)}
+.node{text-align:center;position:relative}
+.node .ic{width:15mm;height:15mm;margin:0 auto 2mm;border-radius:50%;background:#fff;border:2px solid var(--blue);color:var(--blue);display:grid;place-items:center;font-size:17pt}
+.node:nth-child(even) .ic{border-color:var(--green);color:var(--green)}
+.node.on .ic{background:var(--grad);border:0;color:#fff}
+.node b{display:block;font-size:9pt;line-height:1.25}
+.node small{font-size:7.2pt;color:var(--muted)}
+.steps5{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.srow{display:grid;grid-template-columns:11mm 44mm 1fr 34mm;gap:4mm;align-items:center;padding:3.6mm 4mm;border-top:1px solid var(--line)}
+.srow.hd{border-top:0;background:var(--soft);padding:2mm 4mm;font-size:6.8pt;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.sn{width:9mm;height:9mm;border-radius:50%;background:var(--grad);color:#fff;font-weight:800;display:grid;place-items:center;font-size:10pt}
+.st b{display:block;font-size:9.6pt;line-height:1.25}
+.st small{font-size:7.4pt;color:var(--muted);line-height:1.35;display:block;margin-top:.6mm}
+.srow ul{list-style:none;font-size:7.9pt;color:#33445C}
+.srow li{position:relative;padding-left:3.5mm;margin:.4mm 0;line-height:1.4}
+.srow li::before{content:"";position:absolute;left:0;top:.6em;width:4px;height:4px;border-radius:50%;background:var(--blue)}
+.so{font-size:7.6pt;font-weight:700;color:var(--green-d);background:var(--green-s);border-radius:7px;padding:2mm 2.5mm;line-height:1.35}
+.kpit{width:100%;border-collapse:collapse;font-size:8pt}
+.kpit th{text-align:left;font-size:6.8pt;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700;padding:1.8mm 2.5mm;background:var(--soft)}
+.kpit td{padding:2mm 2.5mm;border-top:1px solid var(--line);vertical-align:middle;color:#33445C}
+.kpit td:first-child{width:36mm}
+.kpit td:nth-child(n+3),.kpit tr td[rowspan]~td:nth-child(n+2){white-space:nowrap}
+.grp{display:inline-flex;align-items:center;gap:1.6mm;font-weight:700;font-size:8.2pt}
+.grp.b{color:var(--blue-d)}.grp.g{color:var(--green-d)}
+.princ{display:grid;grid-template-columns:repeat(4,1fr);gap:3mm}
+.princ>div{background:var(--soft);border-radius:10px;padding:3.5mm}
+.princ .ic{font-size:14pt;color:var(--blue)}
+.princ>div:nth-child(even) .ic{color:var(--green)}
+.princ b{display:block;font-size:8.6pt;line-height:1.25;margin:1.2mm 0 .8mm}
+.princ small{font-size:7.4pt;color:var(--muted);line-height:1.4;display:block}
+.road{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+.ph{padding:3.5mm 7mm 3.5mm 8mm;background:var(--soft);clip-path:polygon(0 0,92% 0,100% 50%,92% 100%,0 100%,6% 50%)}
+.ph:first-child{clip-path:polygon(0 0,92% 0,100% 50%,92% 100%,0 100%);padding-left:4mm}
+.ph.on{background:var(--grad);color:#fff}
+.ph span{font-size:6.8pt;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--blue)}
+.ph.on span{color:#DDEBFF}
+.ph b{display:block;font-size:8.8pt;line-height:1.3;margin-top:.6mm}
+.ph small{font-size:7.2pt;color:var(--muted);line-height:1.35;display:block}
+.ph.on small{color:#E4EEFA}
+
+/* ───────── use cases (chữ) ───────── */
+.tline{display:grid;grid-template-columns:repeat(7,1fr);gap:2mm;margin:0 0 5mm}
+.tline div{border-top:3px solid var(--blue);padding-top:1.6mm;font-size:7pt;line-height:1.3;color:var(--muted)}
+.tline div:nth-child(even){border-color:var(--green)}
+.tline b{display:block;font-size:8pt;color:var(--ink)}
+.ucs{display:grid;grid-template-columns:1fr 1fr;gap:5mm}
+.uc{border:1px solid var(--line);border-radius:12px;padding:4.5mm 5mm;border-top:3px solid var(--blue)}
+.uc:nth-child(even){border-top-color:var(--green)}
+.uc.wide{grid-column:1/-1}
+.uc.wide dl{grid-template-columns:24mm 1fr}
+.uh{display:flex;gap:3mm;align-items:flex-start;margin-bottom:3mm}
+.num{width:24px;height:24px;flex:none;border-radius:50%;background:var(--grad);color:#fff;font-weight:800;font-size:9pt;display:grid;place-items:center;margin-top:.5mm}
+.time{font-size:7.6pt;font-weight:700;color:var(--blue);display:block}
+.uh h3{font-size:11.5pt;line-height:1.25;font-weight:700}
+.uc dl{display:grid;grid-template-columns:21mm 1fr;gap:2.2mm 3mm;font-size:8pt}
+.uc dt{font-size:6.8pt;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-top:.4mm}
+.uc dd{color:#33445C;line-height:1.45}
+.uc dt:nth-of-type(3){color:var(--green-d)}
+.uc dd:last-of-type{color:var(--ink);font-weight:600}
+.mtx{width:100%;border-collapse:collapse;font-size:8pt}
+.mtx th{font-size:7pt;font-weight:700;color:var(--muted);padding:1.8mm 1mm;background:var(--soft)}
+.mtx td{border-top:1px solid var(--line);padding:1.8mm 1mm;text-align:center;color:var(--blue);font-size:9pt}
+.mtx td:first-child{text-align:left;color:var(--ink);font-weight:600;font-size:8pt;padding-left:2.5mm}
+.mtx td:last-child{color:var(--green)}
+
+/* ───────── PoC ───────── */
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:5mm}
+.opt{border-radius:14px;padding:5.5mm;position:relative;overflow:hidden}
+.opt.a{background:var(--blue-s)}
+.opt.b{background:var(--navy);color:#fff}
+.opt.b::before{content:"";position:absolute;inset:0;background:radial-gradient(70mm 60mm at 110% 120%,rgba(14,159,75,.75),transparent 60%)}
+.opt>*{position:relative}
+.opt .hd{display:flex;justify-content:space-between;align-items:center}
+.opt .code{font-size:7.4pt;font-weight:700;letter-spacing:.14em;color:var(--blue)}
+.opt.b .code{color:#8DB8FF}
+.price{font-size:7.4pt;font-weight:800;letter-spacing:.08em;border-radius:20px;padding:1mm 3.5mm;background:var(--green);color:#fff}
+.opt.b .price{background:var(--amber);color:var(--navy)}
+.opt h3{font-size:17pt;font-weight:800;margin-top:2mm;line-height:1.15}
+.opt .what{font-size:8.6pt;margin-top:1.5mm;color:#33445C}
+.opt.b .what{color:#C9D7EE}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5mm;margin:4.5mm 0}
+.kpi{background:#fff;border-radius:9px;padding:2.6mm 3mm}
+.opt.b .kpi{background:rgba(255,255,255,.1)}
+.kpi b{font-size:12.5pt;font-weight:800;display:block;line-height:1.15;color:var(--blue-d);white-space:nowrap}
+.opt.b .kpi b{color:#fff}
+.kpi small{font-size:6.8pt;color:var(--muted);line-height:1.3;display:block}
+.opt.b .kpi small{color:#AFC2E0}
+.opt ul{list-style:none;font-size:8pt}
+.opt li{padding-left:5mm;position:relative;margin-bottom:1.3mm;line-height:1.4}
+.opt li svg{position:absolute;left:0;top:.2em;width:9pt;height:9pt;color:var(--green)}
+.opt.b li svg{color:var(--leaf)}
+.tl{display:grid;gap:1.5mm;margin-top:4mm}
+.tl .row{display:grid;grid-template-columns:8mm 1fr;align-items:center;gap:2mm;font-size:7.4pt}
+.tl .row b{font-size:7pt;color:var(--blue)}
+.opt.b .tl .row b{color:var(--amber)}
+.tl .bar{height:5.5mm;border-radius:4px;background:#fff;display:flex;align-items:center;padding:0 2.5mm;font-weight:600;box-shadow:0 0 0 1px var(--line)}
+.opt.b .tl .bar{background:rgba(255,255,255,.12);box-shadow:none}
+.scope{margin-top:6mm;display:grid;grid-template-columns:repeat(4,1fr);gap:3mm}
+.sc{border:1px solid var(--line);border-radius:10px;padding:3.2mm}
+.sc .ic{font-size:13pt;color:var(--blue)}
+.sc:nth-child(even) .ic{color:var(--green)}
+.sc b{display:block;font-size:8.6pt;margin:1mm 0 .6mm;line-height:1.25}
+.sc small{font-size:7.4pt;color:var(--muted);line-height:1.4;display:block}
+.outscope{margin-top:3mm;font-size:7.8pt;color:var(--muted);display:flex;gap:2mm;align-items:baseline}
+.outscope b{color:#B23E2E;font-size:7pt;letter-spacing:.1em;white-space:nowrap}
+.commit{margin-top:6mm;border-radius:12px;background:var(--grad);color:#fff;padding:5mm 6mm}
+.commit h4{font-size:12.5pt;font-weight:800;display:flex;align-items:center;gap:2.5mm}
+.commit .cols{display:grid;grid-template-columns:repeat(3,1fr);gap:5mm;margin-top:3mm}
+.commit .cols b{display:block;font-size:8.8pt;margin-bottom:.8mm}
+.commit .cols p{font-size:7.8pt;opacity:.92;line-height:1.45}
+.commit .cols .n{font-size:7pt;font-weight:800;opacity:.75;letter-spacing:.1em}
+
+
+/* ───────── bản rút gọn presale ───────── */
+.pipe .node b{margin-top:0}
+.cols5{display:grid;grid-template-columns:repeat(5,1fr);gap:3mm;margin-top:-2mm}
+.cols5>div{background:var(--soft);border-radius:10px;padding:3mm;display:flex;flex-direction:column;justify-content:space-between;gap:2.5mm}
+.cols5 p{font-size:7.6pt;color:#33445C;line-height:1.45}
+.cols5 .so{align-self:flex-start}
+.blocks5{display:grid;grid-template-columns:repeat(5,1fr);gap:3mm}
+.blocks5>div{border:1px solid var(--line);border-radius:10px;padding:3.5mm 3mm;text-align:center;color:var(--blue);font-size:14pt}
+.blocks5>div:nth-child(odd){color:var(--green)}
+.blocks5>div.on{background:var(--grad);color:#fff;border:0}
+.blocks5 b{display:block;font-size:8.4pt;color:var(--ink);margin-top:1mm}
+.blocks5 .on b{color:#fff}
+.uct{width:100%;border-collapse:collapse;font-size:8.4pt}
+.uct th{text-align:left;font-size:6.8pt;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700;padding:2.2mm 3mm;background:var(--soft)}
+.uct td{padding:4.2mm 3mm;border-top:1px solid var(--line);vertical-align:top;color:#33445C;line-height:1.45}
+.uct td:first-child{width:40mm}
+.uct td:nth-child(3){width:34mm;color:var(--blue-d);font-weight:600;font-size:7.8pt}
+.uct td:last-child{width:44mm;color:var(--green-d);font-weight:600}
+.uct .t{display:block;font-size:7.4pt;font-weight:700;color:var(--blue)}
+.uct b{color:var(--ink);font-size:9pt}
+.opts2{display:grid;grid-template-columns:1fr 1fr;gap:5mm}
+.opts2 .kpis{margin:3.5mm 0 0}
+.prep{display:grid;grid-template-columns:repeat(3,1fr);gap:4mm}
+.prep>div{border:1px solid var(--line);border-radius:10px;padding:3.5mm 4mm}
+.ph3{font-size:9.2pt;font-weight:700;display:flex;align-items:center;gap:2mm;margin-bottom:2mm;color:var(--ink)}
+.ph3 svg{color:var(--blue)}
+.prep>div:nth-child(2) .ph3 svg{color:var(--green)}
+.prep ul{list-style:none;font-size:7.8pt;color:#33445C}
+.prep li{position:relative;padding-left:3.5mm;margin-bottom:1.2mm;line-height:1.45}
+.prep li::before{content:"";position:absolute;left:0;top:.6em;width:4px;height:4px;border-radius:50%;background:var(--blue)}
+.sess{width:100%;border-collapse:collapse;font-size:8.2pt}
+.sess th{text-align:left;font-size:6.8pt;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700;padding:2mm 3mm;background:var(--soft)}
+.sess td{padding:2.2mm 3mm;border-top:1px solid var(--line);color:#33445C}
+.sess td:nth-child(n+2){width:52mm;color:var(--blue-d);font-weight:600}
+.sess td:last-child{color:var(--green-d)}
+.commit p{font-size:8.2pt;opacity:.95;margin-top:1.5mm;line-height:1.5}
+
+/* ───────── 4 use case demo ───────── */
+.ucd{display:grid;grid-template-columns:1fr 1fr;gap:5mm}
+.ucd .card{border:1px solid var(--line);border-top:3px solid var(--blue);border-radius:12px;padding:5mm;display:flex;flex-direction:column;gap:3mm;min-height:96mm}
+.ucd .card:nth-child(2),.ucd .card:nth-child(3){border-top-color:var(--green)}
+.ucd .ch{display:flex;gap:3mm;align-items:flex-start}
+.ucd .ch .ic{flex:none;width:11mm;height:11mm;border-radius:10px;background:var(--blue-s);color:var(--blue);display:grid;place-items:center;font-size:15pt}
+.ucd .card:nth-child(2) .ch .ic,.ucd .card:nth-child(3) .ch .ic{background:var(--green-s);color:var(--green)}
+.ucd h3{font-size:11.5pt;line-height:1.25;margin-bottom:1.2mm}
+.flow3{list-style:none;counter-reset:s;display:grid;gap:1.6mm}
+.flow3 li{counter-increment:s;position:relative;padding:2mm 2.5mm 2mm 9mm;background:var(--soft);border-radius:7px;font-size:7.9pt;line-height:1.4;color:#33445C}
+.flow3 li::before{content:counter(s);position:absolute;left:2.5mm;top:2mm;width:4.4mm;height:4.4mm;border-radius:50%;background:var(--blue);color:#fff;font-size:6.6pt;font-weight:700;display:grid;place-items:center}
+.flow3 li b{color:var(--blue-d)}
+.ucd dl{display:grid;grid-template-columns:15mm 1fr;gap:1.4mm 2.5mm;font-size:7.9pt;margin-top:auto;padding-top:2.5mm;border-top:1px dashed var(--line)}
+.ucd dt{font-size:6.6pt;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-top:.4mm}
+.ucd dd{color:#33445C;line-height:1.4}
+.ucd dt:last-of-type{color:var(--green-d)}
+.ucd dd:last-of-type{color:var(--ink);font-weight:600}
+.ucd .ex{font-size:8.2pt;color:#33445C}
+.facts{list-style:none;display:grid;gap:1.6mm}
+.facts li{font-size:7.9pt;line-height:1.4;color:#33445C;padding-left:3.5mm;position:relative}
+.facts li::before{content:"";position:absolute;left:0;top:.6em;width:4px;height:4px;border-radius:50%;background:var(--green)}
+.facts b{color:var(--ink)}
+.qa{background:var(--soft);border-radius:9px;padding:3mm}
+.qa .q{font-size:8.6pt;font-weight:700;color:var(--blue-d);margin-bottom:1.5mm}
+.qa .a{font-size:7.9pt;color:#33445C;line-height:1.45;padding-left:3mm;border-left:2px solid var(--green)}
+.ucd .more{font-size:7.6pt;color:var(--muted);line-height:1.45}
+
+/* ───────── xem trên màn hình & thanh chỉnh sửa (không in ra) ───────── */
+@media screen{
+  html,body{background:#E6EBF2}
+  .page{margin:10mm auto;box-shadow:0 4px 24px rgba(11,33,72,.15)}
+}
+#editbar{position:fixed;top:12px;right:12px;z-index:99;display:flex;gap:6px}
+#editbar button{border:0;border-radius:8px;padding:8px 14px;font:600 13px 'Be Vietnam Pro',sans-serif;cursor:pointer;background:#fff;color:var(--ink);box-shadow:0 2px 8px rgba(11,33,72,.2)}
+#editbar button.on{background:var(--blue);color:#fff}
+body.editing .page:hover{outline:2px dashed rgba(26,107,240,.35)}
+@media print{#editbar{display:none}}
+</style>
+</head>
+<body>
+
+<!-- ═════════════ PAGE 1 · COVER ═════════════ -->
+<section class="page cover">
+  <div class="top">
+    <div class="logos"><span class="b">Base.vn</span><span class="x">×</span><span class="v">Vinaseed</span></div>
+    <div class="kick">ĐỀ XUẤT GIẢI PHÁP · BẢN SƠ BỘ</div>
+    <h1>Văn phòng điện tử <em>cho điều hành</em> Vinaseed</h1>
+    <p class="sub">Giải pháp Base 2.0: dữ liệu vận hành được chuẩn hoá về Data Warehouse, AI nhúng sẵn, Chủ tịch nắm toàn bộ vận hành trên một màn hình mỗi sáng.</p>
+
+    <div class="hero">
+      <div class="cpipe">
+        <div><span class="ic">@@plug@@</span><b>Nguồn dữ liệu</b><small>Meeting · Booking · E-office · Task · BPM · Project</small></div>
+        <div><span class="ic">@@filter@@</span><b>Chuẩn hoá</b><small>kết nối, làm sạch, danh mục chung</small></div>
+        <div><span class="ic">@@database@@</span><b>Data Warehouse</b><small>kho dữ liệu điều hành</small></div>
+        <div><span class="ic">@@sparkles@@</span><b>Lớp AI</b><small>chỉ số, hỏi đáp, cảnh báo</small></div>
+        <div class="on"><span class="ic">@@layout-dashboard@@</span><b>Executive Dashboard</b><small>một màn hình cho Chủ tịch</small></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom">
+    <div class="meta">
+      <div><small>Đơn vị đề xuất</small>Base.vn</div>
+      <div><small>Khách hàng</small>Tập đoàn Giống cây trồng Việt Nam (Vinaseed)</div>
+      <div><small>Đối tượng</small>Ban TGĐ, các PTGĐ, Trưởng/Phó phòng</div>
+      <div><small>Ngày lập</small>18/10/2026</div>
+    </div>
+    <div class="toc">
+      <div><b>01</b><span>Bài toán</span><small>6 yêu cầu, định vị là văn phòng điện tử</small></div>
+      <div><b>02</b><span>Phương pháp tiếp cận</span><small>Data Warehouse, AI nhúng, dashboard lãnh đạo</small></div>
+      <div><b>03</b><span>Use case demo</span><small>Họp & giao việc, duyệt giá, dự án, AI hỏi đáp</small></div>
+      <div><b>04</b><span>Phương pháp kiểm thử</span><small>Showcase hoặc PoC, khung chuẩn bị</small></div>
+    </div>
+    <div class="note"><div class="ic">@@target@@</div><div><b>Mục tiêu tài liệu:</b> thống nhất cách hiểu bài toán và chọn phương án kiểm chứng giải pháp trước khi trình Chủ tịch.</div></div>
+  </div>
+  <div class="foot" style="left:15mm;right:15mm"><span>Base.vn × Vinaseed · Đề xuất sơ bộ</span><b>01 / 05</b></div>
+</section>
+
+<!-- ═════════════ PAGE 2 · BÀI TOÁN ═════════════ -->
+<section class="page">
+  <div class="gradbar"></div>
+  <div class="head"><div class="brandpair"><span class="b">Base.vn</span><span class="x">×</span><span class="v">Vinaseed</span></div><span>01 · Bài toán</span></div>
+
+  <div class="sec" style="margin-top:6mm"><div class="n">01</div><div><div class="k">Yêu cầu của Vinaseed</div><h2>Bài toán điều hành, không phải phần mềm</h2></div></div>
+  <p class="lead">Vinaseed cần quản trị vận hành <b>xuyên suốt từ Chủ tịch HĐQT, Ban TGĐ tới phòng ban và chi nhánh</b>, chạy trên một hệ thống thay cho email, Zalo và Excel rời rạc.</p>
+
+  <div class="h3">4 mục tiêu</div>
+  <div class="goals">
+    <div class="goal"><div class="ic">@@users-round@@</div><b>Hệ thống xuyên suốt từ Ban lãnh đạo tới chi nhánh</b></div>
+    <div class="goal"><div class="ic">@@list-checks@@</div><b>Tự động giao việc, theo dõi, cảnh báo trễ hạn</b></div>
+    <div class="goal"><div class="ic">@@calendar-days@@</div><b>Số hoá lịch công tác của Ban Giám đốc</b></div>
+    <div class="goal"><div class="ic">@@layout-dashboard@@</div><b>Executive Dashboard mỗi sáng cho Chủ tịch</b></div>
+  </div>
+
+  <div class="h3">6 yêu cầu nghiệp vụ</div>
+  <div class="reqs">
+    <div class="req"><div class="top"><div class="ic">@@calendar-days@@</div><span class="no">01</span></div><h4>Lịch công tác & đặt chỗ</h4><p>Ai đi đâu, ai ở văn phòng; đặt phòng họp, xe; phân quyền xem.</p><span class="chip b">Meeting · Booking</span></div>
+    <div class="req"><div class="top"><div class="ic">@@presentation@@</div><span class="no">02</span></div><h4>Kết luận họp thành việc</h4><p>Biên bản, rút kết luận, tách đầu việc có người nhận, hạn, tiêu chí.</p><span class="chip g">Meeting AI · Task</span></div>
+    <div class="req"><div class="top"><div class="ic">@@workflow@@</div><span class="no">03</span></div><h4>Quy trình liên phòng ban</h4><p>Duyệt giá thu mua 3 bước, ký song song, có nhánh trả lại.</p><span class="chip b">BPM</span></div>
+    <div class="req"><div class="top"><div class="ic">@@folder-kanban@@</div><span class="no">04</span></div><h4>Dự án chiến lược</h4><p>Mốc trọng yếu, SLA, tiến độ theo dự án và theo thành viên.</p><span class="chip g">Project</span></div>
+    <div class="req"><div class="top"><div class="ic">@@bell-ring@@</div><span class="no">05</span></div><h4>Cảnh báo & nhắc việc</h4><p>Tự nhắc sắp đến hạn, trễ hạn qua thông báo và email.</p><span class="chip b">Toàn hệ thống</span></div>
+    <div class="req"><div class="top"><div class="ic">@@layout-dashboard@@</div><span class="no">06</span></div><h4>Executive Dashboard</h4><p>Việc trọng tâm, việc chậm, lịch Ban TGĐ, tờ trình chờ duyệt, hỏi đáp AI.</p><span class="chip g">Home · AI</span></div>
+  </div>
+
+  <div class="position">
+    <div class="q"><small>ĐỊNH VỊ</small><h3>6 yêu cầu, 1 bài toán: Văn phòng điện tử cho điều hành</h3><p>Không phải ERP hay phần mềm sản xuất, mà là luồng làm việc hằng ngày của Ban lãnh đạo.</p></div>
+    <div class="steps">
+      <div class="step"><span class="ic">@@file-text@@</span><b>Chỉ đạo</b><small>họp, văn bản</small></div>
+      <div class="step"><span class="ic">@@list-checks@@</span><b>Thực thi</b><small>việc, quy trình</small></div>
+      <div class="step"><span class="ic">@@bell-ring@@</span><b>Theo dõi</b><small>tiến độ, cảnh báo</small></div>
+      <div class="step"><span class="ic">@@layout-dashboard@@</span><b>Báo cáo</b><small>một màn hình</small></div>
+    </div>
+  </div>
+  <div class="foot"><span>Nguồn: Yêu cầu kỹ thuật dự án số hoá quản trị vận hành, Vinaseed, 10/2026</span><b>02 / 05</b></div>
+</section>
+
+<!-- ═════════════ PAGE 3 · PHƯƠNG PHÁP TIẾP CẬN ═════════════ -->
+<section class="page">
+  <div class="gradbar"></div>
+  <div class="head"><div class="brandpair"><span class="b">Base.vn</span><span class="x">×</span><span class="v">Vinaseed</span></div><span>02 · Phương pháp tiếp cận</span></div>
+
+  <div class="sec" style="margin-top:6mm"><div class="n">02</div><div><div class="k">Phương pháp tiếp cận</div><h2>Service hoá dữ liệu, Data Warehouse, AI nhúng</h2></div></div>
+  <p class="lead">Mỗi ứng dụng làm tốt việc của mình; dữ liệu được <b>chuẩn hoá về một kho chung</b>, AI và dashboard đọc từ cùng một nguồn, nên mọi nơi thấy cùng một con số.</p>
+
+  <div class="pipe">
+    <div class="node"><div class="ic">@@plug@@</div><b>Nguồn dữ liệu</b></div>
+    <div class="node"><div class="ic">@@filter@@</div><b>Chuẩn hoá</b></div>
+    <div class="node"><div class="ic">@@database@@</div><b>Data Warehouse</b></div>
+    <div class="node"><div class="ic">@@sparkles@@</div><b>Lớp AI</b></div>
+    <div class="node on"><div class="ic">@@layout-dashboard@@</div><b>Dashboard</b></div>
+  </div>
+  <div class="cols5">
+    <div><p>Meeting, Booking, E-office, Task, BPM, Project trên Base; sau này thêm báo cáo đơn vị, ERP.</p><span class="so">Bản đồ nguồn</span></div>
+    <div><p>Kết nối tự động; thống nhất danh mục tổ chức, nhân sự, dự án, trạng thái.</p><span class="so">Danh mục chuẩn</span></div>
+    <div><p>Dữ liệu tập trung theo chủ đề, có lịch sử, phân quyền theo cấp.</p><span class="so">Kho dữ liệu điều hành</span></div>
+    <div><p>Định nghĩa chỉ số thống nhất; hỏi đáp tiếng Việt có nguồn; tóm tắt, cảnh báo.</p><span class="so">Trợ lý AI</span></div>
+    <div><p>Một màn hình mỗi sáng; đi sâu từ chỉ số đến bản ghi gốc.</p><span class="so">Home của Chủ tịch</span></div>
+  </div>
+
+  <div class="h3" style="margin-top:7mm">Dashboard của Chủ tịch gồm 5 khối</div>
+  <div class="blocks5">
+    <div class="on">@@message-square-text@@<b>Hỏi đáp AI</b></div>
+    <div>@@target@@<b>Việc trọng tâm</b></div>
+    <div>@@clock-alert@@<b>Việc, dự án chậm</b></div>
+    <div>@@calendar-days@@<b>Lịch Ban TGĐ</b></div>
+    <div>@@file-text@@<b>Chờ phê duyệt</b></div>
+  </div>
+
+  <div class="h3" style="margin-top:7mm">Nguyên tắc</div>
+  <div class="princ">
+    <div><div class="ic">@@gauge@@</div><b>Một định nghĩa cho mỗi chỉ số</b><small>Mọi màn hình, báo cáo dùng chung cách tính.</small></div>
+    <div><div class="ic">@@scan-search@@</div><b>Truy vết đến bản ghi gốc</b><small>Mỗi con số, câu trả lời AI đều mở được về nguồn.</small></div>
+    <div><div class="ic">@@shield-check@@</div><b>Đúng quyền</b><small>AI chỉ trả lời trong phạm vi người hỏi được xem.</small></div>
+    <div><div class="ic">@@bell-ring@@</div><b>Hệ thống tự đôn đốc</b><small>Kết luận thành việc, trễ hạn tự báo lên Home.</small></div>
+  </div>
+
+  <div class="compare">
+    <div class="before"><h5>Hôm nay</h5><ul><li>Hỏi tiến độ qua thư ký, điện thoại</li><li>Chờ phòng ban tổng hợp Excel</li><li>Kết luận họp dễ bị bỏ sót</li></ul></div>
+    <div class="after"><h5>Với Base 2.0</h5><ul><li>Hỏi AI, có câu trả lời kèm nguồn</li><li>Báo cáo tự sinh, một con số ở mọi nơi</li><li>Kết luận thành việc có hạn ngay sau họp</li></ul></div>
+  </div>
+  <div class="foot"><span>Mức tự động hoá số liệu liên ứng dụng sẽ chốt trong phạm vi kiểm thử</span><b>03 / 05</b></div>
+</section>
+
+<!-- ═════════════ PAGE 4 · USE CASE ═════════════ -->
+<section class="page">
+  <div class="gradbar"></div>
+  <div class="head"><div class="brandpair"><span class="b">Base.vn</span><span class="x">×</span><span class="v">Vinaseed</span></div><span>03 · Use case demo</span></div>
+
+  <div class="sec" style="margin-top:6mm"><div class="n">03</div><div><div class="k">Use case demo</div><h2>Bốn use case trình diễn</h2></div></div>
+  <p class="lead">Mỗi use case gắn với một yêu cầu của Vinaseed, demo trên dữ liệu thật của Vinaseed khi kiểm thử.</p>
+
+  <div class="ucd">
+    <div class="card">
+      <div class="ch"><span class="ic">@@presentation@@</span><div><h3>Meeting + AI giao việc</h3><span class="chip b">Meeting</span> <span class="chip g">Task</span> <span class="chip w">AI</span></div></div>
+      <ol class="flow3"><li>Họp giao ban Ban TGĐ: lịch, phòng họp, thành viên</li><li>AI ghi biên bản, rút kết luận</li><li>Kết luận thành việc có người nhận, hạn, tiêu chí; tự nhắc hạn</li></ol>
+      <dl><dt>Dữ liệu</dt><dd>Lịch họp, biên bản, kết luận; đầu việc phát sinh</dd><dt>Giá trị</dt><dd>Không bỏ sót kết luận; đo được tỷ lệ hoàn thành</dd></dl>
+    </div>
+    <div class="card">
+      <div class="ch"><span class="ic">@@workflow@@</span><div><h3>Quy trình phê duyệt giá thu mua</h3><span class="chip b">BPM</span> <span class="chip w">AI</span></div></div>
+      <ol class="flow3"><li><b>B1</b> GĐ Sản xuất / GĐ BU2 lập đề nghị, tải tờ trình</li><li><b>B2</b> GĐ Tài chính và GĐ Sản xuất ký song song; không đạt trả về B1</li><li><b>B3</b> Chủ tịch HĐQT phê duyệt; không đạt trả về B2</li></ol>
+      <dl><dt>Dữ liệu</dt><dd>Hồ sơ đề nghị, lịch sử ký, thời gian chờ từng bước</dd><dt>Giá trị</dt><dd>Duyệt nhanh, minh bạch; thấy ngay điểm nghẽn</dd></dl>
+    </div>
+    <div class="card">
+      <div class="ch"><span class="ic">@@folder-kanban@@</span><div><h3>Quản lý dự án chiến lược</h3><span class="chip g">Project</span></div></div>
+      <p class="ex">Ví dụ: <b>Mở rộng vùng sản xuất lúa giống Thu Đông 2026</b></p>
+      <ul class="facts">
+        <li><b>12</b> đầu việc, <b>4</b> mốc: ký hợp đồng liên kết 120 hộ, gieo cấy 450 ha, kiểm định đồng ruộng, nhập kho</li>
+        <li>Rủi ro: rầy nâu, lịch trỗ bố mẹ, mưa muộn vùng trũng</li>
+        <li>Chi phí kế hoạch <b>~5,2 tỷ</b>, doanh thu dự kiến <b>6 tỷ</b></li>
+      </ul>
+      <dl><dt>Giá trị</dt><dd>Tiến độ, rủi ro, lãi lỗ dự án trên một màn hình</dd></dl>
+    </div>
+    <div class="card">
+      <div class="ch"><span class="ic">@@sparkles@@</span><div><h3>AI hỏi đáp cho lãnh đạo</h3><span class="chip b">Data Warehouse</span> <span class="chip w">AI</span></div></div>
+      <div class="qa">
+        <p class="q">"Dự án Thu Đông 2026 đang vướng gì?"</p>
+        <p class="a">Mốc ký hợp đồng 120 hộ trễ 19 ngày; 3 rủi ro đang mở, 1 mức cao (mưa muộn vùng trũng); hoàn thành 4/12 việc.</p>
+      </div>
+      <p class="more">Câu hỏi khác: tờ trình nào đang chờ tôi duyệt? kết luận họp tuần trước còn việc nào chưa xong?</p>
+      <dl><dt>Giá trị</dt><dd>Trả lời trong vài giây, kèm nguồn, đúng quyền</dd></dl>
+    </div>
+  </div>
+  <div class="foot"><span>Số liệu dự án là dữ liệu demo minh hoạ; khi kiểm thử sẽ dùng dữ liệu của Vinaseed</span><b>04 / 05</b></div>
+</section>
+
+<!-- ═════════════ PAGE 5 · PHƯƠNG PHÁP KIỂM THỬ ═════════════ -->
+<section class="page">
+  <div class="gradbar"></div>
+  <div class="head"><div class="brandpair"><span class="b">Base.vn</span><span class="x">×</span><span class="v">Vinaseed</span></div><span>04 · Phương pháp kiểm thử</span></div>
+
+  <div class="sec" style="margin-top:6mm"><div class="n">04</div><div><div class="k">Phương pháp kiểm thử hệ thống</div><h2>Showcase hoặc PoC, cùng một khung chuẩn bị</h2></div></div>
+
+  <div class="opts2">
+    <div class="opt a">
+      <div class="hd"><span class="code">HÌNH THỨC 1</span><span class="price">MIỄN PHÍ</span></div>
+      <h3>Showcase</h3>
+      <p class="what">Trình diễn trên dữ liệu thật của Vinaseed; các thành viên xem và chấm điểm.</p>
+      <div class="kpis"><div class="kpi"><b>~2 tuần</b><small>từ khi đủ dữ liệu</small></div><div class="kpi"><b>Demo</b><small>môi trường Base</small></div><div class="kpi"><b>1 buổi</b><small>trình diễn</small></div></div>
+    </div>
+    <div class="opt b">
+      <div class="hd"><span class="code">HÌNH THỨC 2</span><span class="price">CÓ PHÍ</span></div>
+      <h3>PoC dùng thật</h3>
+      <p class="what">Hệ thống riêng, thiết lập và đào tạo để Ban lãnh đạo dùng thật.</p>
+      <div class="kpis"><div class="kpi"><b>30</b><small>tài khoản</small></div><div class="kpi"><b>1 tháng</b><small>vận hành</small></div><div class="kpi"><b>Riêng</b><small>hệ thống Vinaseed</small></div></div>
+    </div>
+  </div>
+
+  <div class="h3" style="margin-top:6mm">Cần chuẩn bị</div>
+  <div class="prep">
+    <div>
+      <div class="ph3">@@target@@ Phạm vi dự án</div>
+      <ul>
+        <li>Chốt các luồng đánh giá: Dashboard & AI, giao việc từ họp, duyệt giá thu mua, lịch & cảnh báo</li>
+        <li>Tiêu chí đạt và người đánh giá, ký trước khi bắt đầu</li>
+        <li>Ngoài phạm vi: chứng thư số, tích hợp ERP, kế toán</li>
+      </ul>
+    </div>
+    <div>
+      <div class="ph3">@@users-round@@ Nguồn lực nhân sự</div>
+      <ul>
+        <li><b>Vinaseed:</b> một đầu mối có thẩm quyền; người dùng chính cho từng luồng; người cung cấp dữ liệu</li>
+        <li><b>Base:</b> quản lý dự án, tư vấn giải pháp, kỹ thuật dữ liệu & AI</li>
+      </ul>
+    </div>
+    <div>
+      <div class="ph3">@@file-spreadsheet@@ Dữ liệu đầu vào</div>
+      <ul>
+        <li>Sơ đồ tổ chức, danh sách người tham gia</li>
+        <li>Lịch công tác, danh sách dự án, quy trình duyệt giá, mẫu biên bản họp</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="h3" style="margin-top:6mm">Các buổi làm việc</div>
+  <table class="sess">
+    <thead><tr><th>Buổi</th><th>Showcase</th><th>PoC</th></tr></thead>
+    <tbody>
+      <tr><td><b>Khởi động & chốt phạm vi</b></td><td>●</td><td>●</td></tr>
+      <tr><td><b>Thu thập dữ liệu, quy trình</b></td><td>●</td><td>●</td></tr>
+      <tr><td><b>Thiết lập hệ thống & đào tạo người dùng</b></td><td>–</td><td>●</td></tr>
+      <tr><td><b>Rà soát tiến độ</b></td><td>–</td><td>Hằng tuần</td></tr>
+      <tr><td><b>Trình diễn / đánh giá cuối</b></td><td>1 buổi trình diễn, chấm điểm</td><td>Đánh giá theo phạm vi đã chốt</td></tr>
+    </tbody>
+  </table>
+
+  <div class="commit">
+    <h4>@@handshake@@ Chốt rõ trước, cùng quyết tâm làm</h4>
+    <p>Yêu cầu mới phát sinh được ghi nhận cho giai đoạn sau, không mở rộng trong kiểm thử. Hai bên cử đầu mối, cung cấp dữ liệu đúng hạn để không lãng phí nguồn lực. Biên bản đánh giá là căn cứ quyết định bước triển khai.</p>
+  </div>
+  <div class="foot"><span>Bước tiếp theo: Vinaseed chọn hình thức, cử đầu mối và gửi dữ liệu mẫu</span><b>05 / 05</b></div>
+</section>
+
+<div id="editbar">
+  <button id="btn-edit" type="button">✎ Chỉnh sửa</button>
+  <button id="btn-save" type="button">⤓ Lưu HTML</button>
+  <button id="btn-print" type="button">⎙ In / PDF</button>
+</div>
+<script>
+(function () {
+  var editing = false, edit = document.getElementById('btn-edit');
+  function setEditing(on) {
+    editing = on;
+    document.body.classList.toggle('editing', on);
+    document.querySelectorAll('.page').forEach(function (p) {
+      if (on) p.setAttribute('contenteditable', 'true'); else p.removeAttribute('contenteditable');
+    });
+    edit.classList.toggle('on', on);
+    edit.textContent = on ? '✓ Xong' : '✎ Chỉnh sửa';
+  }
+  edit.onclick = function () { setEditing(!editing); };
+  document.getElementById('btn-print').onclick = function () { setEditing(false); window.print(); };
+  document.getElementById('btn-save').onclick = function () {
+    var was = editing; setEditing(false);
+    var html = '<!doctype html>\n' + document.documentElement.outerHTML;
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
+    a.download = decodeURIComponent(location.pathname.split('/').pop() || 'proposal.html');
+    a.click();
+    setEditing(was);
+  };
+})();
+</script>
+</body>
+</html>

@@ -45,3 +45,17 @@ ${body}
 fs.writeFileSync(path.join(OUT, 'index.html'), html);
 fs.writeFileSync(path.join(OUT, '.nojekyll'), '');
 console.log('Đã tạo', path.relative(ROOT, OUT));
+
+// Bản một file duy nhất (gửi qua email/Zalo, mở trực tiếp không cần máy chủ): nhúng CSS, JS, d3 và dữ liệu.
+const read = (f) => fs.readFileSync(path.join(OUT, f), 'utf8');
+const data = {};
+DATASETS.forEach((id) => { data[id] = JSON.parse(read('data/' + id + '.json')); });
+const inlineJs = (s) => '<script>' + s.replace(/<\/script/gi, '<\\/script') + '</script>';
+const single = html
+  .replace('<link rel="icon" href="favicon.png">', '<link rel="icon" href="data:image/png;base64,' + fs.readFileSync(path.join(OUT, 'favicon.png')).toString('base64') + '">')
+  .replace(/<link rel="stylesheet" href="([^"]+)">/g, (m, f) => '<style>' + read(f) + '</style>')
+  .replace('<script src="dash-shim.js"></script>', () => inlineJs('window.VS_DATA=' + JSON.stringify(data) + ';') + '\n' + inlineJs(read('dash-shim.js')))
+  .replace(/<script src="([^"]+)"><\/script>/g, (m, f) => inlineJs(read(f)));
+const SINGLE = path.join(ROOT, 'dashboard', 'Vinaseed_Executive_Dashboard.html');
+fs.writeFileSync(SINGLE, single);
+console.log('Đã tạo', path.relative(ROOT, SINGLE), Math.round(single.length / 1024) + ' KB');

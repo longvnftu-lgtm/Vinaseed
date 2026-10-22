@@ -37,6 +37,7 @@
   }
 
   DATASETS.forEach((id) => {
+    if (window.VS_DATA && window.VS_DATA[id]) { store[id] = { status: 'ok', data: window.VS_DATA[id] }; return; }
     store[id] = { status: 'loading' };
     fetch('data/' + id + '.json')
       .then((r) => { if (!r.ok) throw new Error(r.status + ' ' + r.statusText); return r.json(); })
